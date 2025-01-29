@@ -1,22 +1,32 @@
-# SkillScore
-A group project focused on developing software for the digital management of activity points for NIT Calicut students.
+# SkillScore  
 
-The current process for awarding activity points at the institute is cumbersome, involving 
-manual submissions and approvals, leading to delays and inefficiencies. There is no 
-centralized platform for students to track their points or for faculty to streamline approvals. A 
-digital solution is required to simplify the process and provide transparency for all 
-stakeholders.
+## Overview  
+**SkillScore** is a group project aimed at developing a digital solution for managing activity points for **NIT Calicut** students. The current manual process is inefficient, leading to delays and a lack of transparency. This platform simplifies submissions, approvals, and tracking of activity points while reducing the administrative burden.  
+
+## Problem Statement  
+The current process for awarding activity points at the institute is cumbersome, involving manual submissions and approvals. This results in delays, inefficiencies, and a lack of transparency. There is no centralized platform for students to track their points or for faculty to streamline approvals.  
+
+## Solution  
+**SkillScore** provides a digital platform to:  
+✅ Simplify the activity point submission and approval process.  
+✅ Ensure transparency for students, faculty, and administrators.  
+✅ Automate and streamline approvals with multiple levels of authorization.  
+
+## Features  
+
+### 🏆 For Students:  
+- Submit requests for activity points.  
+- Track approved, pending, and rejected activity points.  
+- Upload proofs/certificates for verification.  
+
+### 🎓 For Faculty Advisors (FA):  
+- Approve or reject activity point requests.  
+- Identify students with insufficient points.  
+- Manage category-wise cut-offs and additional approval waivers.  
+
+### 🔧 System Capabilities:  
+- Multi-level approval system with customizable approving authority.  
+- Efficient record maintenance, reducing administrative workload.  
+- Transparent tracking of requests and approvals.  
 
 
-In this We:
-● Develop a portal for managing activity points allocation efficiently. 
-● Allow students to: 
-  ○ Submit requests for activity points. 
-  ○ Track their approved, pending, and rejected activity points. 
-● Enable faculty advisors (FA) to: 
-  ○ Approve/reject activity point requests. 
-  ○ Identify students with insufficient points. 
-  ○ Manage category-wise cut-offs and waivers for additional approvals. 
-● Provide multiple levels of approval with customizable approving authority. 
-● Facilitate proof/certificate upload for activity verification. 
-● Enhance transparency and reduce the administrative burden of record maintenance. 
