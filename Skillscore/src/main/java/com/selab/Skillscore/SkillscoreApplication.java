@@ -9,5 +9,5 @@ public class SkillscoreApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SkillscoreApplication.class, args);
 	}
-
+	
 }
