@@ -21,16 +21,16 @@ body {
     flex-direction: column;
   }
   
-  .sidebar .logo {
-    width:20px;
+  .sidebar .logo img {
+    width:60px;
     height:auto;
     text-align: center;
-    margin-bottom: 20px;
   }
   
   .sidebar ul {
     list-style: none;
     padding: 0;
+    margin-top: 50px;
   }
   
   .sidebar ul li {
