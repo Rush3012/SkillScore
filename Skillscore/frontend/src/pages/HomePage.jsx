@@ -4,22 +4,35 @@ import "./HomePage.css"; // Import the CSS file
 import logo from "../assets/skillscore_logo.png";
 
 const HomePage = () => {
-  const [userType, setUserType] = useState("Student"); // Default is Student
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState(""); 
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   const handleLogin = () => {
-    if (email === "rushda@gmail.com" && password === "123") {
-      navigate("/StudentDashboard"); // Redirect to student dashboard
-    } else if (email === "faculty@gmail.com" && password === "456") {
-      navigate("/FacultyDashboard"); // Redirect to faculty dashboard
-    } else {
-      alert("Invalid email or password");
-    }
-  };
+    fetch("http://localhost:8080/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, password }),
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.userId && data.role) {
+          const dashboardPath =
+          data.role === "student"
+            ? `/StudentDashboard/userId=${data.userId}`
+            : `/FacultyDashboard/userId=${data.userId}`;
 
+          navigate(dashboardPath); // Use React Router's navigate function
+        } else {
+          setError(data.error || "Invalid username or password");
+        }
+      })
+      .catch(error => {
+        console.error("Error:", error);
+        setError("Something went wrong. Please try again.");
+      });
+  };
 
   return (
     <div className="homepage-container">
@@ -36,19 +49,13 @@ const HomePage = () => {
           <h2>Login</h2>
           <p>Welcome back to SkillScore!</p>
 
-          {/* User Type Selection */}
-          <select className="input-field" value={userType} onChange={(e) => setUserType(e.target.value)}>
-            <option value="student">Student</option>
-            <option value="faculty">Faculty</option>
-          </select>
-
           {/* Login Inputs */}
           <input
-            type="email"
+            type="text"
             className="input-field"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
           />
           <input
             type="password"
@@ -63,8 +70,6 @@ const HomePage = () => {
           <button className="login-btn" onClick={handleLogin}>
             Login
           </button>
-
-          
         </div>
       </div>
     </div>
@@ -72,3 +77,4 @@ const HomePage = () => {
 };
 
 export default HomePage;
+

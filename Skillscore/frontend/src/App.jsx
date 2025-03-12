@@ -1,5 +1,5 @@
-import HomePage from "./pages/HomePage"; // Import Home Page
-import AppRoutes from "./routes";
+import React from "react";
+import AppRoutes from "./routes"; // Import Routes
 
 function App() {
   return (
