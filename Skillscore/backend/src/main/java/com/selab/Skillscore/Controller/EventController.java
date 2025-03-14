@@ -36,4 +36,10 @@ public class EventController {
     public ResponseEntity<Event> addEvent(@RequestBody Event event) {
         return ResponseEntity.ok(eventService.saveEvent(event));
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Event> getEventById(@PathVariable Long id) {
+        Event event = eventService.getEventById(id);
+        return event != null ? ResponseEntity.ok(event) : ResponseEntity.notFound().build();
+    }
 }

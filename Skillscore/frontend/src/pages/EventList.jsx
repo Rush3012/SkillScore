@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 
 const EventList = () => {
   const [events, setEvents] = useState([]);
-  const [selectedEvent, setSelectedEvent] = useState(null);
+  const navigate = useNavigate(); 
+
 
   useEffect(() => {
     fetch("http://localhost:8080/api/events")
@@ -26,7 +28,7 @@ const EventList = () => {
           <div 
             key={event.id} 
             className="cursor-pointer border p-2 rounded-lg shadow-md hover:bg-gray-100"
-            onClick={() => setSelectedEvent(event)}
+            onClick={() => navigate(`/event/${event.id}`)}
           >
             <img 
               src={event.image || "https://via.placeholder.com/150"} 
@@ -41,7 +43,7 @@ const EventList = () => {
     }
       </div>
 
-      {selectedEvent && (
+      {/* {selectedEvent && (
         <div className="mt-6 p-4 border rounded-lg shadow-md bg-white">
           <h2 className="text-xl font-bold">{selectedEvent.name}</h2>
           <img 
@@ -60,7 +62,7 @@ const EventList = () => {
             </a>
           </p>
         </div>
-      )}
+      )} */}
     </div>
   );
 };
