@@ -2,10 +2,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import StudentDashboard from "./pages/StudentDashboard";
 import FacultyDashboard from "./pages/FacultyDashboard";
-import RequestPage from "./pages/RequestForm";
-
-
-//import RequestPage from "./pages/RequestPage";
+import EventList from "./pages/EventList";
+import RequestForm from "./pages/RequestForm";
 
 const AppRoutes = () => (
   <Router>
@@ -13,7 +11,8 @@ const AppRoutes = () => (
       <Route path="/" element={<HomePage />} />
       <Route path="/StudentDashboard/:userId" element={<StudentDashboard />} />
       <Route path="/FacultyDashboard/:userId" element={<FacultyDashboard />} />
-      <Route path="/RequestForm" element={<RequestPage />} />
+      <Route path="/request" element={<RequestForm />} />
+      <Route path="/events" element={<EventList />} />
     </Routes>
   </Router>
 );
