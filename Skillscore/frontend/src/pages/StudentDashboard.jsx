@@ -4,12 +4,16 @@ import { useParams } from "react-router-dom";
 import logo from "../assets/skillscore_logo.png";
 import "./StudentDashboard.css";
 import propic from "../assets/Student_image.jpeg";
+import { useNavigate } from "react-router-dom";
+
 
 export default function StudentDashboard() {
   const [studentData, setStudentData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { userId } = useParams();
+  const navigate = useNavigate();
+  
   
 
 
