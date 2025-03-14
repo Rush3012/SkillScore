@@ -115,7 +115,7 @@ export default function StudentDashboard() {
                 <span>Pending Requests</span>
               </div>
             </div>
-            <button className="dashboard-submit-btn">Submit New Request</button>
+            <button className="dashboard-submit-btn" onClick={() => navigate("/RequestForm")}>Submit New Request</button>
           </div>
 
           {/* Upcoming Events Section */}
