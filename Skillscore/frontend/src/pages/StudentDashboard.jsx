@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { FaCalendarAlt, FaSignOutAlt } from "react-icons/fa";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import logo from "../assets/skillscore_logo.png";
 import "./StudentDashboard.css";
 import propic from "../assets/Student_image.jpeg";
+import { useNavigate } from "react-router-dom";
+
 
 export default function StudentDashboard() {
   const [studentData, setStudentData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { userId } = useParams();
+  const navigate = useNavigate();
+  
   
 
 
@@ -69,7 +73,7 @@ export default function StudentDashboard() {
           <ul>
             <li className="dashboard-active">Dashboard</li>
             <li>Profile</li>
-            <li>Events</li>
+            <Link to="/events">Events</Link>  {/* Link to Event List Page */}
             <li>Requests</li>
           </ul>
         </nav>
@@ -115,7 +119,7 @@ export default function StudentDashboard() {
                 <span>Pending Requests</span>
               </div>
             </div>
-            <button className="dashboard-submit-btn" onClick={() => navigate("/RequestForm")}>Submit New Request</button>
+            <button className="dashboard-submit-btn" onClick={() => navigate("/Request")}>Submit New Request</button>
           </div>
 
           {/* Upcoming Events Section */}

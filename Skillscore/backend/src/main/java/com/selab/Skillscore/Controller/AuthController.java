@@ -18,7 +18,6 @@ import com.selab.Skillscore.model.User;
 import com.selab.Skillscore.service.UserService;
 
 @Controller
-
 public class AuthController {
     @Autowired
     private UserService userService;
@@ -46,14 +45,14 @@ public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest, HttpSessi
     return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "Invalid username or password"));
 }
 
-// DTO Class for JSON Request
-public static class LoginRequest {
-    private String username;
-    private String password;
+    // DTO Class for JSON Request
+    public static class LoginRequest {
+        private String username;
+        private String password;
 
-    public String getUsername() { return username; }
-    public String getPassword() { return password; }
-}
+        public String getUsername() { return username; }
+        public String getPassword() { return password; }
+    }
 
 
     @GetMapping("/logout")
