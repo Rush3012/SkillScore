@@ -4,6 +4,8 @@ import StudentDashboard from "./pages/StudentDashboard";
 import FacultyDashboard from "./pages/FacultyDashboard";
 import EventList from "./pages/EventList";
 import RequestForm from "./pages/RequestForm";
+import EventDetail from "./pages/EventDetail"; // Import the details page
+
 
 const AppRoutes = () => (
   <Router>
@@ -13,6 +15,8 @@ const AppRoutes = () => (
       <Route path="/FacultyDashboard/:userId" element={<FacultyDashboard />} />
       <Route path="/request" element={<RequestForm />} />
       <Route path="/events" element={<EventList />} />
+      <Route path="/event/:id" element={<EventDetail />} />
+
     </Routes>
   </Router>
 );
