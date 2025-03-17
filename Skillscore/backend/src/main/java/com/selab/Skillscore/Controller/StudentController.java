@@ -15,7 +15,7 @@ import com.selab.Skillscore.model.Student;
 
 
 @RestController
-@RequestMapping("/student")
+@RequestMapping("/api/students")
 public class StudentController {
     
     @Autowired
@@ -30,11 +30,10 @@ public class StudentController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
-
-    @GetMapping("/test/{userId}")
-    public ResponseEntity<Student> testStudent(@PathVariable Long userId) {
-        Student student = studentService.getStudentByUserId(userId);
-        return student != null ? ResponseEntity.ok(student) : ResponseEntity.notFound().build();
+    @GetMapping("/by-user/{userId}")
+    public Student getStudentByUserId(@PathVariable Long userId) {
+        return studentService.getStudentByUserId(userId);
     }
+
 }
 

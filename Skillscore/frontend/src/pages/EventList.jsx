@@ -1,70 +1,65 @@
+
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Sidebar from "../components/stu_sidebar";
+import Header from "../components/stu_header";
+import "./Events.css";
+import noImage from "../assets/no_image.png";
 
-
-const EventList = () => {
+const Events = () => {
   const [events, setEvents] = useState([]);
-  const navigate = useNavigate(); 
-
+  const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/events")
-      .then(response => response.json()) 
-      .then(data => {
+    fetch("http://localhost:8080/api/events", {
+      credentials: "include",})
+      .then((response) => response.json())
+      .then((data) => {
         console.log("Fetched events:", data);
-        setEvents(data); 
+        setEvents(data);
       })
-      .catch(error => console.error("Error fetching events:", error));
+      .catch((error) => console.error("Error fetching events:", error));
   }, []);
-  
-
 
   return (
-    <div className="p-4">
-      <h2 className="text-xl font-bold mb-4">Events</h2>
-      <div className="grid grid-cols-3 gap-4">
-        {events && events.length > 0 ? (
-            events.map(event => (
-          <div 
-            key={event.id} 
-            className="cursor-pointer border p-2 rounded-lg shadow-md hover:bg-gray-100"
-            onClick={() => navigate(`/event/${event.id}`)}
-          >
-            <img 
-              src={event.image || "https://via.placeholder.com/150"} 
-              alt={event.name} 
-              className="w-full h-32 object-cover rounded-md"
-            />
-            <h3 className="text-lg font-semibold mt-2">{event.name}</h3>
-          </div>))
-        ) : (
-            <p>No event available</p>
-        )
-    }
-      </div>
+    <div className="events-page-container">
+      <Sidebar role="STUDENT" />
+      <div className="events-content">
+        <Header />
+        <div className="events-section">
+          <div className="events-header">
+            <h2>Upcoming Events</h2>
+          </div>
 
-      {/* {selectedEvent && (
-        <div className="mt-6 p-4 border rounded-lg shadow-md bg-white">
-          <h2 className="text-xl font-bold">{selectedEvent.name}</h2>
-          <img 
-            src={selectedEvent.image || "https://via.placeholder.com/150"} 
-            alt={selectedEvent.name} 
-            className="w-full h-48 object-cover rounded-md mt-2"
-          />
-          <p className="mt-2 text-gray-700">{selectedEvent.description}</p>
-          <p className="mt-2"><strong>Points:</strong> {selectedEvent.points}</p>
-          <p><strong>Date:</strong> {selectedEvent.startDate} - {selectedEvent.endDate}</p>
-          <p><strong>Time:</strong> {selectedEvent.time}</p>
-          <p className="mt-2">
-            <a href={selectedEvent.registrationLink} target="_blank" rel="noopener noreferrer" 
-               className="text-blue-500 underline">
-              Register Here
-            </a>
-          </p>
+          <div className="events-grid">
+            {events && events.length > 0 ? (
+              events.map((event) => (
+                <div
+                  key={event.id}
+                  className="event-card"
+                  onClick={() => navigate(`/event/${event.id}`)}
+                >
+                  <img
+                    src={event.image || noImage}
+                    alt={event.name}
+                    className="event-image"
+                  />
+                  <div className="event-info">
+                    <h3>{event.name}</h3>
+                    <p>{event.startDate} - {event.endDate}</p>
+                    <p>{event.time}</p>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <p>No events available</p>
+            )}
+          </div>
         </div>
-      )} */}
+      </div>
     </div>
   );
 };
 
-export default EventList;
+export default Events;
+

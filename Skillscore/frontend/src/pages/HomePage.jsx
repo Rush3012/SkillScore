@@ -10,10 +10,11 @@ const HomePage = () => {
   const navigate = useNavigate();
 
   const handleLogin = () => {
-    fetch("http://localhost:8080/login", {
+    fetch("http://localhost:8080/api/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, password }),
+      credentials: "include", // Include cookies in the request
     })
       .then(response => response.json())
       .then(data => {

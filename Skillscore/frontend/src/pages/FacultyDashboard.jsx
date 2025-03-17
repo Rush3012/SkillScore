@@ -18,7 +18,9 @@ const FacultyDashboard = () => {
 
     const formattedUserId = parseInt(extractedUserId, 10); // Convert userId to number
 
-    fetch(`http://localhost:8080/faculty/dashboard/${formattedUserId}`)
+    fetch(`http://localhost:8080/api/faculty/dashboard/${formattedUserId}`, {
+      credentials: "include", // Ensure cookies/session are sent
+    })
       .then((res) => {
         if (!res.ok) {
           throw new Error("Failed to fetch faculty data");
