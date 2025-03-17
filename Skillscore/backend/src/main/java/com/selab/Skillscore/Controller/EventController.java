@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.selab.Skillscore.model.Event;
+import com.selab.Skillscore.model.Faculty;
 import com.selab.Skillscore.service.EventService;
+import com.selab.Skillscore.service.FacultyService;
 
 import java.util.List;
 import java.util.Optional;
@@ -31,11 +33,30 @@ public class EventController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    // Add a new event
+    @Autowired
+    private FacultyService facultyService;
+    
     @PostMapping("/add")
     public ResponseEntity<Event> addEvent(@RequestBody Event event) {
-        return ResponseEntity.ok(eventService.saveEvent(event));
+        try {
+            if (event.getFaculty() == null || event.getFaculty().getId() == null) {
+                return ResponseEntity.badRequest().body(null);
+            }
+    
+            Faculty faculty = facultyService.getFacultyById(event.getFaculty().getId());
+            if (faculty == null) {
+                return ResponseEntity.badRequest().body(null);
+            }
+    
+            event.setFaculty(faculty);
+            Event savedEvent = eventService.saveEvent(event);
+            return ResponseEntity.ok(savedEvent);
+            
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
+    
 
     @GetMapping("/{id}")
     public ResponseEntity<Event> getEventById(@PathVariable Long id) {

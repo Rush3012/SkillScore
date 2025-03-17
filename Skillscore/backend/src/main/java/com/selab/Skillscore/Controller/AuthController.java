@@ -60,4 +60,16 @@ public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest, HttpSessi
         session.invalidate();  // Destroy session
         return "redirect:/login?logout=true"; // Redirect to login page with logout message
     }
+
+    @GetMapping("/api/auth/role")
+public ResponseEntity<?> getUserRole(HttpSession session) {
+    User loggedInUser = (User) session.getAttribute("loggedInUser");
+
+    if (loggedInUser != null) {
+        return ResponseEntity.ok(Map.of("role", loggedInUser.getRole().name().toLowerCase()));
+    } else {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "User not logged in"));
+    }
+}
+
 }
