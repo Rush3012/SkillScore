@@ -32,6 +32,7 @@ const AddEvent = () => {
         
         try {
             const response = await fetch("http://localhost:8080/api/events/add", {
+                credentials: "include",
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

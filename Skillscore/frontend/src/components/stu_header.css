@@ -1,0 +1,32 @@
+
+.student-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: #f8f9fa; /* Adjust background as needed */
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .back-icon {
+    font-size: 20px;
+    cursor: pointer;
+    margin-right: auto; /* Pushes it to the leftmost side */
+  }
+  
+  .student-profile {
+    display: flex;
+    align-items: center;
+  }
+  
+  .student-profile span {
+    margin-right: 10px;
+    font-weight: bold;
+  }
+  
+  .student-profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+  

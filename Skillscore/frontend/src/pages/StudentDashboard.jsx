@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { FaCalendarAlt, FaSignOutAlt } from "react-icons/fa";
 import { useParams, Link } from "react-router-dom";
-import logo from "../assets/skillscore_logo.png";
 import "./StudentDashboard.css";
-import propic from "../assets/Student_image.jpeg";
 import { useNavigate } from "react-router-dom";
+import Header from "../components/stu_header";
+import Sidebar from "../components/stu_sidebar";
 
 
 export default function StudentDashboard() {
@@ -27,7 +27,9 @@ export default function StudentDashboard() {
 
     const formattedUserId = parseInt(extractedUserId, 10); // Convert userId to number
 
-    fetch(`http://localhost:8080/student/dashboard/${formattedUserId}`)
+    fetch(`http://localhost:8080/api/students/dashboard/${formattedUserId}`,{
+      credentials: "include", // Ensure cookies/session are sent
+    })
       .then((res) => {
         if (!res.ok) {
           throw new Error("Failed to fetch student data");
@@ -64,40 +66,13 @@ export default function StudentDashboard() {
   return (
     <div className="dashboard-container">
       {/* Sidebar */}
-      <aside className="dashboard-sidebar">
-        <div className="dashboard-left-panel">
-          <img src={logo} alt="SkillScore Logo" className="dashboard-logo" />
-          <span className="logo-text">SkillScore</span>
-        </div>
-        <nav className="dashboard-nav">
-          <ul>
-            <li className="dashboard-active">Dashboard</li>
-            <li>Profile</li>
-            <Link to="/events">Events</Link>  {/* Link to Event List Page */}
-            <li>Requests</li>
-          </ul>
-        </nav>
-        <button className="dashboard-logout-btn" onClick={handleLogout}>
-          <FaSignOutAlt /> Logout
-        </button>
-      </aside>
+      <Sidebar role="STUDENT" />
+        
 
       {/* Main Content */}
       <main className="dashboard-main-content">
         {/* Header */}
-        <header className="dashboard-header">
-          <h1>Welcome {studentData.name} !!!</h1>
-          <div className="dashboard-profile">
-            <span>{studentData.name}</span>
-            <div className="dashboard-profile-info">
-              <img
-                src={propic}
-                alt={studentData.name}
-                className="dashboard-profile-pic"
-              />
-            </div>
-          </div>
-        </header>
+        <Header/>
 
         {/* Points Summary & Events */}
         <div className="dashboard-content-wrapper">

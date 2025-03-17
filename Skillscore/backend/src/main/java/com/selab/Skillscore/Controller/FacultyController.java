@@ -11,7 +11,7 @@ import com.selab.Skillscore.service.FacultyService;
 import com.selab.Skillscore.dto.FacultyDashboardDTO;
 
 @RestController
-@RequestMapping("/faculty")
+@RequestMapping("/api/faculty")
 public class FacultyController {
     
     @Autowired
