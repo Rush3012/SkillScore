@@ -6,11 +6,10 @@ import "./stu_sidebar.css"; // Sidebar styles
 
 const Sidebar = ({ role }) => {
   const navigate = useNavigate();
-  const location = useLocation(); // Detect current URL path
+  const location = useLocation(); 
 
   const handleLogout = async () => {
     try {
-        // Call backend logout API if available
         const response = await fetch("http://localhost:8080/api/auth/logout", {
             method: "POST",
             credentials: "include", // Ensure session cookies are sent
@@ -20,11 +19,9 @@ const Sidebar = ({ role }) => {
             throw new Error("Logout failed");
         }
 
-        // Clear session storage & local storage
         sessionStorage.clear();
-        localStorage.removeItem("authToken"); // If you're using JWT storage
+        localStorage.removeItem("authToken"); 
 
-        // Redirect to login
         navigate("/");
     } catch (error) {
         console.error("Error during logout:", error);

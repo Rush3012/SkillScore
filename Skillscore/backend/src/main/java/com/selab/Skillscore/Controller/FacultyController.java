@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.HttpStatus;
 import com.selab.Skillscore.service.FacultyService;
 import com.selab.Skillscore.dto.FacultyDashboardDTO;
+import com.selab.Skillscore.model.Faculty;
 
 @RestController
 @RequestMapping("/api/faculty")
@@ -25,6 +26,11 @@ public class FacultyController {
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
+    }
+
+    @GetMapping("/by-user/{userId}")
+    public Faculty getFacultyByUserId(@PathVariable Long userId) {
+        return facultyService.getFacultyByUserId(userId);
     }
 }
 

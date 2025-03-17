@@ -1,42 +1,48 @@
 
 import React, { useEffect, useState } from "react";
 import { FaUser, FaCalendarAlt, FaClipboardList, FaSignOutAlt } from "react-icons/fa";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./FacultyDashboard.css";
 import logo from "../assets/skillscore_logo.png";
 
 const FacultyDashboard = () => {
-  const [facultyData, setFacultyData] = useState(null);
+  const [faculty, setFaculty] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { userId } = useParams();
 
   useEffect(() => {
-    if (!userId) return;
-
-    const extractedUserId = userId?.split("=")[1]; // Gets "1"
-
-    const formattedUserId = parseInt(extractedUserId, 10); // Convert userId to number
-
-    fetch(`http://localhost:8080/api/faculty/dashboard/${formattedUserId}`, {
-      credentials: "include", // Ensure cookies/session are sent
-    })
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error("Failed to fetch faculty data");
+    const fetchFcultyData = async () => {
+      try {
+        const userResponse = await fetch("/api/auth/profile", {
+            credentials: "include"
+        }); 
+        if (!userResponse.ok) {
+          throw new Error("Failed to fetch student data");
         }
-        return res.json();
-      })
-      .then((data) => {
-        setFacultyData(data);
-        setLoading(false);
-      })
-      .catch((error) => {
+        const userData = await userResponse.json();
+        const userId = userData.userId;
+        const facultyResponse = await fetch(`http://localhost:8080/api/faculty/by-user/${userId}`, {
+          credentials: "include",
+        });
+      
+        if (!facultyResponse.ok) {
+          throw new Error("Failed to fetch student data");
+        }
+
+        const facultyData = await facultyResponse.json();
+        setFaculty(facultyData || "Faculty");
+
+    
+      }catch(error)  {
         console.error("Error fetching faculty data:", error);
         setError(error.message);
+      } finally {
         setLoading(false);
-      });
-  }, [userId]);
+      }
+    };
+    fetchFcultyData();
+
+  }, []);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
