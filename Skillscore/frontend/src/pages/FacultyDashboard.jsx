@@ -69,7 +69,7 @@ const FacultyDashboard = () => {
             <FaUser /> <Link to="/students">Students</Link>
           </li>
           <li>
-            <FaCalendarAlt /> <Link to="/events">Events</Link>
+            <FaCalendarAlt /> <Link to="/eventss">Events</Link>
           </li>
           <li>
             <FaClipboardList /> <Link to="/requests">Requests</Link>

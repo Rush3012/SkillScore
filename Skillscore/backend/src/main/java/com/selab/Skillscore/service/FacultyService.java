@@ -32,4 +32,9 @@ public class FacultyService {
     public Faculty getFacultyByUserId(Long userId) {
         return facultyRepository.findByUserId(userId).orElse(null);
     }
+
+    public Faculty getFacultyById(Long facultyId) {
+        return facultyRepository.findById(facultyId)
+                .orElseThrow(() -> new RuntimeException("Faculty not found with ID: " + facultyId));
+    }
 }
