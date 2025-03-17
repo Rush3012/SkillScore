@@ -7,18 +7,20 @@ import RequestForm from "./pages/RequestForm";
 import EventDetail from "./pages/EventDetail"; // Import the details page
 import FacultyEvent from "./pages/FacultyEvent"; // Import the faculty event page
 import AddEvent from "./pages/AddEvent";
+import StudentProfile from "./pages/StudentProfile";
 
 const AppRoutes = () => (
   <Router>
     <Routes>
       <Route path="/" element={<HomePage />} />
-      <Route path="/StudentDashboard/:userId" element={<StudentDashboard />} />
-      <Route path="/FacultyDashboard/:userId" element={<FacultyDashboard />} />
+      <Route path="/StudentDashboard" element={<StudentDashboard />} />
+      <Route path="/FacultyDashboard" element={<FacultyDashboard />} />
       <Route path="/request" element={<RequestForm />} />
       <Route path="/events" element={<EventList />} />
       <Route path="/event/:id" element={<EventDetail />} />
       <Route path="eventss" element={<FacultyEvent/>} />
       <Route path="events/add" element={<AddEvent />} />
+      <Route path="/profile" element={<StudentProfile />} />
     </Routes>
   </Router>
 );

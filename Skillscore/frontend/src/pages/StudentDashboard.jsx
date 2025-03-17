@@ -1,85 +1,76 @@
+
 import React, { useEffect, useState } from "react";
-import { FaCalendarAlt, FaSignOutAlt } from "react-icons/fa";
-import { useParams, Link } from "react-router-dom";
-import "./StudentDashboard.css";
+import { FaCalendarAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import "./StudentDashboard.css";
 import Header from "../components/stu_header";
 import Sidebar from "../components/stu_sidebar";
 
-
 export default function StudentDashboard() {
-  const [studentData, setStudentData] = useState(null);
+  const [student, setStudent] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { userId } = useParams();
   const navigate = useNavigate();
-  
-  
-
 
   useEffect(() => {
-    if (!userId) {
-      setError("Invalid Student ID");
-      setLoading(false);
-      return;
-    }
-    const extractedUserId = userId?.split("=")[1]; // Gets "1"
-
-    const formattedUserId = parseInt(extractedUserId, 10); // Convert userId to number
-
-    fetch(`http://localhost:8080/api/students/dashboard/${formattedUserId}`,{
-      credentials: "include", // Ensure cookies/session are sent
-    })
-      .then((res) => {
-        if (!res.ok) {
+    const fetchStudentData = async () => {
+      try {
+        const userResponse = await fetch("/api/auth/profile", {
+            credentials: "include"
+        }); 
+        if (!userResponse.ok) {
           throw new Error("Failed to fetch student data");
         }
-        return res.json();
-      })
-      .then((data) => {
-        setStudentData(data);
-        setLoading(false);
-      })
-      .catch((err) => {
+        const userData = await userResponse.json();
+        const userId = userData.userId;
+
+        const studentResponse = await fetch(`http://localhost:8080/api/students/by-user/${userId}`, {
+            credentials: "include",
+          });
+        
+          if (!studentResponse.ok) {
+            throw new Error("Failed to fetch student data");
+          }
+  
+          const studentData = await studentResponse.json();
+          setStudent(studentData || "Student");
+  
+      
+        } catch(err) {
         console.error("Error fetching student data:", err);
         setError(err.message);
+      } finally {
         setLoading(false);
-      });
+      }
+    };
+    fetchStudentData();
   }, []);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
 
   const handleLogout = () => {
-    // Remove authentication token (if stored in localStorage/sessionStorage)
-    localStorage.removeItem("authToken"); // Adjust based on your auth mechanism
+    localStorage.removeItem("authToken");
     sessionStorage.removeItem("authToken");
-  
-    // Optionally, clear other user-related data
-    localStorage.removeItem("userId"); // If you store userId
-    sessionStorage.removeItem("userRole");
-  
-    // Redirect to login page
-    window.location.href = "/"; // Redirects user to login
+    window.location.href = "/"; // Redirects to login page
   };
 
   return (
     <div className="dashboard-container">
       {/* Sidebar */}
       <Sidebar role="STUDENT" />
-        
 
       {/* Main Content */}
       <main className="dashboard-main-content">
         {/* Header */}
-        <Header/>
+        <Header />
 
         {/* Points Summary & Events */}
         <div className="dashboard-content-wrapper">
           {/* Points Section */}
           <div className="dashboard-points-summary">
             <h2>Total Points</h2>
-            <h1>{studentData.totalPoints}/80</h1>
+            <h1>{student.totalPoints}/80</h1>
             <div className="dashboard-point-breakdown">
               <div className="dashboard-point-item dashboard-institute-points">
                 <p>--/40</p>
@@ -94,7 +85,9 @@ export default function StudentDashboard() {
                 <span>Pending Requests</span>
               </div>
             </div>
-            <button className="dashboard-submit-btn" onClick={() => navigate("/Request")}>Submit New Request</button>
+            <button className="dashboard-submit-btn" onClick={() => navigate("/Request")}>
+              Submit New Request
+            </button>
           </div>
 
           {/* Upcoming Events Section */}
@@ -112,9 +105,7 @@ export default function StudentDashboard() {
                 <FaCalendarAlt className="dashboard-event-icon" />
                 <div>
                   <p className="dashboard-event-title">NSS Camp</p>
-                  <p className="dashboard-event-date">
-                    March 19 from 8:00 AM to 5:00 PM
-                  </p>
+                  <p className="dashboard-event-date">March 19 from 8:00 AM to 5:00 PM</p>
                 </div>
               </li>
               <li>

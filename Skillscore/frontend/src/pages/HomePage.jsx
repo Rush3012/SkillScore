@@ -21,8 +21,8 @@ const HomePage = () => {
         if (data.userId && data.role) {
           const dashboardPath =
           data.role === "student"
-            ? `/StudentDashboard/userId=${data.userId}`
-            : `/FacultyDashboard/userId=${data.userId}`;
+            ? "/StudentDashboard"
+            : "/FacultyDashboard";
 
           navigate(dashboardPath); // Use React Router's navigate function
         } else {
