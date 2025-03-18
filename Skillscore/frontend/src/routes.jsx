@@ -8,6 +8,7 @@ import EventDetail from "./pages/EventDetail"; // Import the details page
 import FacultyEvent from "./pages/FacultyEvent"; // Import the faculty event page
 import AddEvent from "./pages/AddEvent";
 import StudentProfile from "./pages/StudentProfile";
+import FacultyEvents from "./pages/FacultyEvent";
 
 const AppRoutes = () => (
   <Router>
@@ -21,6 +22,7 @@ const AppRoutes = () => (
       <Route path="eventss" element={<FacultyEvent/>} />
       <Route path="events/add" element={<AddEvent />} />
       <Route path="/profile" element={<StudentProfile />} />
+      <Route path="/FacultyEvents" element={<FacultyEvents />} />
     </Routes>
   </Router>
 );
