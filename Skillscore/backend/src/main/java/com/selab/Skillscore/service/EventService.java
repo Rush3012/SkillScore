@@ -6,10 +6,13 @@ import org.springframework.stereotype.Service;
 import com.selab.Skillscore.model.Event;
 import com.selab.Skillscore.repository.EventRepository;
 
+import lombok.RequiredArgsConstructor;
+
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class EventService {
     
     @Autowired

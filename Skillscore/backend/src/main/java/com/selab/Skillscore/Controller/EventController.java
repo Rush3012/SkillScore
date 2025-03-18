@@ -7,12 +7,17 @@ import com.selab.Skillscore.model.Event;
 import com.selab.Skillscore.model.Faculty;
 import com.selab.Skillscore.service.EventService;
 import com.selab.Skillscore.service.FacultyService;
+import org.springframework.http.MediaType;
+
+
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/events")
+@RequiredArgsConstructor
 @CrossOrigin(origins = "*")
 public class EventController {
 
@@ -36,9 +41,10 @@ public class EventController {
     @Autowired
     private FacultyService facultyService;
     
-    @PostMapping("/add")
+    @PostMapping(value = "/add", consumes = { MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<Event> addEvent(@RequestBody Event event) {
         try {
+            System.out.println("blablabla");
             if (event.getFaculty() == null || event.getFaculty().getId() == null) {
                 return ResponseEntity.badRequest().body(null);
             }

@@ -15,19 +15,19 @@ public class FacultyService {
     @Autowired
     private FacultyRepository facultyRepository;
 
-    public FacultyDashboardDTO getFacultyDashboard(Long userId) {
-        Optional<Faculty> faculty = facultyRepository.findByUserId(userId);
-        return faculty.map(this::mapToDashboardDTO).orElse(null);
-    }
+    // public FacultyDashboardDTO getFacultyDashboard(Long userId) {
+    //     Optional<Faculty> faculty = facultyRepository.findByUserId(userId);
+    //     return faculty.map(this::mapToDashboardDTO).orElse(null);
+    // }
 
-    private FacultyDashboardDTO mapToDashboardDTO(Faculty faculty) {
-        return new FacultyDashboardDTO(
-        faculty.getFacultyId(),
-        faculty.getName(),
-        faculty.getDepartment(),
-        faculty.getIsAdvisor(),
-        faculty.getStudents());
-    }
+    // private FacultyDashboardDTO mapToDashboardDTO(Faculty faculty) {
+    //     return new FacultyDashboardDTO(
+    //     faculty.getFacultyId(),
+    //     faculty.getName(),
+    //     faculty.getDepartment(),
+    //     faculty.getIsAdvisor(),
+    //     faculty.getStudents());
+    // }
 
     public Faculty getFacultyByUserId(Long userId) {
         return facultyRepository.findByUserId(userId).orElse(null);
