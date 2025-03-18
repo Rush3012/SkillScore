@@ -28,6 +28,14 @@ public class Faculty {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
+    public Faculty() {}
+    public Faculty(String name, String department, boolean isAdvisor, User user) {
+        this.name = name;
+        this.department = department;
+        this.isAdvisor = isAdvisor;
+        this.user = user;
+    }
+
     public Long getId() { return facultyId; }
     public void setId(Long id) { this.facultyId = id; }
     public String getName() { return name; }
@@ -39,12 +47,12 @@ public class Faculty {
     public User getUser() { return user; }
     public void setUser(User user) { this.user = user; }
     
-    @OneToMany(mappedBy = "faculty")
-    @JsonManagedReference  
-    private List<Student> students = new ArrayList<>();
+    // @OneToMany(mappedBy = "faculty")
+    // @JsonManagedReference  
+    // private List<Student> students = new ArrayList<>();
 
-    public List<Student> getStudents() {
-        return students;  
-    }
+    // public List<Student> getStudents() {
+    //     return students;  
+    // }
 
 }

@@ -1,6 +1,7 @@
 package com.selab.Skillscore.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -20,7 +21,7 @@ public class Student {
     
     @ManyToOne
     @JoinColumn(name = "faculty_id", referencedColumnName = "facultyId")
-    @JsonBackReference  // Prevents recursion
+    @JsonIgnore  
     private Faculty faculty;
     
     @OneToOne
@@ -40,5 +41,11 @@ public class Student {
     public void setFaculty(Faculty faculty) { this.faculty = faculty; }
     public User getUser() { return user; }
     public void setUser(User user) { this.user = user; }
+    public Long getFacultyId() {
+        return faculty != null ? faculty.getFacultyId() : null;
+    }
+    public String getFacultyName() {
+        return faculty != null ? faculty.getName() : null;
+    }
 
 }

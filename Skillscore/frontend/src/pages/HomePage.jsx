@@ -10,18 +10,19 @@ const HomePage = () => {
   const navigate = useNavigate();
 
   const handleLogin = () => {
-    fetch("http://localhost:8080/login", {
+    fetch("http://localhost:8080/api/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, password }),
+      credentials: "include", // Include cookies in the request
     })
       .then(response => response.json())
       .then(data => {
         if (data.userId && data.role) {
           const dashboardPath =
           data.role === "student"
-            ? `/StudentDashboard/userId=${data.userId}`
-            : `/FacultyDashboard/userId=${data.userId}`;
+            ? "/StudentDashboard"
+            : "/FacultyDashboard";
 
           navigate(dashboardPath); // Use React Router's navigate function
         } else {

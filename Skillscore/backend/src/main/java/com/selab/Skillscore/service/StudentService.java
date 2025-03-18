@@ -17,6 +17,9 @@ public class StudentService {
     public Student getStudentByUserId(Long userId) {
         return studentRepository.findByUserId(userId).orElse(null);
     }
+    public Student getStudentByUserIds(Long userId) {
+        return studentRepository.findByUserIds(userId);
+    }
 
     public StudentDashboardDTO getStudentDashboard(Long userId) {
         Optional<Student> student = studentRepository.findByUserId(userId);
