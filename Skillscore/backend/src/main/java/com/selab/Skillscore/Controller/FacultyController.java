@@ -9,22 +9,28 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.HttpStatus;
 import com.selab.Skillscore.service.FacultyService;
 import com.selab.Skillscore.dto.FacultyDashboardDTO;
+import com.selab.Skillscore.model.Faculty;
 
 @RestController
-@RequestMapping("/faculty")
+@RequestMapping("/api/faculty")
 public class FacultyController {
     
     @Autowired
     private FacultyService facultyService;
 
-    @GetMapping("/dashboard/{userId}")
-    public ResponseEntity<FacultyDashboardDTO> getFacultyDashboard(@PathVariable Long userId) {
-        FacultyDashboardDTO dashboard = facultyService.getFacultyDashboard(userId);
-        if (dashboard != null) {
-            return ResponseEntity.ok(dashboard);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
+    // @GetMapping("/dashboard/{userId}")
+    // public ResponseEntity<FacultyDashboardDTO> getFacultyDashboard(@PathVariable Long userId) {
+    //     FacultyDashboardDTO dashboard = facultyService.getFacultyDashboard(userId);
+    //     if (dashboard != null) {
+    //         return ResponseEntity.ok(dashboard);
+    //     } else {
+    //         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    //     }
+    // }
+
+    @GetMapping("/by-user/{userId}")
+    public Faculty getFacultyByUserId(@PathVariable Long userId) {
+        return facultyService.getFacultyByUserId(userId);
     }
 }
 

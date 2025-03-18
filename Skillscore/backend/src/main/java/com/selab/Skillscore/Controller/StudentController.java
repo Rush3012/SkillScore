@@ -15,26 +15,25 @@ import com.selab.Skillscore.model.Student;
 
 
 @RestController
-@RequestMapping("/student")
+@RequestMapping("/api/students")
 public class StudentController {
     
     @Autowired
     private StudentService studentService;
 
-    @GetMapping("/dashboard/{userId}")
-    public ResponseEntity<StudentDashboardDTO> getStudentDashboard(@PathVariable Long userId) {
-        StudentDashboardDTO dashboard = studentService.getStudentDashboard(userId);
-        if (dashboard != null) {
-            return ResponseEntity.ok(dashboard);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
+    // @GetMapping("/dashboard/{userId}")
+    // public ResponseEntity<StudentDashboardDTO> getStudentDashboard(@PathVariable Long userId) {
+    //     StudentDashboardDTO dashboard = studentService.getStudentDashboard(userId);
+    //     if (dashboard != null) {
+    //         return ResponseEntity.ok(dashboard);
+    //     } else {
+    //         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    //     }
+    // }
+    @GetMapping("/by-user/{userId}")
+    public Student getStudentByUserId(@PathVariable Long userId) {
+        return studentService.getStudentByUserId(userId);
     }
 
-    @GetMapping("/test/{userId}")
-    public ResponseEntity<Student> testStudent(@PathVariable Long userId) {
-        Student student = studentService.getStudentByUserId(userId);
-        return student != null ? ResponseEntity.ok(student) : ResponseEntity.notFound().build();
-    }
 }
 

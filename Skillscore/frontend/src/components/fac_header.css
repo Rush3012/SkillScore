@@ -1,0 +1,50 @@
+/* Faculty Header */
+.faculty-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    padding: 15px 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;  /* Increased for a modern look */
+    min-height: 60px; /* Prevents shrinking */
+}
+
+/* Date */
+.date {
+    font-size: 16px;
+    color: #555;
+}
+
+/* Faculty Info */
+.faculty-info {
+    display: flex;
+    align-items: center;
+    gap: 12px; /* Slightly increased */
+}
+
+/* Profile Picture */
+.faculty-profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: contain; /* Prevents stretching */
+    border: 2px solid #2ECC71;
+}
+
+/* Faculty Name & Role */
+.faculty-details {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Ensures proper alignment */
+}
+
+.faculty-name {
+    font-size: 16px;
+    color: #333;
+}
+
+.faculty-role {
+    font-size: 14px;
+    color: #777;
+}
