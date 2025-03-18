@@ -37,4 +37,7 @@ public class EventService {
         return eventRepository.findById(id).orElse(null);
     }
     
+    public List<Event> getEventsByFaculty(Long facultyId) {
+        return eventRepository.findByFaculty_FacultyId(facultyId);
+    }
 }

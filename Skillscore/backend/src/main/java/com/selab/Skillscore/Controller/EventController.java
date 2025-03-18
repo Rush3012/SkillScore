@@ -69,4 +69,9 @@ public class EventController {
         Event event = eventService.getEventById(id);
         return event != null ? ResponseEntity.ok(event) : ResponseEntity.notFound().build();
     }
+
+    @GetMapping("/faculty/{facultyId}")
+    public List<Event> getEventsByFaculty(@PathVariable Long facultyId) {
+        return eventService.getEventsByFaculty(facultyId);
+    }
 }

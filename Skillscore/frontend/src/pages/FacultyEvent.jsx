@@ -86,7 +86,9 @@ const Events = () => {
       .then((response) => response.json())
       .then((data) => {
         console.log("Fetched events:", data);
-        setEvents(data);
+        const sortedEvents = data.sort((a, b) => new Date(b.startDate) - new Date(a.startDate));
+
+        setEvents(sortedEvents);
       })
       .catch((error) => console.error("Error fetching events:", error));
   }, []);
@@ -98,7 +100,7 @@ const Events = () => {
 
       {/* Main Content */}
       <div className="events-content">
-        <Header name="Renjith R" role="Faculty" />
+        <Header/>
 
         <div className="events-section">
           <h2 className="events-header">Upcoming Events</h2>
@@ -110,7 +112,7 @@ const Events = () => {
                 <div
                   key={event.id}
                   className="event-card"
-                  onClick={() => navigate(`/event/${event.id}`)}
+                  onClick={() => navigate(`/faculty/event/${event.id}`)}
                 >
                   <img
                     src={event.image || noImage}
