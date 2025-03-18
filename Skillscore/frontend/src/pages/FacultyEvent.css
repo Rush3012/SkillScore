@@ -1,0 +1,90 @@
+
+/* Faculty Events Page Layout */
+.faculty-events-container {
+    display: flex;
+    background-color: #f8f9fa;
+    height: 100vh;
+    width: 1550px;
+    overflow: hidden;  /* Prevents extra scroll issues */
+}
+
+/* Sidebar - Fixed Width */
+.faculty-events-sidebar {
+    width: 250px;  /* Adjust as needed */
+    flex-shrink: 0; /* Prevents shrinking */
+}
+
+/* Main Content Area */
+.faculty-events-content {
+    flex-grow: 1; /* Takes remaining space */
+    padding: 20px;
+    overflow-y: auto;
+    margin-left: 250px; /* Matches sidebar width */
+}
+
+/* Grid Layout for Events */
+.faculty-events-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .faculty-events-sidebar {
+        width: 100px; /* Smaller sidebar */
+    }
+
+    .faculty-events-content {
+        margin-left: 100px; /* Adjust content spacing */
+    }
+
+    .faculty-events-grid {
+        grid-template-columns: 1fr; /* Single column for smaller screens */
+    }
+}
+
+/* Add New Event Button */
+.add-faculty-event-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #2ECC71;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+}
+
+.add-faculty-event-btn:hover {
+    background-color: #28a745;
+}
+
+/* Plus Icon Style */
+.add-event-icon {
+    font-size: 20px;
+    margin-right: 10px;
+}
+
+/* Hide Button Text on Small Screens */
+@media (max-width: 768px) {
+    .add-event-text {
+        display: none;
+    }
+
+    .add-faculty-event-btn {
+        width: 50px;
+        height: 50px;
+        justify-content: center;
+        padding: 0;
+        border-radius: 50%;
+    }
+}
