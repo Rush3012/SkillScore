@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import com.selab.Skillscore.model.Student;
 import com.selab.Skillscore.repository.StudentRepository;
 import com.selab.Skillscore.dto.StudentDashboardDTO;
+
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -34,5 +36,9 @@ public class StudentService {
             student.getTotalPoints(),
             student.getFaculty().getName()  // Assuming faculty exists
         );
+    }
+
+    public List<Student> getStudentsByFacultyId(Long facultyId) {
+        return studentRepository.findByFaculty_FacultyId(facultyId);
     }
 }

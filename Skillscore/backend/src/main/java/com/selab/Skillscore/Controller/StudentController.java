@@ -1,5 +1,7 @@
 package com.selab.Skillscore.Controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +35,11 @@ public class StudentController {
     @GetMapping("/by-user/{userId}")
     public Student getStudentByUserId(@PathVariable Long userId) {
         return studentService.getStudentByUserId(userId);
+    }
+
+    @GetMapping("/faculty/{facultyId}")
+    public List<Student> getStudentsByFaculty(@PathVariable Long facultyId) {
+        return studentService.getStudentsByFacultyId(facultyId);
     }
 
 }

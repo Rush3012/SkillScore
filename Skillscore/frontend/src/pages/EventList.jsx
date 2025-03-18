@@ -16,7 +16,10 @@ const Events = () => {
       .then((response) => response.json())
       .then((data) => {
         console.log("Fetched events:", data);
-        setEvents(data);
+
+        const sortedEvents = data.sort((a, b) => new Date(b.startDate) - new Date(a.startDate));
+
+        setEvents(sortedEvents);
       })
       .catch((error) => console.error("Error fetching events:", error));
   }, []);

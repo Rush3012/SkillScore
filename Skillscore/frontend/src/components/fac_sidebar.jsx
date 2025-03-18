@@ -38,7 +38,7 @@ const FacultySidebar = () => {
           <Link to="/FacultyDashboard"> Dashboard</Link>
         </li>
         <li>
-          <Link to="/faculty-students"> Students</Link> {/* Faculty managing students */}
+          <Link to="/faculty/students"> Students</Link> {/* Faculty managing students */}
         </li>
         <li>
           <Link to="/FacultyEvents"> Events</Link>
