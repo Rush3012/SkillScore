@@ -1,136 +1,144 @@
+
+
 // import { useEffect, useState } from "react";
 // import { useNavigate } from "react-router-dom";
+// import Sidebar from "../components/fac_sidebar";
+// import Header from "../components/fac_header";
+// import "./FacultyEvent.css";
+// import noImage from "../assets/no_image.png";
 
-
-// const EventList = () => {
+// const Events = () => {
 //   const [events, setEvents] = useState([]);
-//   const navigate = useNavigate(); 
-
+//   const navigate = useNavigate();
 
 //   useEffect(() => {
-//     fetch("http://localhost:8080/api/events")
-//       .then(response => response.json()) 
-//       .then(data => {
+//     fetch("http://localhost:8080/api/events", {
+//       credentials: "include",})
+//       .then((response) => response.json())
+//       .then((data) => {
 //         console.log("Fetched events:", data);
-//         setEvents(data); 
+//         setEvents(data);
 //       })
-//       .catch(error => console.error("Error fetching events:", error));
-      
-      
-//     }, []);
-  
-
+//       .catch((error) => console.error("Error fetching events:", error));
+//   }, []);
 
 //   return (
-//     <div className="p-4">
-//       <h2 className="text-xl font-bold mb-4">Events</h2>
-//       <div className="flex space-x-4 mb-4">
-//           <button className="bg-blue-500 text-white p-2 rounded" onClick={() => navigate("/events/add")}>
-//             Add Event
-//           </button>
-//           <button className="bg-green-500 text-white p-2 rounded" onClick={() => navigate("/events/my-events")}>
-//             My Events
-//           </button>
+//     <div className="events-page-container">
+//       <Sidebar role="FACULTY" />
+//       <div className="events-content">
+//         <Header />
+//         <div className="events-section">
+//           <div className="events-header">
+//             <h2>Upcoming Events</h2>
+//           </div>
+          
+
+//           <div className="events-grid">
+//             {events && events.length > 0 ? (
+//               events.map((event) => (
+//                 <div
+//                   key={event.id}
+//                   className="event-card"
+//                   onClick={() => navigate(`/event/${event.id}`)}
+//                 >
+//                   <img
+//                     src={event.image || noImage}
+//                     alt={event.name}
+//                     className="event-image"
+//                   />
+//                   <div className="event-info">
+//                     <h3>{event.name}</h3>
+//                     <p>{event.startDate} - {event.endDate}</p>
+//                     <p>{event.time}</p>
+//                   </div>
+//                 </div>
+//               ))
+//             ) : (
+//               <p>No events available</p>
+//             )}
+//             <button className="add-faculty-event-btn" onClick={() => navigate("/faculty-events/new")}>
+//           <span className="add-event-icon">+</span>
+//           <span className="add-event-text">Add New Event</span>
+//         </button>
+//           </div>
 //         </div>
-//       <div className="grid grid-cols-3 gap-4">
-//         {events && events.length > 0 ? (
-//             events.map(event => (
-//           <div 
-//             key={event.id} 
-//             className="cursor-pointer border p-2 rounded-lg shadow-md hover:bg-gray-100"
-//             onClick={() => navigate(`/event/${event.id}`)}
-//           >
-//             <img 
-//               src={event.image || "https://via.placeholder.com/150"} 
-//               alt={event.name} 
-//               className="w-full h-32 object-cover rounded-md"
-//             />
-//             <h3 className="text-lg font-semibold mt-2">{event.name}</h3>
-//           </div>))
-//         ) : (
-//             <p>No event available</p>
-//         )
-//     }
 //       </div>
 //     </div>
 //   );
 // };
 
-// export default EventList;
-
+// export default Events;
 
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import FacultySidebar from "../components/fac_sidebar"; 
-import FacultyHeader from "../components/fac_header"; 
-import "./FacultyEvent.css"; // Ensure styles match the new class names
-import noImage from "../assets/no_image.png"; 
+import Sidebar from "../components/fac_sidebar";
+import Header from "../components/fac_header";
+import "./FacultyEvent.css";
+import noImage from "../assets/no_image.png";
 
-const FacultyEvents = () => {
-  const [events, setEvents] = useState([]); // State for events
+const Events = () => {
+  const [events, setEvents] = useState([]);
   const navigate = useNavigate();
 
   // Fetch events from backend
   useEffect(() => {
-    fetch("http://localhost:8080/api/events")
-      .then(response => response.json()) 
-      .then(data => {
+    fetch("http://localhost:8080/api/events", { credentials: "include" })
+      .then((response) => response.json())
+      .then((data) => {
         console.log("Fetched events:", data);
-        setEvents(data); 
+        setEvents(data);
       })
-      .catch(error => console.error("Error fetching events:", error));
+      .catch((error) => console.error("Error fetching events:", error));
   }, []);
 
   return (
-    <div className="flex">
+    <div className="events-page-container">
       {/* Sidebar */}
-      <FacultySidebar role="FACULTY" className="w-1/5" />
-      
-      {/* Main Content */}
-      <div className="w-4/5 p-4">
-        <FacultyHeader name="Renjith R" role="Faculty" />
-        
-        <div className="p-4">
-          <h2 className="text-xl font-bold mb-4">Faculty-Managed Events</h2>
+      <Sidebar role="FACULTY" />
 
-          {/* Buttons for adding and managing events */}
-          <div className="flex space-x-4 mb-4">
-            <button className="bg-blue-500 text-white p-2 rounded" onClick={() => navigate("/faculty-events/new")}>
-              Add Event
-            </button>
-            <button className="bg-green-500 text-white p-2 rounded" onClick={() => navigate("/faculty-events/my-events")}>
-              My Events
-            </button>
-          </div>
+      {/* Main Content */}
+      <div className="events-content">
+        <Header name="Renjith R" role="Faculty" />
+
+        <div className="events-section">
+          <h2 className="events-header">Upcoming Events</h2>
 
           {/* Event Grid */}
-          <div className="grid grid-cols-3 gap-4">
+          <div className="events-grid">
             {events.length > 0 ? (
-              events.map(event => (
-                <div 
-                  key={event.id} 
-                  className="cursor-pointer border p-2 rounded-lg shadow-md hover:bg-gray-100"
-                  onClick={() => navigate(`/faculty-events/${event.id}`, { state: event })}
+              events.map((event) => (
+                <div
+                  key={event.id}
+                  className="event-card"
+                  onClick={() => navigate(`/event/${event.id}`)}
                 >
-                  <img 
-                    src={event.image || noImage} 
-                    alt={event.name} 
-                    className="w-full h-32 object-cover rounded-md"
+                  <img
+                    src={event.image || noImage}
+                    alt={event.name}
+                    className="event-image"
                   />
-                  <h3 className="text-lg font-semibold mt-2">{event.name}</h3>
-                  <p className="text-sm text-gray-600">{event.date} • {event.time}</p>
-                  <p className="text-sm text-gray-600">{event.venue}</p>
+                  <div className="event-info">
+                    <h3>{event.name}</h3>
+                    <p>{event.startDate} - {event.endDate}</p>
+                    <p>{event.time}</p>
+                  </div>
                 </div>
               ))
             ) : (
-              <p>No events available</p>
+              <p className="no-events">No events available</p>
             )}
           </div>
         </div>
+
+        {/* "Add Event" Button */}
+        <button className="add-event-btn" onClick={() => navigate("/events/add")}>
+          <span className="add-event-icon">+</span>
+          <span className="add-event-text">Add New Event</span>
+        </button>
       </div>
     </div>
   );
 };
 
-export default FacultyEvents;
+export default Events;
 

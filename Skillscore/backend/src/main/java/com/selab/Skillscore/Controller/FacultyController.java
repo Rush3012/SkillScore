@@ -18,15 +18,15 @@ public class FacultyController {
     @Autowired
     private FacultyService facultyService;
 
-    @GetMapping("/dashboard/{userId}")
-    public ResponseEntity<FacultyDashboardDTO> getFacultyDashboard(@PathVariable Long userId) {
-        FacultyDashboardDTO dashboard = facultyService.getFacultyDashboard(userId);
-        if (dashboard != null) {
-            return ResponseEntity.ok(dashboard);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-    }
+    // @GetMapping("/dashboard/{userId}")
+    // public ResponseEntity<FacultyDashboardDTO> getFacultyDashboard(@PathVariable Long userId) {
+    //     FacultyDashboardDTO dashboard = facultyService.getFacultyDashboard(userId);
+    //     if (dashboard != null) {
+    //         return ResponseEntity.ok(dashboard);
+    //     } else {
+    //         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    //     }
+    // }
 
     @GetMapping("/by-user/{userId}")
     public Faculty getFacultyByUserId(@PathVariable Long userId) {
