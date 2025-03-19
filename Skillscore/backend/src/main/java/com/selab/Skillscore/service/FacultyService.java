@@ -7,6 +7,8 @@ import com.selab.Skillscore.model.Faculty;
 import com.selab.Skillscore.repository.FacultyRepository;
 import com.selab.Skillscore.repository.StudentRepository;
 import com.selab.Skillscore.dto.FacultyDashboardDTO;
+
+import java.util.List;
 import java.util.Optional;
 
 
@@ -44,5 +46,9 @@ public class FacultyService {
 
     public int getStudentCountByFacultyId(Long facultyId) {
         return studentRepository.countStudentsByFacultyId(facultyId);
+    }
+
+    public List<Faculty> getAllFaculty() {
+        return facultyRepository.findAll();
     }
 }

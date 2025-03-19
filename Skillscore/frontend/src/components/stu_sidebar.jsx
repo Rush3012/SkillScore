@@ -54,30 +54,17 @@ const Sidebar = ({ role }) => {
           >
             Events
           </li>
-          {role === "STUDENT" ? (
+          
             <li 
-              className={location.pathname === "/Requests" ? "dashboard-active" : ""}
-              onClick={() => navigate("/Requests")}
+              className={location.pathname === "/request" ? "dashboard-active" : ""}
+              onClick={() => navigate("/request")}
             >
               Requests
             </li>
-          ) : role === "FACULTY" ? (
-            <>
-              <li 
-                className={location.pathname === "/ManageStudents" ? "dashboard-active" : ""}
-                onClick={() => navigate("/ManageStudents")}
-              >
-                Manage Students
-              </li>
-              <li 
-                className={location.pathname === "/Reports" ? "dashboard-active" : ""}
-                onClick={() => navigate("/Reports")}
-              >
-                Reports
-              </li>
-            </>
-          ) : null}
-        </ul>
+         
+          </ul>
+             
+              
       </nav>
       <button className="dashboard-logout-btn" onClick={handleLogout}>
         <FaSignOutAlt /> Logout

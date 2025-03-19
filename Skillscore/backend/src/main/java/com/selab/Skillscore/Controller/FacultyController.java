@@ -1,6 +1,7 @@
 package com.selab.Skillscore.Controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,12 @@ public class FacultyController {
     
     @Autowired
     private FacultyService facultyService;
+
+    @GetMapping
+    public ResponseEntity<List<Faculty>> getAllFaculty() {
+        List<Faculty> facultyList = facultyService.getAllFaculty();
+        return ResponseEntity.ok(facultyList);
+    }
 
     // @GetMapping("/dashboard/{userId}")
     // public ResponseEntity<FacultyDashboardDTO> getFacultyDashboard(@PathVariable Long userId) {
