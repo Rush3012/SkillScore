@@ -146,5 +146,9 @@ public class Request {
             this.description = description;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
     
 }

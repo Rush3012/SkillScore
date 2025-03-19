@@ -88,7 +88,60 @@ public class RequestService {
     
 
 
-    @Transactional
+//     @Transactional
+// public void submitRequest(String studentId, Long eventId, Request request) {
+//     Student student = studentRepository.findById(studentId)
+//             .orElseThrow(() -> new RuntimeException("Student not found"));
+
+//     if (student.getFaculty() == null) {
+//         throw new RuntimeException("Student does not have an assigned faculty advisor.");
+//     }
+
+//     request.setStudent(student);
+
+//     Event event = null;
+//     if (eventId != null) {
+//         event = eventRepository.findById(eventId)
+//                 .orElseThrow(() -> new RuntimeException("Event not found"));
+//         request.setEvent(event);  // Only if events are needed
+//     }
+
+//     requestRepository.save(request);  // Save the request
+
+//     // Create faculty approval entries
+//     List<RequestApproval> approvals = new ArrayList<>();
+
+//     // // Always add Faculty Advisor
+//     // approvals.add(new RequestApproval(request, student.getFaculty()));
+
+//     // // Add Faculty in Charge (if applicable)
+//     // if (event != null && event.getFaculty() != null) {
+//     //     approvals.add(new RequestApproval(request, event.getFaculty()));
+//     // }
+
+
+//     // Always add Faculty Advisor if assigned
+// if (student.getFaculty() != null) {
+//     approvals.add(new RequestApproval(request, student.getFaculty()));
+// } else {
+//     throw new RuntimeException("Student does not have an assigned faculty advisor.");
+// }
+
+// // Add Faculty in Charge (if applicable)
+// if (event != null && event.getFaculty() != null) {
+//     approvals.add(new RequestApproval(request, event.getFaculty()));
+// }
+
+
+
+//     requestApprovalRepository.saveAll(approvals);
+// }
+
+// }
+
+
+
+@Transactional
 public void submitRequest(String studentId, Long eventId, Request request) {
     Student student = studentRepository.findById(studentId)
             .orElseThrow(() -> new RuntimeException("Student not found"));
@@ -99,43 +152,34 @@ public void submitRequest(String studentId, Long eventId, Request request) {
 
     request.setStudent(student);
 
+    // ✅ Ensure description is correctly assigned
+    if (request.getDescription() == null || request.getDescription().isEmpty()) {
+        throw new RuntimeException("Description cannot be empty.");
+    }
+
     Event event = null;
     if (eventId != null) {
         event = eventRepository.findById(eventId)
                 .orElseThrow(() -> new RuntimeException("Event not found"));
-        request.setEvent(event);  // Only if events are needed
+        request.setEvent(event);
     }
 
-    requestRepository.save(request);  // Save the request
+    requestRepository.save(request);  // Save request
 
     // Create faculty approval entries
     List<RequestApproval> approvals = new ArrayList<>();
 
-    // // Always add Faculty Advisor
-    // approvals.add(new RequestApproval(request, student.getFaculty()));
+    if (student.getFaculty() != null) {
+        approvals.add(new RequestApproval(request, student.getFaculty()));
+    } else {
+        throw new RuntimeException("Student does not have an assigned faculty advisor.");
+    }
 
-    // // Add Faculty in Charge (if applicable)
-    // if (event != null && event.getFaculty() != null) {
-    //     approvals.add(new RequestApproval(request, event.getFaculty()));
-    // }
-
-
-    // Always add Faculty Advisor if assigned
-if (student.getFaculty() != null) {
-    approvals.add(new RequestApproval(request, student.getFaculty()));
-} else {
-    throw new RuntimeException("Student does not have an assigned faculty advisor.");
-}
-
-// Add Faculty in Charge (if applicable)
-if (event != null && event.getFaculty() != null) {
-    approvals.add(new RequestApproval(request, event.getFaculty()));
-}
-
-
+    if (event != null && event.getFaculty() != null) {
+        approvals.add(new RequestApproval(request, event.getFaculty()));
+    }
 
     requestApprovalRepository.saveAll(approvals);
 }
 
 }
-
