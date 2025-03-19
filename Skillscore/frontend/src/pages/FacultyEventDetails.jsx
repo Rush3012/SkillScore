@@ -48,7 +48,8 @@ const EventDetails = () => {
           <h2>{event.name}</h2>
 
           <img 
-            src={event.image || noImage} 
+            src={<img src={`http://localhost:8080/api/files/${event.image}`} alt={event.name} />
+            || noImage} 
             alt={event.name} 
             className="event-image-large" 
           />

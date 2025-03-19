@@ -11,6 +11,7 @@ import StudentProfile from "./pages/StudentProfile";
 import FacultyEvents from "./pages/FacultyEvent";
 import FacultyStudents from "./pages/FacultyStudents";
 import FacultyEventDetails from "./pages/FacultyEventDetails";
+import StudentReport from "./pages/StudentReport";
 
 const AppRoutes = () => (
   <Router>
@@ -27,6 +28,7 @@ const AppRoutes = () => (
       <Route path="/FacultyEvents" element={<FacultyEvents />} />
       <Route path="/faculty/students" element={<FacultyStudents />} />
       <Route path="/faculty/event/:id" element={<FacultyEventDetails />} />
+      <Route path="/student-report/:rollNumber" element={<StudentReport />} />
     </Routes>
   </Router>
 );
