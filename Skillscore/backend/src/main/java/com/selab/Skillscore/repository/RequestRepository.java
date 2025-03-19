@@ -9,5 +9,5 @@ import com.selab.Skillscore.model.Request;
 public interface RequestRepository extends JpaRepository<Request, Long> {
     //List<Request> findByFacultyNameOrFacultyAdvisorAndStatus(String facultyName, String facultyAdvisor, String status);
 
-    List<Request> findByFacultyAdvisor_FacultyIdAndStatus(Long facultyId, String status);
+    
 }

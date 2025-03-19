@@ -1,5 +1,6 @@
 package com.selab.Skillscore.Controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,42 +26,38 @@ public class RequestController {
     @Autowired
     private RequestService requestService;
 
-//     @PostMapping("/submit")
-//     public ResponseEntity<String> submitRequest(
-//             @RequestParam String studentId, 
-//             @RequestParam(required = false) Long eventId, 
-//             @RequestBody Request request) {
-//         try {
-//             requestService.submitRequest(studentId, eventId, request);
-//             return ResponseEntity.ok("Request submitted successfully.");
-//         } catch (RuntimeException e) {
-//             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-//         }
-//     }
 
-//     @GetMapping("/faculty/{facultyId}/pending")
-//     public ResponseEntity<List<Request>> getPendingRequestsForFaculty(@PathVariable Long facultyId) {
-//         List<Request> pendingRequests = requestService.getPendingRequestsForFaculty(facultyId);
-//         return ResponseEntity.ok(pendingRequests);
-//     }
 
-//     @GetMapping("/faculty-advisor/{facultyId}/pending")
-//     public ResponseEntity<List<Request>> getPendingRequestsForFacultyAdvisor(@PathVariable Long facultyId) {
-//         List<Request> pendingRequests = requestService.getPendingRequestsForFacultyAdvisor(facultyId);
-//         return ResponseEntity.ok(pendingRequests);
-//     }
+
+
+//needed
+
+
+// @PostMapping("/submit")
+// public ResponseEntity<String> submitRequest(@RequestBody RequestDTO requestDTO, Principal principal) {  
+//     String studentId = principal.getName(); 
+//     System.out.println("Received studentId: " + studentId);
+//     System.out.println("Received eventId: " + requestDTO.getEventId());
+
+//     Request request = new Request();
+//     request.setDescription(requestDTO.getDescription());
+
+//     requestService.submitRequest(studentId, requestDTO.getEventId(), request);
+
+//     return ResponseEntity.ok("Request submitted successfully.");
 // }
 
 
 @PostMapping("/submit")
 public ResponseEntity<String> submitRequest(@RequestBody RequestDTO requestDTO) {  
-    System.out.println("Received studentId: " + requestDTO.getStudentId());
+    String studentId = requestDTO.getStudentId();  
+    System.out.println("Received studentId: " + studentId);
     System.out.println("Received eventId: " + requestDTO.getEventId());
 
     Request request = new Request();
     request.setDescription(requestDTO.getDescription());
 
-    requestService.submitRequest(requestDTO.getStudentId(), requestDTO.getEventId(), request);
+    requestService.submitRequest(studentId, requestDTO.getEventId(), request);
 
     return ResponseEntity.ok("Request submitted successfully.");
 }

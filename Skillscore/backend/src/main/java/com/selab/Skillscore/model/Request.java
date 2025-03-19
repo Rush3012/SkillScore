@@ -90,11 +90,16 @@
 package com.selab.Skillscore.model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "request")
 public class Request {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -102,30 +107,28 @@ public class Request {
 
     @ManyToOne
     @JoinColumn(name = "student_id", referencedColumnName = "rollNumber", nullable = false)
-    private Student student;  // Auto-fills Student Name
+    private Student student;
 
     @ManyToOne
-    @JoinColumn(name = "faculty_advisor_id", referencedColumnName = "facultyId", nullable = false)
-    private Faculty facultyAdvisor;  // Auto-fills from student's faculty
+    @JoinColumn(name = "event_id", referencedColumnName = "id", nullable = true) // Can be null if manual entry
+    private Event event;
 
-    @ManyToOne
-    @JoinColumn(name = "event_id", referencedColumnName = "id", nullable = false)
-    private Event event;  // Auto-filled if event is selected, null if manual entry
+    @CreationTimestamp
+    private LocalDateTime createdAt;
 
-    private String eventName;  // Stored separately for manual entry
-    private String facultyName; // If event has a faculty, auto-fill
-    private int points;
-    private LocalDate date;
-    private LocalTime time;
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
+
+    private String description;
+
+
     
-    private String description;  // Added field for request description
-    private String status = "Pending";
 
-    // Getters and Setters
+
 
     public Long getId() {
         return id;
-    }
+    };
 
     public Student getStudent() {
         return student;
@@ -135,75 +138,13 @@ public class Request {
         this.student = student;
     }
 
-    public Faculty getFacultyAdvisor() {
-        return facultyAdvisor;
-    }
-
-    public void setFacultyAdvisor(Faculty facultyAdvisor) {
-        this.facultyAdvisor = facultyAdvisor;
-    }
-
-    public Event getEvent() {
-        return event;
-    }
-
     public void setEvent(Event event) {
         this.event = event;
     }
 
-    public String getEventName() {
-        return eventName;
+    public void setDescription(String description){
+            this.description = description;
     }
 
-    public void setEventName(String eventName) {
-        this.eventName = eventName;
-    }
-
-    public String getFacultyName() {
-        return facultyName;
-    }
-
-    public void setFacultyName(String facultyName) {
-        this.facultyName = facultyName;
-    }
-
-    public int getPoints() {
-        return points;
-    }
-
-    public void setPoints(int points) {
-        this.points = points;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    public LocalTime getTime() {
-        return time;
-    }
-
-    public void setTime(LocalTime time) {
-        this.time = time;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
+    
 }
