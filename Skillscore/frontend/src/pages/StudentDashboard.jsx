@@ -49,11 +49,7 @@ export default function StudentDashboard() {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
 
-  const handleLogout = () => {
-    localStorage.removeItem("authToken");
-    sessionStorage.removeItem("authToken");
-    window.location.href = "/"; // Redirects to login page
-  };
+  
 
   return (
     <div className="dashboard-container">
