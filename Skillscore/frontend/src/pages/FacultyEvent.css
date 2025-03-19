@@ -95,6 +95,16 @@
     flex-shrink: 0;
 }
 
+.faculty-search-bar {
+    width: 100%;
+    max-width: 400px;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
 /* Main Content */
 .events-content {
     flex-grow: 1;

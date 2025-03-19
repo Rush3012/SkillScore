@@ -1,5 +1,8 @@
 package com.selab.Skillscore.Controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,8 +32,21 @@ public class FacultyController {
     // }
 
     @GetMapping("/by-user/{userId}")
-    public Faculty getFacultyByUserId(@PathVariable Long userId) {
-        return facultyService.getFacultyByUserId(userId);
+    public ResponseEntity<Map<String, Object>> getFacultyByUserId(@PathVariable Long userId) {
+        Faculty faculty = facultyService.getFacultyByUserId(userId);
+        int studentCount = facultyService.getStudentCountByFacultyId(faculty.getFacultyId());
+
+        // Create a response object with faculty details and student count
+        Map<String, Object> response = new HashMap<>();
+        response.put("facultyId", faculty.getFacultyId());
+        response.put("name", faculty.getName());
+        response.put("department", faculty.getDepartment());
+        response.put("isAdvisor", faculty.getIsAdvisor());
+        response.put("user", faculty.getUser());
+        response.put("studentCount", studentCount);
+
+        return ResponseEntity.ok(response);
+
     }
 }
 

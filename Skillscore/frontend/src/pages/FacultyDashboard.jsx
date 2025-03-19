@@ -292,7 +292,6 @@ const FacultyDashboard = () => {
   const [error, setError] = useState(null);
   const [events, setEvents] = useState([]); // ✅ Initialize as an array to avoid mapping errors
 
-  // Fetch faculty data
   useEffect(() => {
     const fetchFacultyData = async () => {
       try {
@@ -322,7 +321,6 @@ const FacultyDashboard = () => {
     fetchFacultyData();
   }, []);
 
-  // Fetch faculty-specific events
   useEffect(() => {
     if (!faculty || !faculty.facultyId) return; // ✅ Prevents calling API if faculty is undefined
 
@@ -370,7 +368,7 @@ const FacultyDashboard = () => {
         <div className="dashboard-cards">
           <div className="card">
             <h3>Total Students</h3>
-            <p className="count">40</p>
+            <p className="count">{faculty.studentCount}</p>
           </div>
           <div className="card highlight">
             <h3>Students Below Credit</h3>

@@ -8,6 +8,7 @@ import noImage from "../assets/no_image.png";
 
 const Events = () => {
   const [events, setEvents] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -24,6 +25,12 @@ const Events = () => {
       .catch((error) => console.error("Error fetching events:", error));
   }, []);
 
+  const filteredEvents = events.filter(event => 
+    event.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    event.startDate.includes(searchQuery) || 
+    event.endDate.includes(searchQuery)
+  );
+
   return (
     <div className="events-page-container">
       <Sidebar role="STUDENT" />
@@ -32,11 +39,19 @@ const Events = () => {
         <div className="events-section">
           <div className="events-header">
             <h2>Upcoming Events</h2>
+            {/* 🔍 Search Bar */}
+        <input
+          type="text"
+          placeholder="Search events..."
+          className="faculty-search-bar"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
           </div>
 
           <div className="events-grid">
-            {events && events.length > 0 ? (
-              events.map((event) => (
+            {filteredEvents && events.length > 0 ? (
+              filteredEvents.map((event) => (
                 <div
                   key={event.id}
                   className="event-card"
