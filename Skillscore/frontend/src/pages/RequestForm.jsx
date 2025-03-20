@@ -255,14 +255,25 @@ const RequestForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    let finalEventId = formData.eventId; // Default to selected event ID
-
-    if (isOtherEvent){finalEventId = null;}
+    let finalEventId = formData.eventId; 
 
     const requestData = new FormData();
     requestData.append("studentId", student?.rollNumber);
-    requestData.append("eventId", finalEventId);
     requestData.append("description", formData.description);
+    requestData.append("isOther", isOtherEvent.toString());
+
+    if (isOtherEvent) {
+      finalEventId = null;
+      requestData.append("activityName", formData.eventName);
+      requestData.append("activityType", formData.category);
+      requestData.append("coordinatorId", formData.facultyAdvisor);
+      requestData.append("points", formData.points.toString());
+    }
+
+    requestData.append("eventId", finalEventId);
+
+    console.log("Sending FormData:", Object.fromEntries(requestData.entries())); // ✅ Debugging
+
 
     try {
       const response = await fetch("http://localhost:8080/requests/submit", {
@@ -279,6 +290,8 @@ const RequestForm = () => {
         setMessage("Request submitted successfully!");
         navigate("/requests"); 
       } else {
+        const errorText = await response.text();  // ✅ Capture error message
+        console.error("Server Response:", errorText);
         setMessage("Failed to submit request.");
       }
     } catch (error) {

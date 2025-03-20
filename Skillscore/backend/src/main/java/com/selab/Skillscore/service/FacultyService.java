@@ -6,10 +6,8 @@ import org.springframework.stereotype.Service;
 import com.selab.Skillscore.model.Faculty;
 import com.selab.Skillscore.repository.FacultyRepository;
 import com.selab.Skillscore.repository.StudentRepository;
-import com.selab.Skillscore.dto.FacultyDashboardDTO;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @Service
