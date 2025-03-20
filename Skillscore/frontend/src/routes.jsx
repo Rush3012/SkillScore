@@ -16,7 +16,7 @@ import StudentReport from "./pages/StudentReport";
 const AppRoutes = () => (
   <Router>
     <Routes>
-      <Route path="/" element={<HomePage />} />
+      <Route path="/login" element={<HomePage />} />
       <Route path="/StudentDashboard" element={<StudentDashboard />} />
       <Route path="/FacultyDashboard" element={<FacultyDashboard />} />
       <Route path="/request" element={<RequestForm />} />
