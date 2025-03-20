@@ -22,7 +22,7 @@ const FacultySidebar = () => {
             sessionStorage.clear();
             localStorage.removeItem("authToken"); 
     
-            navigate("/");
+            navigate("/login");
         } catch (error) {
             console.error("Error during logout:", error);
         }

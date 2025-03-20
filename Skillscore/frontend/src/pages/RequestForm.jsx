@@ -246,7 +246,7 @@ const RequestForm = () => {
 
   const handleFacultyChange = (e) => {
     const selectedFacultyId = e.target.value;
-    console.log("Selected Faculty ID:", selectedFacultyId);  // ✅ Debugging log
+    console.log("Selected Faculty ID:", selectedFacultyId);  
     setFormData({ ...formData, facultyAdvisor: selectedFacultyId });
     formData.facultyAdvisor = selectedFacultyId;
   };
@@ -257,42 +257,7 @@ const RequestForm = () => {
 
     let finalEventId = formData.eventId; // Default to selected event ID
 
-    if (isOtherEvent) {
-      const newEventData = {
-        name: formData.eventName,
-        description: formData.description,
-        points: Number(formData.points),
-        startDate: formData.date,
-        endDate: formData.date,
-        time: "00:00",  // Default time if not specified
-        faculty: { facultyId: Number(formData.facultyAdvisor) },
-      };
-
-      const formDataToSend = new FormData();
-      formDataToSend.append("eventData", JSON.stringify(newEventData));
-      if (formData.file) formDataToSend.append("poster", formData.file);  // Include file if exists
-
-
-      try {
-        const eventResponse = await fetch("http://localhost:8080/api/events/add", {
-          method: "POST",
-          body: formDataToSend,
-        });
-
-        if (!eventResponse.ok) {
-          setMessage("Failed to add new event.");
-          return;
-        }
-
-        const newEvent = await eventResponse.json();
-        finalEventId = newEvent.id; 
-        console.log("neweventid", finalEventId);
-      } catch (error) {
-        console.error("Error adding event:", error);
-        setMessage("Error adding new event.");
-        return;
-      }
-    }
+    if (isOtherEvent){finalEventId = null;}
 
     const requestData = new FormData();
     requestData.append("studentId", student?.rollNumber);
