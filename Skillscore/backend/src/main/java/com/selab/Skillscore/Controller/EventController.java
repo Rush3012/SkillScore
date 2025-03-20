@@ -15,14 +15,12 @@ import com.selab.Skillscore.service.FileStorageService;
 import org.springframework.http.MediaType;
 
 
-import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/events")
-// @RequiredArgsConstructor
 @CrossOrigin(origins = "*")
 public class EventController {
 
@@ -38,13 +36,11 @@ public class EventController {
     }
 
 
-    // Get all events
     @GetMapping
     public ResponseEntity<List<Event>> getAllEvents() {
         return ResponseEntity.ok(eventService.getAllEvents());
     }
 
-    // Find event by name
     @GetMapping("/find")
     public ResponseEntity<Event> getEventByName(@RequestParam String name) {
         Optional<Event> event = eventService.getEventByName(name);
