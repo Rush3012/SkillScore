@@ -20,4 +20,6 @@ public interface StudentRepository extends JpaRepository<Student, String> {
     @Query("SELECT COUNT(s) FROM Student s WHERE s.faculty.facultyId = :facultyId")
     int countStudentsByFacultyId(@Param("facultyId") Long facultyId);
 
+    Student findByRollNumber(String rollNumber);
+
 }

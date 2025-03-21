@@ -41,4 +41,7 @@ public class StudentService {
     public List<Student> getStudentsByFacultyId(Long facultyId) {
         return studentRepository.findByFaculty_FacultyId(facultyId);
     }
+    public Student getStudentsByStudentRollNumber(String rollNumber) {
+        return studentRepository.findByRollNumber(rollNumber);
+    }
 }

@@ -4,8 +4,11 @@ import java.time.LocalDateTime;
 
 import org.hibernate.annotations.UpdateTimestamp;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
@@ -27,7 +30,9 @@ public class RequestApproval {
     @JoinColumn(name = "faculty_id", referencedColumnName = "facultyId", nullable = false)
     private Faculty faculty;
 
-    private String status = "Pending";  // Pending, Approved, Rejected
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private Status status = Status.PENDING;  // Pending, Approved, Rejected
 
     private String comments;  // If rejected, store reason
 
@@ -68,11 +73,11 @@ public class RequestApproval {
         this.faculty = faculty;
     }
 
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 
@@ -92,5 +97,5 @@ public class RequestApproval {
         this.updatedAt = updatedAt;
     }
 
-    
+
 }

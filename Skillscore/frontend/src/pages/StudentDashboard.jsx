@@ -81,7 +81,7 @@ export default function StudentDashboard() {
                 <span>Pending Requests</span>
               </div>
             </div>
-            <button className="dashboard-submit-btn" onClick={() => navigate("/Request")}>
+            <button className="dashboard-submit-btn" onClick={() => navigate("/student/request/add")}>
               Submit New Request
             </button>
           </div>
@@ -118,3 +118,5 @@ export default function StudentDashboard() {
     </div>
   );
 }
+
+
