@@ -31,5 +31,10 @@ public class StudentController {
         return studentService.getStudentsByFacultyId(facultyId);
     }
 
+    @GetMapping("/{rollNumber}")
+    public Student getStudentsByStudent(@PathVariable String rollNumber){
+        return studentService.getStudentsByStudentRollNumber(rollNumber);
+    }
+
 }
 
