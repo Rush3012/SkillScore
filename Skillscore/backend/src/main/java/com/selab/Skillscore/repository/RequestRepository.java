@@ -7,9 +7,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-import com.selab.Skillscore.dto.RequestResponseDTO;
 import com.selab.Skillscore.model.Request;
-// import com.selab.Skillscore.model.Status;
 import com.selab.Skillscore.model.Status;
 
 public interface RequestRepository extends JpaRepository<Request, Long> {

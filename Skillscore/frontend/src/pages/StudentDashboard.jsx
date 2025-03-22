@@ -10,6 +10,8 @@ export default function StudentDashboard() {
   const [student, setStudent] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [events, setEvents] = useState([]);
+  const [count, setCount] = useState();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -33,6 +35,7 @@ export default function StudentDashboard() {
           }
   
           const studentData = await studentResponse.json();
+          console.log("studentdata from useffect",studentData);
           setStudent(studentData || "Student");
   
       
@@ -45,6 +48,65 @@ export default function StudentDashboard() {
     };
     fetchStudentData();
   }, []);
+
+  useEffect(() => {
+    const fetchRequests = async () => {
+      console.log("stduent in fetchreq",student);
+      if(student){
+      try{
+        console.log("inside fetchreq try: ", student.rollNumber);
+        const requestsResponse = await fetch(`http://localhost:8080/api/requests/pending/${student.rollNumber}`, {
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        if (!requestsResponse.ok) {
+          throw new Error(`Failed to fetch pending requests: ${requestsResponse.status} ${requestsResponse.statusText}`);
+        }
+
+        const pendingRequests = await requestsResponse.json();
+        setCount(pendingRequests.length);
+        console.log("grdsfd: ", count);
+      }
+      catch (err){
+        setError(err.message);
+        console.log(err.message);   
+      }}
+    };
+    fetchRequests();
+  },[student])
+
+  useEffect(() => {
+  
+      const fetchEvents = async () => {
+        try {
+          const response = await fetch(`http://localhost:8080/api/events`, {
+            credentials: "include",
+          });
+  
+          if (!response.ok) throw new Error("Failed to fetch events");
+  
+          const data = await response.json();
+          console.log("Fetched events:", data);
+          
+          const today = new Date();
+  
+          const sortedEvents = data.sort((a, b) => new Date(a.startDate) - new Date(b.startDate));
+  
+          const latestThreeEvents = sortedEvents.filter(event => new Date(event.startDate) >= today).slice(0, 3);
+  
+          setEvents(latestThreeEvents);
+        } catch (err) {
+          console.error("Error fetching events:", err);
+          setError(err.message);
+        }
+      };
+  
+      fetchEvents();
+    }, []);
+
+    
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
@@ -69,15 +131,15 @@ export default function StudentDashboard() {
             <h1>{student.totalPoints}/80</h1>
             <div className="dashboard-point-breakdown">
               <div className="dashboard-point-item dashboard-institute-points">
-                <p>--/40</p>
+                <p>{student.institutePoints}/40</p>
                 <span>Institute Points</span>
               </div>
               <div className="dashboard-point-item dashboard-cultural-points">
-                <p>--/40</p>
-                <span>Cultural Points</span>
+                <p>{student.departmentPoints}/40</p>
+                <span>Department Points</span>
               </div>
               <div className="dashboard-point-item dashboard-pending-requests">
-                <p>--</p>
+                <p>{count}</p>
                 <span>Pending Requests</span>
               </div>
             </div>
@@ -90,29 +152,25 @@ export default function StudentDashboard() {
           <div className="dashboard-upcoming-events">
             <h3>Upcoming Events</h3>
             <ul>
-              <li>
-                <FaCalendarAlt className="dashboard-event-icon" />
-                <div>
-                  <p className="dashboard-event-title">AI Bootcamp</p>
-                  <p className="dashboard-event-date">March 13 at 10:30 AM</p>
-                </div>
-              </li>
-              <li>
-                <FaCalendarAlt className="dashboard-event-icon" />
-                <div>
-                  <p className="dashboard-event-title">NSS Camp</p>
-                  <p className="dashboard-event-date">March 19 from 8:00 AM to 5:00 PM</p>
-                </div>
-              </li>
-              <li>
-                <FaCalendarAlt className="dashboard-event-icon" />
-                <div>
-                  <p className="dashboard-event-title">Ragam Workshop</p>
-                  <p className="dashboard-event-date">March 12 at 2:30 PM</p>
-                </div>
-              </li>
+              {events.length > 0 ? (
+                events.map((event) => (
+                  <li 
+                    key={event.id} 
+                    onClick={() => window.location.href = `/event/${event.id}`}
+                  >
+                    <FaCalendarAlt className="dashboard-event-icon" />
+                    <div>
+                    <p className="dashboard-event-title">{event.name}</p>
+                    <p className="dashboard-event-date">{event.startDate}</p>
+                    </div>
+                  </li>
+                ))
+              ) : (
+                <li>No upcoming events</li>
+              )}
             </ul>
           </div>
+
         </div>
       </main>
     </div>

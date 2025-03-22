@@ -82,6 +82,21 @@
   border-radius: 50%;
 }
 
+.add-file-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #007bff;
+  display: flex;
+  align-items: center;
+  margin-top: 5px;
+}
+
+.add-file-btn:hover {
+  color: #0056b3;
+}
+
+
 /* Form Layout */
 .form-container {
   background: #f5ffe6;

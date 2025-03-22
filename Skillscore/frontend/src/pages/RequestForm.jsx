@@ -1,130 +1,4 @@
-// import React from "react";
-// import { useNavigate } from "react-router-dom";
-// import { FaSignOutAlt, FaArrowLeft } from "react-icons/fa";
-// import { FaRegUser, FaClipboardList, FaCalendarAlt } from "react-icons/fa";
-// import logo from "../assets/skillscore_logo.png";
-// import userImg from "../assets/Student_image.jpeg";
-// import "./RequestForm.css";
 
-// const RequestForm = () => {
-//   const navigate = useNavigate(); // For navigation
-
-//   return (
-//     <div className="request-page-container">
-//       {/* Sidebar */}
-//       <aside className="sidebar">
-//         <div className="sidebar-header">
-//           <img src={logo} alt="SkillScore Logo" className="sidebar-logo" />
-//           <span className="logo-text">SkillScore</span>
-//         </div>
-//         <nav className="sidebar-nav">
-//           <ul>
-//             <li onClick={() => navigate("/StudentDashboard")}>
-//               <FaClipboardList /> Dashboard
-//             </li>
-//             <li onClick={() => navigate("/Profile")}>
-//               <FaRegUser /> Profile
-//             </li>
-//             <li onClick={() => navigate("/Events")}>
-//               <FaCalendarAlt /> Events
-//             </li>
-//             <li className="active" onClick={() => navigate("/Requests")}>
-//               <FaClipboardList /> Requests
-//             </li>
-//           </ul>
-//         </nav>
-//       </aside>
-
-//       {/* Main Content */}
-//       <div className="request-form-content">
-//         {/* Header */}
-//         <header className="request-form-header">
-//           <FaArrowLeft className="back-icon" onClick={() => navigate(-1)} />
-//           <h1>Request Form</h1>
-//           <div className="user-profile">
-//             <span>Rushda P P</span>
-//             <img src={userImg} alt="User" className="profile-pic" />
-//           </div>
-//         </header>
-
-//         {/* Form */}
-//         <div className="form-container">
-//           <form>
-//             <div className="form-grid">
-//               <div className="form-group">
-//                 <label>Activity Name:*</label>
-//                 <input type="text" required />
-//               </div>
-
-//               <div className="form-group">
-//                 <label>Activity Coordinator:</label>
-//                 <select>
-//                   <option>Select</option>
-//                   <option>Faculty 1</option>
-//                   <option>Faculty 2</option>
-//                 </select>
-//               </div>
-
-//               <div className="form-group">
-//                 <label>Activity Category:*</label>
-//                 <select required>
-//                   <option value="">Select</option>
-//                   <option value="Cultural">Cultural</option>
-//                   <option value="Technical">Technical</option>
-//                 </select>
-//               </div>
-
-//               <div className="form-group">
-//                 <label>Date of the Event:*</label>
-//                 <input type="date" required />
-//               </div>
-
-//               <div className="form-group">
-//                 <label>Faculty Advisor:*</label>
-//                 <input type="text" required />
-//               </div>
-
-//               <div className="form-group">
-//                 <label>Points Expected:</label>
-//                 <input type="number" />
-//               </div>
-
-//               <div className="form-group full-width">
-//                 <label>Description:</label>
-//                 <textarea />
-//               </div>
-
-//               {/* File Upload Section */}
-//               <div className="form-group full-width">
-//                 <label>Upload Documents:*</label>
-//                 <div className="file-upload-section">
-//                   <input type="file" required />
-//                   <button type="button" className="upload-btn">Upload</button>
-//                   <button type="button" className="delete-btn">Delete</button>
-//                   <button type="button" className="add-btn">+</button>
-//                 </div>
-//               </div>
-//             </div>
-
-//             {/* Declaration */}
-//             <div className="form-checkbox">
-//               <input type="checkbox" required />
-//               <label>
-//                 I hereby declare that all the details and documents submitted
-//                 are true and correct to the best of my knowledge
-//               </label>
-//             </div>
-
-//             {/* Submit Button */}
-//             <button type="submit" className="submit-btn">SUBMIT</button>
-//           </form>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default RequestForm;
 
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -141,7 +15,8 @@ const RequestForm = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState("");
-  const [facultyList, setFacultyList] = useState([]); // ✅ Faculty list from backend
+  const [facultyList, setFacultyList] = useState([]);
+  const [uploadedFiles, setUploadedFiles] = useState([]);
 
 
   const [formData, setFormData] = useState({
@@ -154,7 +29,6 @@ const RequestForm = () => {
     facultyAdvisor: "",
     points: "",
     description: "",
-    file: null,
   });
 
   useEffect(() => {
@@ -241,7 +115,9 @@ const RequestForm = () => {
   };
 
   const handleFileChange = (e) => {
-    setFormData({ ...formData, file: e.target.files[0] });
+    if (uploadedFiles.length < 3) {
+      setUploadedFiles([...uploadedFiles, e.target.files[0]]);
+    }
   };
 
   const handleFacultyChange = (e) => {
@@ -249,6 +125,10 @@ const RequestForm = () => {
     console.log("Selected Faculty ID:", selectedFacultyId);  
     setFormData({ ...formData, facultyAdvisor: selectedFacultyId });
     formData.facultyAdvisor = selectedFacultyId;
+  };
+
+  const removeFile = (index) => {
+    setUploadedFiles(uploadedFiles.filter((_, i) => i !== index));
   };
   
 
@@ -272,28 +152,38 @@ const RequestForm = () => {
 
     requestData.append("eventId", finalEventId);
 
-    console.log("Sending FormData:", Object.fromEntries(requestData.entries())); // ✅ Debugging
+    console.log("Sending FormData:", Object.fromEntries(requestData.entries())); 
 
 
     try {
-      const response = await fetch("http://localhost:8080/requests/submit", {
+      const requestResponse = await fetch("http://localhost:8080/api/requests/submit", {
         method: "POST",
-        // headers: { 
-        //   "Content-Type": "application/json",  // ✅ Ensure JSON content type
-        //   "Accept": "application/json"
-        // },
-
         body: requestData,
       });
 
-      if (response.ok) {
-        setMessage("Request submitted successfully!");
-        navigate("/requests"); 
-      } else {
-        const errorText = await response.text();  // ✅ Capture error message
-        console.error("Server Response:", errorText);
+      if (!requestResponse.ok) {
+        const errorText = await requestResponse.text();
+        console.error("Error submitting request:", errorText);
         setMessage("Failed to submit request.");
+        return;
       }
+  
+      const request = await requestResponse.json(); 
+      console.log("Request submitted successfully. ID:", request.requestId);
+  
+      for (const file of uploadedFiles) {
+        const fileData = new FormData();
+        fileData.append("file", file);
+        fileData.append("requestId", request.requestId);
+  
+        await fetch("http://localhost:8080/api/documents/upload", {
+          method: "POST",
+          body: fileData,
+        });
+      }
+  
+      setMessage("Request submitted successfully!");
+      navigate(`/student/request/PENDING/${student.rollNumber}`);
     } catch (error) {
       console.error("Error submitting request:", error);
       setMessage("Error submitting request.");
@@ -336,8 +226,8 @@ const RequestForm = () => {
                     <label>Activity Category:</label>
                     <select name="category" value={formData.category} onChange={handleChange} required>
                       <option value="">Select</option>
-                      <option value="Cultural">Cultural</option>
-                      <option value="Technical">Technical</option>
+                      <option value="Cultural">Institute Level</option>
+                      <option value="Technical">Department Level</option>
                     </select>
                   </div>
                   <div className="form-group">
@@ -367,9 +257,20 @@ const RequestForm = () => {
               {/* File Upload */}
               <div className="form-group full-width">
                 <label>Upload Documents:*</label>
+
                 <div className="file-upload-section">
-                  <input type="file" onChange={handleFileChange} />
-                </div>
+                {uploadedFiles.map((file, index) => (
+                  <div key={index} className="file-item">
+                    <span>{file.name}</span>
+                    <button type="button" onClick={() => removeFile(index)}></button>
+                  </div>
+                ))}
+                {uploadedFiles.length < 3 && (
+                  <>
+                    <input type="file" onChange={handleFileChange} />
+                    {/* <button type="button" onClick={() => document.querySelector("input[type=file]").click()}>➕</button> */}
+                  </>
+                )}
               </div>
             </div>
 
@@ -377,6 +278,7 @@ const RequestForm = () => {
             <div className="form-checkbox">
               <input type="checkbox" required />
               <label>I declare that the details are correct to the best of my knowledge.</label>
+            </div>
             </div>
 
             {/* Submit Button */}
