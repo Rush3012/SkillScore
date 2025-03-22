@@ -166,7 +166,7 @@ const StudentRequests = () => {
     fetchStudentData();
   }, []);
 
-  // Update requests when URL changes
+
   useEffect(() => {
     const pathParts = location.pathname.split("/");
     const statusFromURL = pathParts[3];

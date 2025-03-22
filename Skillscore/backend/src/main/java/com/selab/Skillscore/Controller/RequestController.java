@@ -1,6 +1,7 @@
 package com.selab.Skillscore.Controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,7 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
@@ -38,7 +41,7 @@ public class RequestController {
 
 
     @PostMapping(value = "/submit", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<String> submitRequest(
+    public ResponseEntity<?> submitRequest(
         @RequestPart("studentId") String studentId,
         @RequestPart("description") String description,
         @RequestPart("isOther") String isOtherStr,
@@ -68,7 +71,10 @@ public class RequestController {
             requestService.submitRequest(studentId, null, request);
         }
 
-        return ResponseEntity.ok("Request submitted successfully.");
+        return ResponseEntity.ok(Map.of(
+            "message", "Request submitted successfully",
+           "requestId", request.getId() 
+        ));
     }
 
 
@@ -98,5 +104,21 @@ public class RequestController {
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                             .body(null);
+    }
+
+    @PutMapping("/faculty/{facultyId}/{requestId}/update-status")
+    public ResponseEntity<String> updateRequestStatus(
+            @PathVariable Long facultyId, 
+            @PathVariable Long requestId, 
+            @RequestParam String status) {
+
+        boolean isUpdated = requestService.updateRequestStatus(facultyId, requestId, status.toUpperCase());
+
+        if (isUpdated) {
+            return ResponseEntity.ok("Status updated successfully.");
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Failed to update request status.");
+        }
     }
 }

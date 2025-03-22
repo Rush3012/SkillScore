@@ -109,9 +109,9 @@ const StudentReport = () => {
           {/* Department Points */}
           <div className="progress-item">
             <CircularProgressbar
-              value={student.deptPoints}
+              value={student.departmentPoints}
               maxValue={40}
-              text={`${student.deptPoints}/40`}
+              text={`${student.departmentPoints}/40`}
               styles={buildStyles({
                 textColor: "#333",
                 pathColor: "#D32F2F", // Red

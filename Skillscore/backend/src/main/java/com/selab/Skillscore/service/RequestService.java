@@ -1,8 +1,10 @@
 
 package com.selab.Skillscore.service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -143,6 +145,35 @@ public class RequestService {
         return new RequestResponseDTO(
             request, Status.PENDING
         );
+    }
+
+
+    @Transactional
+    public boolean updateRequestStatus(Long facultyId, Long requestId, String status) {
+        Optional<RequestApproval> approvalOpt = requestApprovalRepository.findByFacultyIdAndRequestId(facultyId, requestId);
+
+        if (approvalOpt.isPresent()) {
+            RequestApproval approval = approvalOpt.get();
+            approval.setStatus(Status.valueOf(status));  // Update status
+
+            if (status.equals("ACCEPTED")) {
+                Request request = approval.getRequest();
+                Student student = request.getStudent();
+                student.setTotalPoints(student.getTotalPoints() + request.getPoints()); // Update student points
+                if (request.getActivityType().equals("Institute Level")){
+                    student.setInstitutePoints(student.getInstitutePoints() + request.getPoints());
+                }
+                else if (request.getActivityType().equals("Department Level")){
+                    student.setDepartmentPoints(student.getDepartmentPoints() + request.getPoints());
+                }
+                
+                studentRepository.save(student);
+            }
+            approval.setUpdatedAt(LocalDateTime.now());
+            requestApprovalRepository.save(approval);
+            return true;
+        }
+        return false;
     }
 
 }
