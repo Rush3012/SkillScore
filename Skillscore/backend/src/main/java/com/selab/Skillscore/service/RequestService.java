@@ -102,6 +102,10 @@ public class RequestService {
         };
     }
 
+    public List<RequestApproval> getAllRequestsSend(Long requestId){
+        return requestApprovalRepository.findByRequestId(requestId);
+    }
+
     public RequestResponseDTO getRequestById(Long requestId) {
         Request request = requestRepository.findById(requestId)
                     .orElseThrow(() -> new RuntimeException("Request not found"));
@@ -154,19 +158,30 @@ public class RequestService {
             approval.setStatus(Status.valueOf(status));  // Update status
 
             if (status.equals("APPROVED")) {
-                System.out.println("how are you?");
-                Request request = approval.getRequest();
-                Student student = request.getStudent();
-                student.setTotalPoints(student.getTotalPoints() + request.getPoints()); // Update student points
-                if (request.getActivityType().equals("Institute Level")){
-                    student.setInstitutePoints(student.getInstitutePoints() + request.getPoints());
-                }
-                else if (request.getActivityType().equals("Department Level")){
-                    student.setDepartmentPoints(student.getDepartmentPoints() + request.getPoints());
-                }
+                List<RequestApproval> allRequest = requestApprovalRepository.findByRequestId(requestId);
                 
-                studentRepository.save(student);
+                // Check if all approvals are APPROVED
+                boolean allApproved = allRequest.stream().allMatch(ra -> ra.getStatus().equals(Status.APPROVED));
+            
+                if (allApproved) {
+                    System.out.println("All approvals are approved. Updating student points...");
+            
+                    Request request = approval.getRequest();
+                    Student student = request.getStudent();
+                    student.setTotalPoints(student.getTotalPoints() + request.getPoints()); // Update student points
+            
+                    if ("Institute Level".equals(request.getActivityType())) {
+                        student.setInstitutePoints(student.getInstitutePoints() + request.getPoints());
+                    } else if ("Department Level".equals(request.getActivityType())) {
+                        student.setDepartmentPoints(student.getDepartmentPoints() + request.getPoints());
+                    }
+            
+                    studentRepository.save(student);
+                } else {
+                    System.out.println("Not all approvals are approved. Points update skipped.");
+                }
             }
+            
             approval.setComments(comment);
             approval.setUpdatedAt(LocalDateTime.now());
             requestApprovalRepository.save(approval);

@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.selab.Skillscore.dto.RequestResponseDTO;
 import com.selab.Skillscore.model.Request;
+import com.selab.Skillscore.model.RequestApproval;
 import com.selab.Skillscore.model.Status;
 import com.selab.Skillscore.service.RequestService;
 
@@ -85,6 +85,11 @@ public class RequestController {
         return ResponseEntity.ok(request);
     }
 
+    @GetMapping("/all/{requestId}")
+    public List<RequestApproval> getAllRequestApprovals(@PathVariable Long requestId){
+        return requestService.getAllRequestsSend(requestId);
+    }
+
     @GetMapping("/faculty/{facultyId}")
     public ResponseEntity<List<RequestResponseDTO>> getRequestsForFaculty(@PathVariable Long facultyId) {
         List<RequestResponseDTO> requests = requestService.getRequestsByFaculty(facultyId);
@@ -134,4 +139,6 @@ public class RequestController {
         return ResponseEntity.ok(updatedRequest);
     }
 
+   
+    
 }
