@@ -263,8 +263,8 @@ const RequestForm = () => {
                     <label>Activity Category:</label>
                     <select name="category" value={formData.category} onChange={handleChange} required>
                       <option value="">Select</option>
-                      <option value="Cultural">Institute Level</option>
-                      <option value="Technical">Department Level</option>
+                      <option value="Institute Level">Institute Level</option>
+                      <option value="Department Level">Department Level</option>
                     </select>
                   </div>
                   <div className="form-group">

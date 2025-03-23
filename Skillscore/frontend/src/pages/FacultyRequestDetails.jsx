@@ -13,6 +13,8 @@ const FacultyRequestDetails = () => {
   const [rejectReason, setRejectReason] = useState("");
   const [faculty, setFaculty] = useState(null);
   const [showRejectPopup, setShowRejectPopup] = useState(false);
+  const [isFA, setIsFA] = useState(false);
+  const [isApproved, setIsApproved] = useState(false);
 
 
   // Fetch request details from API
@@ -48,6 +50,41 @@ const FacultyRequestDetails = () => {
         }
         const data = await response.json();
         setRequest(data);
+        if (data.student.facultyId === facultyData.facultyId) {
+            console.log("The logged-in faculty is the FA of the student.");
+        
+            try {
+                const approvalReply = await fetch(`http://localhost:8080/api/requests/all/${id}`, {
+                    credentials: "include",
+                });
+        
+                if (!approvalReply.ok) throw new Error("Failed to fetch approvals");
+        
+                const replyData = await approvalReply.json();
+                console.log(replyData);
+        
+                if (replyData.length === 1) {
+                    setIsApproved(true);
+                } else {
+                    // 🔹 Find the Event Coordinator's approval (not FA's)
+                    const eventCoordinatorApproval = replyData.find(
+                        approval => approval.faculty.facultyId !== facultyData.facultyId
+                    );
+        
+                    if (eventCoordinatorApproval && eventCoordinatorApproval.status === "APPROVED") {
+                        setIsApproved(true);
+                    } else {
+                        setIsApproved(false);
+                    }
+                }
+            } catch (error) {
+                console.error("Error fetching approvals:", error);
+            }
+        
+            setIsFA(true);
+        } else {
+            console.log("The logged-in faculty is NOT the FA of the student.");
+        }
         } catch (err) {
         setError(err.message);
         } finally {
@@ -128,6 +165,7 @@ const FacultyRequestDetails = () => {
                 <p><strong>Activity Points</strong> <br /> {request.points}</p>
                 <p><strong>Date of Event</strong> <br /> {request.eventDate}</p>
                 <p><strong>Description</strong> <br /> {request.description}</p>
+                <p>am i the fa? <br /> {isFA}</p>
               </div>
             </div>
 
@@ -146,13 +184,18 @@ const FacultyRequestDetails = () => {
                 <a href={request.documentUrl} download>
                 <button className="download-btn">⬇ Download</button>
                 </a>
+                
             </div>
+            {(isFA && isApproved) || (!isFA) ? (
+                <div className="action-buttons">
+                    <button className="accept-btn" onClick={handleAccept}>✔ ACCEPT</button>
+                    <button className="reject-btn" onClick={() => setShowRejectPopup(true)}>❌ REJECT</button>
+                </div>
+            ) : (
+                <p>The request is not approved by the respective Activity Coordinator. Kindly wait for it to happen.</p>
+            )}
+            {isApproved ? ( <p>the request is approved by activity coordinator</p>) : (<p> not APPROVED</p>)}
 
-            <div className="action-buttons">
-              <button className="accept-btn" onClick={handleAccept}>✔ ACCEPT</button>
-              <button className="reject-btn" onClick={() => setShowRejectPopup(true)}>❌ REJECT</button>
-
-            </div>
             {showRejectPopup && (
             <div className="popup-overlay">
                 <div className="popup">
