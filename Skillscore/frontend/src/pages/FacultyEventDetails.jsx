@@ -59,6 +59,7 @@ const EventDetails = () => {
             <p><strong>Date:</strong> {event.startDate} - {event.endDate}</p>
             <p><strong>Time:</strong> {event.time}</p>
             <p><strong>Venue:</strong> {event.venue || "Not specified"}</p>
+            <p><strong>Faculty Coordinator:</strong> {event.faculty.name}</p>
           </div>
 
           <div className="event-description">

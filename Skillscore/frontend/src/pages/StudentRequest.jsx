@@ -216,7 +216,7 @@ const StudentRequests = () => {
                 requests.map((request) => (
                   <div key={request.id} className="request-card">
                     <h3>{request.activityName}</h3>
-                    {activeTab !== "APPROVED" && <button className="edit-button">EDIT</button>}
+                    {activeTab !== "APPROVED" && <button className="edit-button"onClick={() => navigate(`/student/request/edit/${request.id}`)}>EDIT</button>}
                   </div>
                 ))
               )}

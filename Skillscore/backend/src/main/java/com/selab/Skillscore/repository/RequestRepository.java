@@ -13,12 +13,15 @@ import com.selab.Skillscore.model.Status;
 public interface RequestRepository extends JpaRepository<Request, Long> {
     @Query("""
         SELECT r FROM Request r 
-        JOIN RequestApproval ra ON ra.request = r 
         WHERE r.student.rollNumber = :rollNumber 
-        AND ra.status = com.selab.Skillscore.model.Status.APPROVED
-        
-        """)
+        AND r.id IN (
+            SELECT ra.request.id FROM RequestApproval ra
+            GROUP BY ra.request.id
+            HAVING COUNT(CASE WHEN ra.status <> com.selab.Skillscore.model.Status.APPROVED THEN 1 END) = 0
+        )
+    """)
     List<Request> findApprovedRequests(@Param("rollNumber") String rollNumber);
+
 
 
     @Query("""

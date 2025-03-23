@@ -56,6 +56,10 @@ public class Request {
         this.event = event;
     }
 
+    public Event getEvent() {
+        return event;
+    }
+
     public void setDescription(String description){
             this.description = description;
     }

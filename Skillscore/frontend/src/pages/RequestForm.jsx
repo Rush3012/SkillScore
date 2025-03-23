@@ -1,13 +1,14 @@
 
 
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Sidebar from "../components/stu_sidebar";
 import Header from "../components/stu_header";
 import "./RequestForm.css";
 
 const RequestForm = () => {
   const navigate = useNavigate();
+  const { requestId } = useParams();
   const [events, setEvents] = useState([]); 
   const [selectedEvent, setSelectedEvent] = useState(""); 
   const [isOtherEvent, setIsOtherEvent] = useState(false); 
@@ -17,6 +18,8 @@ const RequestForm = () => {
   const [message, setMessage] = useState("");
   const [facultyList, setFacultyList] = useState([]);
   const [uploadedFiles, setUploadedFiles] = useState([]);
+  const [isEditing, setIsEditing] = useState(false);
+
 
 
   const [formData, setFormData] = useState({
@@ -31,6 +34,16 @@ const RequestForm = () => {
     description: "",
   });
 
+  useEffect(() => {
+    if (requestId) {
+      setIsEditing(true); 
+    } else {
+      setIsEditing(false);
+    }
+  }, [requestId]);
+  
+  
+  
   useEffect(() => {
     const fetchStudentData = async () => {
       try {
@@ -85,7 +98,29 @@ const RequestForm = () => {
     fetchFaculty();
   }, []);
 
+
+  useEffect(() => {
+    if (isEditing) {
+      const fetchRequestDetails = async () => {
+        try {
+          const response = await fetch(`http://localhost:8080/api/requests/${requestId}`);
+          if (!response.ok) throw new Error("Failed to fetch request details");
+          const requestData = await response.json();
+
+          setSelectedEvent(requestData.eventId || "other");
+          setIsOtherEvent(!requestData.isOther);
+          setFormData(requestData);
+          setUploadedFiles(requestData.documents || []);
+        } catch (error) {
+          console.error("Error fetching request details:", error);
+        }
+      };
+      fetchRequestDetails();
+    }
+  }, [isEditing, requestId]);
+
   const handleChange = (e) => {
+    if (isEditing && selectedEvent !== "other" && e.target.name !== "description") return;
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -156,10 +191,12 @@ const RequestForm = () => {
 
 
     try {
-      const requestResponse = await fetch("http://localhost:8080/api/requests/submit", {
-        method: "POST",
-        body: requestData,
-      });
+      const url = isEditing
+        ? `http://localhost:8080/api/requests/update/${requestId}`
+        : "http://localhost:8080/api/requests/submit";
+      const method = isEditing ? "PUT" : "POST";
+
+      const requestResponse = await fetch(url, { method, body: requestData });
 
       if (!requestResponse.ok) {
         const errorText = await requestResponse.text();
@@ -262,7 +299,7 @@ const RequestForm = () => {
                 {uploadedFiles.map((file, index) => (
                   <div key={index} className="file-item">
                     <span>{file.name}</span>
-                    <button type="button" onClick={() => removeFile(index)}></button>
+                    <button type="button" onClick={() => removeFile(index)}>❌</button>
                   </div>
                 ))}
                 {uploadedFiles.length < 3 && (
@@ -282,7 +319,7 @@ const RequestForm = () => {
             </div>
 
             {/* Submit Button */}
-            <button type="submit" className="submit-btn">SUBMIT</button>
+            <button type="submit" className="submit-btn">{isEditing ? "Update" : "Submit"}</button>
           </form>
         </div>
       </div>
