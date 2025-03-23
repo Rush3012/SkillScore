@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,5 +53,9 @@ public class DocumentService {
         documentRepository.save(document);
 
         return filePath.toString();
+    }
+
+    public List<Document> findByRequestId(Long requestId) {
+        return documentRepository.findByRequestId(requestId);
     }
 }
