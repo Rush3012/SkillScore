@@ -5,6 +5,9 @@ import { useNavigate } from "react-router-dom";
 import "./StudentDashboard.css";
 import Header from "../components/stu_header";
 import Sidebar from "../components/stu_sidebar";
+import "react-circular-progressbar/dist/styles.css";
+import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+
 
 export default function StudentDashboard() {
   const [student, setStudent] = useState(null);
@@ -122,23 +125,52 @@ export default function StudentDashboard() {
       <main className="dashboard-main-content">
         {/* Header */}
         <Header />
-
+        <div className="dashboard-header">
+          <h1 className="welcome-message">Welcome {student.name} !!!</h1>
+          <p className="dashboard-date">{new Date().toDateString()}</p>
+        </div>
         {/* Points Summary & Events */}
         <div className="dashboard-content-wrapper">
           {/* Points Section */}
           <div className="dashboard-points-summary">
-            <h2>Total Points</h2>
-            <h1>{student.totalPoints}/80</h1>
+          <div className="circular-progress-container">
+              <CircularProgressbar
+                value={student.totalPoints}
+                maxValue={80}
+                text={`${student.totalPoints}/80`}
+                styles={buildStyles({ textSize: "18px", pathColor: "#4caf50", textColor: "#000", trailColor: "#e0e0e0" })}
+              />
+              <h2>Total Points</h2>
+            </div>
+            {/* <h1>{student.totalPoints}/80</h1> */}
             <div className="dashboard-point-breakdown">
-              <div className="dashboard-point-item dashboard-institute-points">
-                <p>{student.institutePoints}/40</p>
-                <span>Institute Points</span>
+              <div className="dashboard-point-item">
+                {/* <p>{student.institutePoints}/40</p>
+                <span>Institute Points</span> */}
+                <div className="circular-progress-small">
+                  <CircularProgressbar
+                    value={student.institutePoints}
+                    maxValue={40}
+                    text={`${student.institutePoints}/40`}
+                    styles={buildStyles({ textSize: "14px", pathColor: "#2196f3", textColor: "#000", trailColor: "#e0e0e0" })}
+                  />
+                </div>
+                <p>Institute Points</p>
               </div>
-              <div className="dashboard-point-item dashboard-cultural-points">
-                <p>{student.departmentPoints}/40</p>
-                <span>Department Points</span>
+              <div className="dashboard-point-item">
+                {/* <p>{student.departmentPoints}/40</p>
+                <span>Department Points</span> */}
+                <div className="circular-progress-small">
+                  <CircularProgressbar
+                    value={student.departmentPoints}
+                    maxValue={40}
+                    text={`${student.departmentPoints}/40`}
+                    styles={buildStyles({ textSize: "14px", pathColor: "#ff9800", textColor: "#000", trailColor: "#e0e0e0" })}
+                  />
+                </div>
+                <p>Department Points</p>
               </div>
-              <div className="dashboard-point-item dashboard-pending-requests">
+              <div className="dashboard-point-item pending-requests">
                 <p>{count}</p>
                 <span>Pending Requests</span>
               </div>

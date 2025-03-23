@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.selab.Skillscore.dto.RequestResponseDTO;
@@ -110,9 +111,10 @@ public class RequestController {
     public ResponseEntity<String> updateRequestStatus(
             @PathVariable Long facultyId, 
             @PathVariable Long requestId, 
-            @RequestParam String status) {
+            @RequestParam String status,
+            @RequestParam(required = false) String comment) {
 
-        boolean isUpdated = requestService.updateRequestStatus(facultyId, requestId, status.toUpperCase());
+        boolean isUpdated = requestService.updateRequestStatus(facultyId, requestId, status.toUpperCase(), comment);
 
         if (isUpdated) {
             return ResponseEntity.ok("Status updated successfully.");
@@ -121,4 +123,15 @@ public class RequestController {
                     .body("Failed to update request status.");
         }
     }
+
+    @PutMapping("/edit/{requestId}")
+    public ResponseEntity<Request> updateRequest(@PathVariable Long requestId,
+                                                @RequestParam String description,
+                                                @RequestParam(required = false) String activityType,
+                                                @RequestParam(required = false) int points,
+                                                @RequestParam(required = false) String coordinatorId) {
+        Request updatedRequest = requestService.updateRequest(requestId, description, activityType, coordinatorId);
+        return ResponseEntity.ok(updatedRequest);
+    }
+
 }

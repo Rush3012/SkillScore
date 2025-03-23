@@ -44,7 +44,7 @@ const FacultySidebar = () => {
           <Link to="/FacultyEvents"> Events</Link>
         </li>
         <li>
-          <Link to="/faculty-requests"> Requests</Link>
+          <Link to="/faculty/requests"> Requests</Link>
         </li>
       </ul>
       <button className="logout-btn" onClick={handleLogout}> Logout</button>

@@ -13,6 +13,8 @@ import FacultyStudents from "./pages/FacultyStudents";
 import FacultyEventDetails from "./pages/FacultyEventDetails";
 import StudentReport from "./pages/StudentReport";
 import StudentRequest from "./pages/StudentRequest";
+import FacultyRequest from "./pages/FacultyRequest";
+import FacultyRequestDetails from "./pages/FacultyRequestDetails";
 
 const AppRoutes = () => (
   <Router>
@@ -21,6 +23,7 @@ const AppRoutes = () => (
       <Route path="/StudentDashboard" element={<StudentDashboard />} />
       <Route path="/FacultyDashboard" element={<FacultyDashboard />} />
       <Route path="/student/request/add" element={<RequestForm />} />
+      <Route path="/student/request/edit/:requestId" element={<RequestForm />} />
       <Route path="/events" element={<EventList />} />
       <Route path="/event/:id" element={<EventDetail />} />
       <Route path="eventss" element={<FacultyEvent/>} />
@@ -31,6 +34,8 @@ const AppRoutes = () => (
       <Route path="/faculty/event/:id" element={<FacultyEventDetails />} />
       <Route path="/student-report/:rollNumber" element={<StudentReport />} />
       <Route path="/student/request/:status/:rollnumber" element={<StudentRequest/>} />
+      <Route path="/faculty/requests" element={<FacultyRequest />} />
+      <Route path="/faculty/request/:id" element={<FacultyRequestDetails/>} />
     </Routes>
   </Router>
 );

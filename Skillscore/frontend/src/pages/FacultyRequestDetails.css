@@ -1,0 +1,120 @@
+.faculty-page {
+    display: flex;
+  }
+  
+  .content {
+    flex-grow: 1;
+    padding: 20px;
+  }
+  
+  .request-container {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  .page-title {
+    font-size: 22px;
+    font-weight: bold;
+    color: #1a1a1a;
+    margin-bottom: 15px;
+  }
+  
+  .request-card {
+    background: #f8f8f8;
+    padding: 20px;
+    border-radius: 8px;
+  }
+  
+  .request-info {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .left, .right {
+    width: 48%;
+  }
+  
+  .left p, .right p {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .left p strong, .right p strong {
+    font-size: 14px;
+    color: #444;
+    display: block;
+  }
+  
+  /* Document Actions */
+  .document-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 5px;
+  }
+  
+  .view-btn, .download-btn {
+    padding: 8px 12px;
+    font-size: 14px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .view-btn {
+    background: #007bff;
+    color: white;
+  }
+  
+  .download-btn {
+    background: #28a745;
+    color: white;
+  }
+  
+  /* Reason Section */
+  .reason-section {
+    margin-top: 15px;
+  }
+  
+  .reason-section label {
+    font-weight: bold;
+    color: red;
+  }
+  
+  textarea {
+    width: 100%;
+    height: 50px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  /* Action Buttons */
+  .action-buttons {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .accept-btn, .reject-btn {
+    padding: 10px 15px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .accept-btn {
+    background: green;
+    color: white;
+  }
+  
+  .reject-btn {
+    background: red;
+    color: white;
+  }

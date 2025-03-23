@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.selab.Skillscore.dto.RequestResponseDTO;
 import com.selab.Skillscore.model.Event;
@@ -38,6 +39,10 @@ public class RequestService {
     @Autowired
     private RequestApprovalRepository requestApprovalRepository;
 
+    @Autowired
+    private FacultyService facultyService;
+
+
 
     @Transactional
     public void submitRequest(String studentId, Long eventId, Request request) {
@@ -50,7 +55,6 @@ public class RequestService {
 
         request.setStudent(student);
 
-        // ✅ Ensure description is correctly assigned
         if (request.getDescription() == null || request.getDescription().isEmpty()) {
             throw new RuntimeException("Description cannot be empty.");
         }
@@ -76,21 +80,14 @@ public class RequestService {
             throw new RuntimeException("Student does not have an assigned faculty advisor.");
         }
 
-        if (event != null && event.getFaculty() != null) {
-            approvals.add(new RequestApproval(request, event.getFaculty()));
-        }
+        
+            approvals.add(new RequestApproval(request, facultyService.getFacultyById(request.getCoordinatorId())));
+        
 
         requestApprovalRepository.saveAll(approvals);
     }
 
-    // public List<Request> getRequestsByStatus(String rollNumber, Status status) {
-    //     return switch (status) {
-    //         case APPROVED -> requestRepository.findApprovedRequests(rollNumber);
-    //         case REJECTED -> requestRepository.findRejectedRequests(rollNumber);     System.out.println("Fetched Rejected Requests: " + requests);
-    //         case PENDING -> requestRepository.findPendingRequests(rollNumber);
-    //         default -> throw new IllegalArgumentException("Invalid status: " + status);
-    //     };
-    // }
+    
 
     public List<Request> getRequestsByStatus(String rollNumber, Status status) {
         return switch (status) {
@@ -111,7 +108,7 @@ public class RequestService {
         List<RequestApproval> approvals = requestApprovalRepository.findByRequestId(requestId);
 
         Status status = determineRequestStatus(approvals);
-        return new RequestResponseDTO(request, status);
+        return new RequestResponseDTO(request, status, facultyService.getFacultyById(request.getCoordinatorId()));
 
     }
 
@@ -143,20 +140,21 @@ public class RequestService {
 
     private RequestResponseDTO convertToDTO(Request request) {
         return new RequestResponseDTO(
-            request, Status.PENDING
+            request, Status.PENDING, facultyService.getFacultyById(request.getCoordinatorId())
         );
     }
 
 
     @Transactional
-    public boolean updateRequestStatus(Long facultyId, Long requestId, String status) {
+    public boolean updateRequestStatus(Long facultyId, Long requestId, String status, String comment) {
         Optional<RequestApproval> approvalOpt = requestApprovalRepository.findByFacultyIdAndRequestId(facultyId, requestId);
 
         if (approvalOpt.isPresent()) {
             RequestApproval approval = approvalOpt.get();
             approval.setStatus(Status.valueOf(status));  // Update status
 
-            if (status.equals("ACCEPTED")) {
+            if (status.equals("APPROVED")) {
+                System.out.println("how are you?");
                 Request request = approval.getRequest();
                 Student student = request.getStudent();
                 student.setTotalPoints(student.getTotalPoints() + request.getPoints()); // Update student points
@@ -169,11 +167,31 @@ public class RequestService {
                 
                 studentRepository.save(student);
             }
+            approval.setComments(comment);
             approval.setUpdatedAt(LocalDateTime.now());
             requestApprovalRepository.save(approval);
             return true;
         }
         return false;
     }
+
+    public Request updateRequest(Long id, String description, String activityType, String coordinatorId) {
+        Request request = requestRepository.findById(id).orElseThrow(() -> new RuntimeException("Request not found"));
+        System.out.println("get event details: " + request.getEvent());
+        if (request.getEvent() != null) {
+            // Case 1: Existing event (Allow only description & file update)
+            request.setDescription(description);
+        } 
+        else {
+            // Case 2: "Other Event" (Allow everything except title)
+            request.setDescription(description);
+            request.setActivityType(activityType);
+            request.setCoordinatorId(Long.parseLong(coordinatorId));
+        }
+
+        return requestRepository.save(request);
+    }
+
+    
 
 }
