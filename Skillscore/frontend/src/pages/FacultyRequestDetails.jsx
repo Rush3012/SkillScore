@@ -15,6 +15,7 @@ const FacultyRequestDetails = () => {
   const [showRejectPopup, setShowRejectPopup] = useState(false);
   const [isFA, setIsFA] = useState(false);
   const [isApproved, setIsApproved] = useState(false);
+  const [document, setDocument] = useState([]);
 
 
   // Fetch request details from API
@@ -96,6 +97,23 @@ const FacultyRequestDetails = () => {
     fetchRequestDetails();
   }, [id]);
 
+
+  useEffect(() => {
+    const fetchDocuments = async () => {
+      try {
+        const response = await fetch(`http://localhost:8080/api/documents/files/${id}`);
+        if (!response.ok) throw new Error("Failed to fetch documents");
+
+        const data = await response.json();
+        setDocument(data);
+      } catch (error) {
+        console.error("Error fetching documents:", error);
+      }
+    };
+
+    fetchDocuments();
+  }, [id]);
+
   // Handle Accept Request
   const handleAccept = async () => {
     try {
@@ -136,6 +154,7 @@ const FacultyRequestDetails = () => {
       alert(error.message);
     }
   };
+
   
 
   if (loading) return <p>Loading...</p>;
@@ -165,27 +184,36 @@ const FacultyRequestDetails = () => {
                 <p><strong>Activity Points</strong> <br /> {request.points}</p>
                 <p><strong>Date of Event</strong> <br /> {request.eventDate}</p>
                 <p><strong>Description</strong> <br /> {request.description}</p>
-                <p>am i the fa? <br /> {isFA}</p>
               </div>
             </div>
+    
+          </div>
 
-            
+          {/* Document View Section */}
+          <div className="documents-section">
+            <h3 className="section-title">Attached Documents</h3>
+            {document.length > 0 ? (
+              <ul className="document-list">
+                {document.map((doc) => (
+                  <li key={doc.id} className="document-item">
+                    <a
+  href={`http://localhost:8080/api/documents/files/preview?filePath=${encodeURIComponent(doc.filePath.replace("uploads/", ""))}`}
+  target="_blank"
+  rel="noopener noreferrer"
+  className="document-link"
+>
+  {doc.name} ({doc.type})
+</a>
 
-            
-            
-            
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p>No documents available for this request.</p>
+            )}
             
           </div>
-          <p><strong>View Document</strong></p>
-            <div className="document-actions">
-                <a href={request.documentUrl} target="_blank" rel="noopener noreferrer">
-                <button className="view-btn">🔍 View</button>
-                </a>
-                <a href={request.documentUrl} download>
-                <button className="download-btn">⬇ Download</button>
-                </a>
-                
-            </div>
+
             {(isFA && isApproved) || (!isFA) ? (
                 <div className="action-buttons">
                     <button className="accept-btn" onClick={handleAccept}>✔ ACCEPT</button>
