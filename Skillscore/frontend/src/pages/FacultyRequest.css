@@ -1,0 +1,44 @@
+.faculty-page {
+    display: flex;
+    height: 100vh;
+    width:1550px
+  }
+  
+  .content {
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto;
+    margin-left: 250px;
+  }
+  
+  .request-list {
+    margin-top: 20px;
+  }
+  
+  .request-item {
+    background: #e8f4f8;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .request-item:hover {
+    background: #d0ebf2;
+  }
+  
+  .request-item h3 {
+    margin: 0;
+    font-size: 18px;
+  }
+  
+  .request-item p {
+    margin: 5px 0;
+  }
+  
+  .status {
+    font-weight: bold;
+    color: #ff9900;
+  }
+  
