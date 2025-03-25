@@ -221,7 +221,7 @@ const StudentRequests = () => {
         style={{ cursor: "pointer" }} // Indicate clickable item
       >
         <h3>{request.activityName}</h3>
-        {activeTab !== "APPROVED" && (
+        {activeTab == "PENDING" && (
           <button
             className="edit-button"
             onClick={(e) => {

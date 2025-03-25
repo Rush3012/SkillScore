@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Sidebar from "../components/stu_sidebar";
 import Header from "../components/stu_header";
 import "./StudentRequestDetails.css";
@@ -12,6 +12,7 @@ const StudentRequestDetails = () => {
   const [error, setError] = useState(null);
   const [document, setDocument] = useState([]);
   const [approvals, setApprovals] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchRequestDetails = async () => {
@@ -58,6 +59,12 @@ const StudentRequestDetails = () => {
     };
     fetchApprovals();
   }, [id]);
+
+    const handleEditAndResend = () => {
+        navigate(`/student/request/edit/${id}`);
+    };
+    const isRejected = approvals.some((approval) => approval.status === "REJECTED");
+
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
@@ -118,7 +125,7 @@ const StudentRequestDetails = () => {
                     <p><strong>Faculty:</strong> {approval.faculty.name}</p>
                     <p><strong>Status:</strong> {approval.status}</p>
                     {approval.status === "REJECTED" && (
-                      <p><strong>Reason:</strong> {approval.reason}</p>
+                      <p><strong>Reason:</strong> {approval.comments}</p>
                     )}
                   </li>
                 ))}
@@ -127,6 +134,13 @@ const StudentRequestDetails = () => {
               <p>No approvals found for this request.</p>
             )}
           </div>
+          {isRejected && (
+            <div className="resend-section">
+              <button className="resend-button" onClick={handleEditAndResend}>
+                Edit & Resend
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>

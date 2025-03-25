@@ -49,12 +49,12 @@ const EventDetails = () => {
 
           <h2>{event.name}</h2>
 
-          <img 
-            src={<img src={`http://localhost:8080/api/files/${event.image}`} alt={event.name} />
-            || noImage} 
-            alt={event.name} 
-            className="event-image-large" 
-          />
+           <img
+                     src={event.image ? `http://localhost:8080/api/files/${event.image}` : noImage}
+                     alt={event.name}
+                     className="event-image"
+                     
+                   />
 
           <div className="event-info">
             <p><strong>Points:</strong> {event.points}</p>

@@ -128,7 +128,7 @@ const FacultyDashboard = () => {
         </div>
 
         {/* Tasks Section */}
-        <div className="dashboard-section">
+        {/* <div className="dashboard-section">
           <h2>Tasks</h2>
           <div className="events">
             {requests.length > 0 ? (
@@ -145,7 +145,7 @@ const FacultyDashboard = () => {
               <p>No requests</p>
             )}
           </div>
-        </div>
+        </div> */}
 
         {/* Upcoming Events */}
         <div className="dashboard-section">

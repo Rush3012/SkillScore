@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -117,7 +118,10 @@ public class RequestController {
             @PathVariable Long facultyId, 
             @PathVariable Long requestId, 
             @RequestParam String status,
-            @RequestParam(required = false) String comment) {
+            @RequestBody(required = false) Map<String, String> requestBody) {
+
+        String comment = requestBody != null ? requestBody.get("reason") : null;
+
 
         boolean isUpdated = requestService.updateRequestStatus(facultyId, requestId, status.toUpperCase(), comment);
 

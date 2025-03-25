@@ -73,11 +73,11 @@ const Events = () => {
                   onClick={() => navigate(`/faculty/event/${event.id}`)}
                 >
                   <img
-                    src={<img src={`http://localhost:8080/api/files/${event.image}`} alt={event.name} />
-                    || noImage}
+                    src={event.image ? `http://localhost:8080/api/files/${event.image}` : noImage}
                     alt={event.name}
                     className="event-image"
                   />
+                  
                   <div className="event-info">
                     <h3>{event.name}</h3>
                     <p>{event.startDate} - {event.endDate}</p>

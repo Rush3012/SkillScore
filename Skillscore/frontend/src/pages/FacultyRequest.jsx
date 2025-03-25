@@ -10,6 +10,10 @@ const FacultyRequestPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [faculty, setFaculty] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredRequests, setFilteredRequests] = useState([]);
+
+
 
   useEffect(() => {
     const fetchRequests = async () => {
@@ -42,6 +46,8 @@ const FacultyRequestPage = () => {
         }
         const data = await response.json();
         setRequests(data);
+        setFilteredRequests(data); // Initialize filtered list with all requests
+
       } catch (err) {
         setError(err.message);
       } finally {
@@ -56,20 +62,44 @@ const FacultyRequestPage = () => {
     navigate(`/faculty/request/${request.id}`, { state: request });
   };
 
+  const handleSearchChange = (e) => {
+    const value = e.target.value.toLowerCase();
+    setSearchTerm(value);
+  
+    const filtered = requests.filter((req) => {
+      const studentName = req.student?.name ? req.student.name.toLowerCase() : "";
+      const eventName = req.eventName ? req.eventName.toLowerCase() : "";
+      const activityName = req.activityName ? req.activityName.toLowerCase() : "";
+  
+      return studentName.includes(value) || eventName.includes(value) || activityName.includes(value);
+    });
+  
+    setFilteredRequests(filtered);
+  };
+  
   return (
     <div className="faculty-page">
       <StuSidebar />
       <div className="content">
         <StuHeader title="Requests" />
+
+        {/* Search Bar */}
+        <input
+          type="text"
+          placeholder="Search requests by student, event, or activity..."
+          value={searchTerm}
+          onChange={handleSearchChange}
+          className="search-bar"
+        />
         <div className="request-list">
           {loading ? (
             <p>Loading requests...</p>
           ) : error ? (
             <p className="error">Error: {error}</p>
-          ) : requests.length === 0 ? (
+          ) : filteredRequests.length === 0 ? (
             <p>No pending requests.</p>
           ) : (
-            requests.map((req) => (
+            filteredRequests.map((req) => (
               <div key={req.id} className="request-item" onClick={() => handleRequestClick(req)}>
                 <h3>📌 {req.eventName}</h3>
                 <p><strong>Student:</strong> {req.student.name}</p>

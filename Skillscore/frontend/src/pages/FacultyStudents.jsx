@@ -13,6 +13,7 @@ const FacultyStudents = () => {
     const [searchTerm, setSearchTerm] = useState(""); // Search term state
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [count, setCount] = useState(null);
     const navigate = useNavigate(); // React Router navigation
 
     useEffect(() => {
@@ -59,6 +60,8 @@ const FacultyStudents = () => {
         fetchStudents();
     }, [faculty]);
 
+
+    
     // Filter students based on search input
     const filteredStudents = students.filter((student) =>
         student.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -101,7 +104,6 @@ const FacultyStudents = () => {
                             <th>Roll Number</th>
                             <th>Name</th>
                             <th>Total Points</th>
-                            <th>Requests</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -111,7 +113,6 @@ const FacultyStudents = () => {
                                     <td>{student.rollNumber}</td>
                                     <td>{student.name}</td>
                                     <td>{student.totalPoints}</td>
-                                    <td>2</td>
                                 </tr>
                             ))
                         ) : (
