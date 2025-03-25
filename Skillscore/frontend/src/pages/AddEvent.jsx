@@ -1,12 +1,15 @@
 
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import FacultySidebar from "../components/fac_sidebar"; 
 import FacultyHeader from "../components/fac_header"; 
 import "./AddEvent.css"; 
 
 const AddEvent = () => {
+  const [fac, setFac] = useState(null);
+  const [preview, setPreview] = useState(null);
+
   const [eventData, setEventData] = useState({
     name: "",
     description: "",
@@ -20,14 +23,75 @@ const AddEvent = () => {
 
   const navigate = useNavigate();
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setEventData({ ...eventData, [name]: value });
-  };
+  useEffect(() => {
+          const fetchFacultyData = async () => {
+              try {
+                  const userResponse = await fetch("/api/auth/profile", { credentials: "include" });
+                  if (!userResponse.ok) throw new Error("Failed to fetch user profile");
+  
+                  const userData = await userResponse.json();
+                  const userId = userData.userId;
+  
+                  const facultyResponse = await fetch(`http://localhost:8080/api/faculty/by-user/${userId}`, {
+                      credentials: "include",
+                  });
+  
+                  if (!facultyResponse.ok) throw new Error("Failed to fetch faculty data");
+  
+                  const facultyData = await facultyResponse.json();
+                  setFac(facultyData);
+  
+              } catch (error) {
+                  console.error("Error fetching faculty data:", error);
+                  setError(error.message);
+              } finally {
+                  setLoading(false);
+              }
+          };
+  
+          fetchFacultyData();
+      }, []);
 
-  const handleFileChange = (e) => {
-    setEventData({ ...eventData, poster: e.target.files[0] });
-  };
+      const handleChange = (e) => {
+        const { name, value } = e.target;
+      
+        if (name === "startDate") {
+          const today = new Date().toISOString().split("T")[0]; // Get today's date in YYYY-MM-DD format
+          if (value < today) {
+            alert("Start date cannot be in the past.");
+            return;
+          }
+        }
+      
+        if (name === "endDate") {
+          if (value < eventData.startDate) {
+            alert("End date must be after the start date.");
+            return;
+          }
+        }
+      
+        setEventData({ ...eventData, [name]: value });
+      };
+      
+
+      const handleFileChange = (e) => {
+        const file = e.target.files[0];
+      
+        if (file) {
+          const allowedTypes = ["image/png", "image/jpeg", "image/jpg", "image/gif"];
+      
+          if (!allowedTypes.includes(file.type)) {
+            alert("Invalid file type! Please upload an image (PNG, JPG, JPEG, GIF).");
+            return;
+          }
+      
+          setEventData({ ...eventData, poster: file });
+          const imageUrl = URL.createObjectURL(file);
+          setPreview(imageUrl);
+  
+        }
+      };
+      
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -40,7 +104,7 @@ const AddEvent = () => {
         startDate: eventData.startDate,
         endDate: eventData.endDate,
         time: eventData.time,
-        faculty: { facultyId: Number(eventData.facultyId) } 
+        faculty: { facultyId: Number(fac.facultyId) } 
     };
     
     formData.append("eventData", JSON.stringify(formattedData)); 
@@ -126,15 +190,20 @@ const AddEvent = () => {
                 <input type="time" name="time" value={eventData.time} onChange={handleChange} required />
               </div>
 
-              <div className="form-group">
+              {/* <div className="form-group">
                 <label>* Faculty ID:</label>
                 <input type="text" name="facultyId" value={eventData.facultyId} onChange={handleChange} required />
-              </div>
+              </div> */}
 
               <div className="form-group">
                 <label>Upload Poster:</label>
                 <input type="file" onChange={handleFileChange} />
               </div>
+              {preview && (
+  <div className="image-preview">
+    <img src={preview} alt="Event Poster Preview" style={{ width: "200px", height: "200px", marginTop: "10px" }} />
+  </div>
+)}
 
               <button type="submit" className="submit-btn">SUBMIT</button>
             </form>

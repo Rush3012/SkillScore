@@ -204,6 +204,15 @@ public class RequestService {
             request.setCoordinatorId(Long.parseLong(coordinatorId));
         }
 
+
+        List<RequestApproval> approvals = requestApprovalRepository.findByRequestId(id);
+        for (RequestApproval approval : approvals) {
+            if (Status.REJECTED.equals(approval.getStatus())) {
+                approval.setStatus(Status.PENDING);   // Reset to Pending
+                approval.setComments(null);      // Clear Comments
+                requestApprovalRepository.save(approval);
+            }
+        }
         return requestRepository.save(request);
     }
 
