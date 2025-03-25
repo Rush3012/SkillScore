@@ -210,17 +210,33 @@ const StudentRequests = () => {
             <Spinner animation="border" />
           ) : (
             <div className="request-list">
-              {requests.length === 0 ? (
-                <p className="text-center">No requests found.</p>
-              ) : (
-                requests.map((request) => (
-                  <div key={request.id} className="request-card">
-                    <h3>{request.activityName}</h3>
-                    {activeTab !== "APPROVED" && <button className="edit-button"onClick={() => navigate(`/student/request/edit/${request.id}`)}>EDIT</button>}
-                  </div>
-                ))
-              )}
-            </div>
+  {requests.length === 0 ? (
+    <p className="text-center">No requests found.</p>
+  ) : (
+    requests.map((request) => (
+      <div
+        key={request.id}
+        className="request-card"
+        onClick={() => navigate(`/student/request/${request.id}`)} // Navigate on click
+        style={{ cursor: "pointer" }} // Indicate clickable item
+      >
+        <h3>{request.activityName}</h3>
+        {activeTab !== "APPROVED" && (
+          <button
+            className="edit-button"
+            onClick={(e) => {
+              e.stopPropagation(); // Prevent navigation when clicking edit
+              navigate(`/student/request/edit/${request.id}`);
+            }}
+          >
+            EDIT
+          </button>
+        )}
+      </div>
+    ))
+  )}
+</div>
+
           )}
         </div>
       </main>

@@ -264,7 +264,7 @@
 
 .dashboard-container {
     display: flex;
-    width: 1550px;
+    width : 100vw;
   }
   
   .dashboard-main-content {

@@ -133,7 +133,7 @@ const StudentReport = () => {
           {student.pendingRequests && student.pendingRequests.length > 0 ? (
             <div className="pending-requests-container">
               {student.pendingRequests.map((req) => (
-                <div key={req.id} className="request-card" onClick={() => navigate(`/request/${req.id}`)}>
+                <div key={req.id} className="request-card" onClick={() => navigate(`/faculty/request/${req.id}`)}>
                   <h4>{req.activityName}</h4>
                   <p><strong>Points:</strong> {req.points}</p>
                 </div>

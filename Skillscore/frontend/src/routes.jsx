@@ -15,10 +15,13 @@ import StudentReport from "./pages/StudentReport";
 import StudentRequest from "./pages/StudentRequest";
 import FacultyRequest from "./pages/FacultyRequest";
 import FacultyRequestDetails from "./pages/FacultyRequestDetails";
+import StudentRequestDetails from "./pages/StudentRequestDetails";
+import Home from "./pages/Home";
 
 const AppRoutes = () => (
   <Router>
     <Routes>
+      <Route path="/" element={<Home/>}/>
       <Route path="/login" element={<HomePage />} />
       <Route path="/StudentDashboard" element={<StudentDashboard />} />
       <Route path="/FacultyDashboard" element={<FacultyDashboard />} />
@@ -36,6 +39,7 @@ const AppRoutes = () => (
       <Route path="/student/request/:status/:rollnumber" element={<StudentRequest/>} />
       <Route path="/faculty/requests" element={<FacultyRequest />} />
       <Route path="/faculty/request/:id" element={<FacultyRequestDetails/>} />
+      <Route path="/student/request/:id" element={<StudentRequestDetails/>} /> 
     </Routes>
   </Router>
 );

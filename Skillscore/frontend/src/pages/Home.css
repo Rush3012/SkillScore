@@ -1,0 +1,120 @@
+/* Full-screen background */
+.home-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.9)), 
+                url("../assets/NITC.jpeg") no-repeat center center/cover;
+  }
+  
+  /* Centered content */
+  .content {
+    text-align: center;
+    color: white;
+    padding: 10px;
+  }
+  
+  /* Image container to handle fade effect */
+  .image-container {
+    position: relative;
+    display: inline-block;
+  }
+  
+  /* NIT Calicut Image */
+  .nit-image {
+    width: 100%;
+    max-width: 500px;
+    border-radius: 10px;
+    opacity: 1;
+    transition: opacity 1.5s ease-in-out;
+  }
+  
+  /* Logo fades into image */
+  .fade-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60%;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+  }
+  
+  /* When hovering, logo smoothly appears */
+  .image-container:hover .fade-overlay {
+    opacity: 1;
+  }
+  
+  /* Animations */
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .website-name {
+    font-size: 2.8rem;
+    font-weight: bold;
+    margin: 10px 0;
+    animation: slideIn 1s ease-out;
+  }
+  
+  .tagline {
+    font-size: 1.2rem;
+    font-style: italic;
+    margin-bottom: 20px;
+    animation: slideIn 1.2s ease-out;
+  }
+  
+  /* Login Buttons */
+  .login-buttons {
+    margin-top: 20px;
+  }
+  
+  button {
+    padding: 14px 28px;
+    font-size: 1rem;
+    margin: 10px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+  }
+  
+  .user-login {
+    background-color: #27ae60;
+    color: white;
+    animation: pulse 2s infinite;
+  }
+  
+  .admin-login {
+    background-color: #c0392b;
+    color: white;
+    animation: pulse 2s infinite;
+  }
+  
+  button:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+  }
+  
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  

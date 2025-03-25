@@ -1,7 +1,8 @@
 
 .profile-container {
     display: flex;
-    width:1550px;
+    width : 100vw;
+    height: 100vh;
   }
   
   .profile-content {
@@ -17,6 +18,7 @@
   }
   
   .profile-card {
+    /* height: 100vh; */
     background: white;
     border-radius: 10px;
     padding: 20px;

@@ -1,0 +1,121 @@
+/* General Page Layout */
+.student-page {
+    display: flex;
+    min-height: 100vh;
+    background-color: #f8f9fa;
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+}
+
+  .content {
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto;
+    margin: 0;
+  }
+  
+  /* Request Container */
+  .request-container {
+    width: 100vw; /* Makes it take full space */
+    max-width: 1200px; /* Adjust based on layout */
+    margin: auto;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+  
+  .page-title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  /* Request Details Card */
+  .request-card {
+    background: #f0f0f0;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+  
+  .request-info {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .left, .right {
+    flex: 1;
+    padding: 10px;
+  }
+  
+  p {
+    margin: 10px 0;
+    color: #212529;
+  }
+  
+  strong {
+    font-weight: bold;
+    color: #333;
+  }
+  
+  /* Documents Section */
+  .documents-section {
+    margin-top: 20px;
+  }
+  
+  .section-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #212529;
+  }
+  
+  .document-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .document-item {
+    margin-bottom: 10px;
+  }
+  
+  .document-link {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+  }
+  
+  .document-link:hover {
+    text-decoration: underline;
+  }
+  
+  /* Approvals Section */
+  .approvals-section {
+    margin-top: 20px;
+  }
+  
+  .approval-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .approval-item {
+    background: #e9ecef;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+  
+  .approval-item p {
+    margin: 5px 0;
+    color: #212529;
+  }
+  
+  .approval-item strong {
+    color: #212529;
+  }
+  

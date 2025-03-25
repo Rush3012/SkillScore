@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -57,5 +58,22 @@ public class DocumentService {
 
     public List<Document> findByRequestId(Long requestId) {
         return documentRepository.findByRequestId(requestId);
+    }
+
+    public void deleteFile(Long fileId) throws IOException {
+        Optional<Document> optionalDoc = documentRepository.findById(fileId);
+        
+        if (optionalDoc.isPresent()) {
+            Document doc = optionalDoc.get();
+            
+            // Delete file from storage
+            Path filePath = Paths.get(UPLOAD_DIR + doc.getFileName());
+            Files.deleteIfExists(filePath);
+
+            // Delete record from database
+            documentRepository.deleteById(fileId);
+        } else {
+            throw new RuntimeException("File not found with ID: " + fileId);
+        }
     }
 }
