@@ -27,6 +27,8 @@ public class RequestResponseDTO {
     private Faculty faculty; // event coordinator
     private LocalDateTime sentTime;
     private LocalDate eventDate;
+    private boolean isOther;
+    private Long eventId;
    
 
     public RequestResponseDTO(Request request, Status status, Faculty faculty) {
@@ -41,10 +43,12 @@ public class RequestResponseDTO {
         this.faculty = faculty;
         if (request.getEvent() != null) {
             this.eventDate = request.getEvent().getStartDate();
+            this.eventId = request.getEvent().getId();
         } else {
             this.eventDate = null;  
+            this.eventId = null;
         }
-       
+        this.isOther = request.getIsOther();
     }
 }
 

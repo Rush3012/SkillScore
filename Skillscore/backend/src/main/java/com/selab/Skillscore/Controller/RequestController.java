@@ -129,7 +129,7 @@ public class RequestController {
         }
     }
 
-    @PutMapping("/edit/{requestId}")
+    @PutMapping("/update/{requestId}")
     public ResponseEntity<Request> updateRequest(@PathVariable Long requestId,
                                                 @RequestParam String description,
                                                 @RequestParam(required = false) String activityType,

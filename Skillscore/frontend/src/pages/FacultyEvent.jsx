@@ -18,8 +18,17 @@ const Events = () => {
       .then((response) => response.json())
       .then((data) => {
         console.log("Fetched events:", data);
-        const sortedEvents = data.sort((a, b) => new Date(b.startDate) - new Date(a.startDate));
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
 
+        const upcomingEvents = data.filter(event => 
+          new Date(event.startDate) >= today
+        );
+
+        // Sort events by start date (earliest first)
+        const sortedEvents = upcomingEvents.sort((a, b) => 
+          new Date(a.startDate) - new Date(b.startDate)
+        );
         setEvents(sortedEvents);
       })
       .catch((error) => console.error("Error fetching events:", error));

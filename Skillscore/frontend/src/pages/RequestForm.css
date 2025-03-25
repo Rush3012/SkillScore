@@ -2,7 +2,7 @@
 .request-page-container {
   display: flex;
   height: 100vh;
-  width: 1550px;
+  width : 100vw;
 }
 
 /* Sidebar */

@@ -16,6 +16,7 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -57,7 +58,6 @@ public class DocumentController {
 
     @GetMapping("/files/preview")
     public ResponseEntity<Resource> previewFile(@RequestParam String filePath) throws MalformedURLException {
-        // Ensure filePath does not contain directory traversal characters
         if (filePath.contains("..")) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
@@ -79,6 +79,16 @@ public class DocumentController {
                     .body(resource);
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
+    @DeleteMapping("/delete/{fileId}")
+    public ResponseEntity<String> deleteFile(@PathVariable Long fileId) {
+        try {
+            documentService.deleteFile(fileId); // Implement this in your service layer
+            return ResponseEntity.ok("File deleted successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error deleting file");
         }
     }
     

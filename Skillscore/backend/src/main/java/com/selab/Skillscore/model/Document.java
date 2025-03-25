@@ -1,5 +1,6 @@
 package com.selab.Skillscore.model;
 
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
@@ -63,4 +64,10 @@ public class Document {
 
     public LocalDateTime getUploadedAt() { return uploadedAt; }
     public void setUploadedAt(LocalDateTime uploadedAt) { this.uploadedAt = uploadedAt; }
+
+    public String getFileName() {
+        return Paths.get(filePath).getFileName().toString();
+    }
+
+
 }

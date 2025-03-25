@@ -87,6 +87,8 @@
     background-color: #f8f9fa;
     height: 100vh;
     overflow: hidden;
+    width : 100vw;
+
 }
 
 /* Sidebar */

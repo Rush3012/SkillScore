@@ -1,5 +1,3 @@
-
-
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Sidebar from "../components/stu_sidebar";
@@ -26,10 +24,9 @@ const RequestForm = () => {
     studentId: "", 
     eventId: "",
     eventName: "",
-    activityCoordinator: "",
+    activityCoordinatorId: "",
     category: "",
     date: "",
-    facultyAdvisor: "",
     points: "",
     description: "",
   });
@@ -61,7 +58,7 @@ const RequestForm = () => {
 
         const studentData = await studentResponse.json();
         setStudent(studentData);
-        setFormData((prev) => ({ ...prev, studentId: studentData.rollNumber })); // ✅ Set studentId after fetching
+        setFormData((prev) => ({ ...prev, studentId: studentData.rollNumber })); 
       } catch (err) {
         console.error("Error fetching student data:", err);
         setError(err.message);
@@ -78,7 +75,16 @@ const RequestForm = () => {
         const response = await fetch("http://localhost:8080/api/events");
         if (!response.ok) throw new Error("Failed to fetch events");
         const data = await response.json();
-        setEvents(data);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0); 
+    
+        const pastEvents = data.filter(event => new Date(event.endDate) < today);
+    
+        const sortedPastEvents = pastEvents.sort((a, b) => 
+          new Date(b.endDate) - new Date(a.endDate)
+        );
+    
+        setEvents(sortedPastEvents);
       } catch (error) {
         console.error("Error fetching events:", error);
       }
@@ -98,6 +104,22 @@ const RequestForm = () => {
     fetchFaculty();
   }, []);
 
+ useEffect(() => {
+    const fetchDocuments = async () => {
+      try {
+        const response = await fetch(`http://localhost:8080/api/documents/files/${requestId}`);
+        if (!response.ok) throw new Error("Failed to fetch documents");
+        const docus = await response.json();
+        setUploadedFiles(docus);
+      } catch (error) {
+        console.error("Error fetching documents:", error);
+      }
+    };
+    if (isEditing){
+      fetchDocuments();
+      console.log("documents: ", uploadedFiles);
+    }
+  }, [requestId, isEditing]);
 
   useEffect(() => {
     if (isEditing) {
@@ -106,30 +128,54 @@ const RequestForm = () => {
           const response = await fetch(`http://localhost:8080/api/requests/${requestId}`);
           if (!response.ok) throw new Error("Failed to fetch request details");
           const requestData = await response.json();
-
+  
           setSelectedEvent(requestData.eventId || "other");
-          setIsOtherEvent(!requestData.isOther);
-          setFormData(requestData);
-          setUploadedFiles(requestData.documents || []);
+          setIsOtherEvent(!requestData.eventId); 
+          
+          if (requestData.other) {
+            setFormData({
+              studentId: requestData.studentId,
+              eventId: "other",
+              eventName: requestData.activityName || "",
+              category: requestData.activityType || "",
+              date: requestData.date || "",
+              activityCoordinatorId: requestData.faculty? requestData.faculty.facultyId : "",
+              points: requestData.points || "",
+              description: requestData.description || "",
+            });
+          } else {
+            setFormData({
+              eventId: requestData.eventId,
+              description: requestData.description
+            });
+          }
+          console.log("how are u? ", selectedEvent.id);
+          console.log("Form data: ", formData);
         } catch (error) {
           console.error("Error fetching request details:", error);
         }
       };
       fetchRequestDetails();
     }
+    
   }, [isEditing, requestId]);
+
+  
+
 
   const handleChange = (e) => {
     if (isEditing && selectedEvent !== "other" && e.target.name !== "description") return;
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  
   const handleEventChange = (e) => {
     const eventId = e.target.value;
+    setSelectedEvent(eventId);
 
     if (eventId === "other") {
       setIsOtherEvent(true);
-      setFormData({ ...formData, eventId: "", eventName: "", category: "", date: "", facultyAdvisor: "", points: "", activityCoordinator: "" });
+      setFormData({ ...formData, eventId: "other", eventName: "", category: "", date: "", points: "", activityCoordinatorId: "" });
     } else {
       const selected = events.find((event) => event.id.toString() === eventId);
       if (selected) {
@@ -140,64 +186,130 @@ const RequestForm = () => {
           eventName: selected.name,
           category: selected.category,
           date: selected.startDate,
-          facultyAdvisor: selected.faculty.id, 
           points: selected.points,
-          activityCoordinator: selected.faculty.id, 
+          activityCoordinatorId: selected.faculty.facultyId, 
         });
       }
     }
-    setSelectedEvent(eventId);
   };
 
-  const handleFileChange = (e) => {
-    if (uploadedFiles.length < 3) {
-      setUploadedFiles([...uploadedFiles, e.target.files[0]]);
+  // const handleFileChange = (e) => {
+  //   if (uploadedFiles.length < 3) {
+  //     setUploadedFiles([...uploadedFiles, e.target.files[0]]);
+  //   }
+  // };
+
+  const handleFileChange = async (e) => {
+    const newFile = e.target.files[0];
+  
+    if (!newFile || uploadedFiles.length >= 3) return;
+  
+    setUploadedFiles([...uploadedFiles, newFile]);
+  
+    // Upload new file immediately
+    const fileData = new FormData();
+    fileData.append("file", newFile);
+    fileData.append("requestId", requestId); // Ensure requestId exists
+  
+    try {
+      const uploadResponse = await fetch("http://localhost:8080/api/documents/upload", {
+        method: "POST",
+        body: fileData,
+      });
+  
+      if (!uploadResponse.ok) {
+        console.error("Error uploading file:", await uploadResponse.text());
+        setMessage("File upload failed.");
+      }
+    } catch (error) {
+      console.error("Error uploading file:", error);
+      setMessage("Error uploading file.");
     }
   };
+  
 
   const handleFacultyChange = (e) => {
     const selectedFacultyId = e.target.value;
     console.log("Selected Faculty ID:", selectedFacultyId);  
-    setFormData({ ...formData, facultyAdvisor: selectedFacultyId });
-    formData.facultyAdvisor = selectedFacultyId;
+    setFormData({ ...formData, activityCoordinatorId: selectedFacultyId });
+    formData.activityCoordinatorId = selectedFacultyId;
   };
 
-  const removeFile = (index) => {
+  
+
+  // const removeFile = async (fileId, index) => {
+  //   try {
+  //     console.log("documentzzzz:", uploadedFiles);
+  //     const response = await fetch(`http://localhost:8080/api/documents/${fileId}`, {
+  //       method: "DELETE",
+  //     });
+  
+  //     if (!response.ok) throw new Error("Failed to delete file");
+  
+  //     // Update state after successful deletion
+  //     setUploadedFiles(uploadedFiles.filter((_, i) => i !== index));
+  
+  //     console.log("File deleted successfully!");
+  //   } catch (error) {
+  //     console.error("Error deleting file:", error);
+  //   }
+  // };
+
+  const removeFile = async (file, index) => {
+    if (file.id) {
+      // If file exists in DB, delete from server
+      try {
+        const response = await fetch(`http://localhost:8080/api/documents/delete/${file.id}`, {
+          method: "DELETE",
+        });
+  
+        if (!response.ok) {
+          console.error("Error deleting file:", await response.text());
+          setMessage("Failed to delete file.");
+          return;
+        }
+      } catch (error) {
+        console.error("Error deleting file:", error);
+        setMessage("Error deleting file.");
+      }
+    }
+  
+    // Remove from state
     setUploadedFiles(uploadedFiles.filter((_, i) => i !== index));
   };
+  
+  
   
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     let finalEventId = formData.eventId; 
-
+  
     const requestData = new FormData();
     requestData.append("studentId", student?.rollNumber);
     requestData.append("description", formData.description);
     requestData.append("isOther", isOtherEvent.toString());
-
+  
     if (isOtherEvent) {
       finalEventId = null;
       requestData.append("activityName", formData.eventName);
       requestData.append("activityType", formData.category);
-      requestData.append("coordinatorId", formData.facultyAdvisor);
+      requestData.append("coordinatorId", formData.activityCoordinatorId);
       requestData.append("points", formData.points.toString());
     }
-
+  
     requestData.append("eventId", finalEventId);
-
-    console.log("Sending FormData:", Object.fromEntries(requestData.entries())); 
-
-
+  
     try {
       const url = isEditing
         ? `http://localhost:8080/api/requests/update/${requestId}`
         : "http://localhost:8080/api/requests/submit";
+      
       const method = isEditing ? "PUT" : "POST";
-
+  
       const requestResponse = await fetch(url, { method, body: requestData });
-
+  
       if (!requestResponse.ok) {
         const errorText = await requestResponse.text();
         console.error("Error submitting request:", errorText);
@@ -208,15 +320,24 @@ const RequestForm = () => {
       const request = await requestResponse.json(); 
       console.log("Request submitted successfully. ID:", request.requestId);
   
-      for (const file of uploadedFiles) {
-        const fileData = new FormData();
-        fileData.append("file", file);
-        fileData.append("requestId", request.requestId);
+      if (uploadedFiles.length > 0) {
+        for (const file of uploadedFiles) {
+          if (file instanceof File) {  
+            const fileData = new FormData();
+            fileData.append("file", file);
+            fileData.append("requestId", request.requestId);
   
-        await fetch("http://localhost:8080/api/documents/upload", {
-          method: "POST",
-          body: fileData,
-        });
+            const uploadResponse = await fetch("http://localhost:8080/api/documents/upload", {
+              method: "POST",
+              body: fileData,
+            });
+  
+            if (!uploadResponse.ok) {
+              console.error("Error uploading file:", await uploadResponse.text());
+              setMessage("Request updated, but file upload failed.");
+            }
+          }
+        }
       }
   
       setMessage("Request submitted successfully!");
@@ -226,6 +347,7 @@ const RequestForm = () => {
       setMessage("Error submitting request.");
     }
   };
+  
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -243,7 +365,7 @@ const RequestForm = () => {
               {/* Event Selection */}
               <div className="form-group">
                 <label>Event Name:*</label>
-                <select name="eventId" value={selectedEvent} onChange={handleEventChange} required>
+                <select name="eventId" value={formData.eventId} onChange={handleEventChange} required>
                   <option value="">Select Event</option>
                   {events.map((event) => (
                     <option key={event.id} value={event.id}>{event.name}</option>
@@ -269,8 +391,8 @@ const RequestForm = () => {
                   </div>
                   <div className="form-group">
                     <label>Activity Coordinator:</label>
-                    <select name="facultyAdvisor" value={formData.facultyAdvisor} onChange={handleFacultyChange} required>
-                      <option value="">Select Faculty Advisor</option>
+                    <select name="activityCoordinatorId" value={formData.activityCoordinatorId} onChange={handleFacultyChange} required>
+                      <option value="">Select Activity Coordinator</option>
                       {facultyList.map((faculty) => (
                         <option key={faculty.facultyId} value={faculty.facultyId}>
                           {faculty.name}
@@ -292,24 +414,42 @@ const RequestForm = () => {
               </div>
 
               {/* File Upload */}
-              <div className="form-group full-width">
+              {/* <div className="form-group full-width">
                 <label>Upload Documents:*</label>
 
                 <div className="file-upload-section">
                 {uploadedFiles.map((file, index) => (
                   <div key={index} className="file-item">
                     <span>{file.name}</span>
-                    <button type="button" onClick={() => removeFile(index)}>❌</button>
+                    <button type="button" onClick={() => removeFile(file.id, index)}>❌</button>
                   </div>
                 ))}
                 {uploadedFiles.length < 3 && (
                   <>
                     <input type="file" onChange={handleFileChange} />
-                    {/* <button type="button" onClick={() => document.querySelector("input[type=file]").click()}>➕</button> */}
                   </>
                 )}
               </div>
-            </div>
+            </div> */}
+            <div className="form-group full-width">
+  <label>Upload Documents:*</label>
+
+  <div className="file-upload-section">
+    {uploadedFiles.map((file, index) => (
+      <div key={index} className="file-item">
+        <span>{file.name || file.fileName}</span> {/* Handle both File and DB objects */}
+        <button type="button" onClick={() => removeFile(file, index)}>❌</button>
+      </div>
+    ))}
+    
+    {uploadedFiles.length < 3 && (
+      <>
+        <input type="file" onChange={handleFileChange} />
+      </>
+    )}
+  </div>
+</div>
+
 
             {/* Declaration */}
             <div className="form-checkbox">
