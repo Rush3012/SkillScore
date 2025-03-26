@@ -98,7 +98,6 @@ const StudentProfile = () => {
                 <p><strong>Department:</strong> {student.department}</p>
                 <p><strong>Batch:</strong> {student.batch}</p>
                 <p><strong>Gender:</strong> {student.gender}</p>
-                <p><strong>Email:</strong> {student.email}</p>
               </div>
             </div>
           </div>

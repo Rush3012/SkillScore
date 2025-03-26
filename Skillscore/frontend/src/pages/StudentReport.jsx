@@ -150,7 +150,6 @@ const StudentReport = () => {
           <div className="student-details">
             <p><strong>Roll No:</strong> {student.rollNumber}</p>
             <p><strong>Semester:</strong> {student.semester}</p>
-            <p><strong>CGPA:</strong> {student.cgpa}</p>
           </div>
         </div>
 

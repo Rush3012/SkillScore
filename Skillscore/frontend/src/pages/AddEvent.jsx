@@ -9,6 +9,7 @@ import "./AddEvent.css";
 const AddEvent = () => {
   const [fac, setFac] = useState(null);
   const [preview, setPreview] = useState(null);
+  
 
   const [eventData, setEventData] = useState({
     name: "",
@@ -19,7 +20,9 @@ const AddEvent = () => {
     time: "",
     facultyId: "",
     registrationLink: "",
-    poster: null,
+    activityType: "",
+    venue: "",
+    regFee: ""
   });
 
   const navigate = useNavigate();
@@ -45,9 +48,7 @@ const AddEvent = () => {
               } catch (error) {
                   console.error("Error fetching faculty data:", error);
                   setError(error.message);
-              } finally {
-                  setLoading(false);
-              }
+              } 
           };
   
           fetchFacultyData();
@@ -106,7 +107,10 @@ const AddEvent = () => {
         endDate: eventData.endDate,
         time: eventData.time,
         faculty: { facultyId: Number(fac.facultyId) }, 
-        registrationLink: eventData.registrationLink
+        registrationLink: eventData.registrationLink,
+        activityType: eventData.activityType,
+        regFee: eventData.regFee,
+        venue: eventData.venue
     };
     
     formData.append("eventData", JSON.stringify(formattedData)); 
@@ -138,6 +142,9 @@ const AddEvent = () => {
           facultyId: "",
           registrationLink: "",
           poster: null,
+          type: "",
+          regFee: "",
+          venue: ""
         });
       } else {
         alert("Failed to add event. Try again.");
@@ -169,6 +176,15 @@ const AddEvent = () => {
               </div>
 
               <div className="form-group">
+                <label>* Event Type:</label>
+                <select name="activityType" value={eventData.activityType} onChange={handleChange} required>
+                  <option value="">Select</option>
+                  <option value="Institute Level">Institute Level</option>
+                  <option value="Department Level">Department Level</option>
+                </select>
+              </div>
+
+              <div className="form-group">
                 <label>* Event Description:</label>
                 <textarea name="description" value={eventData.description} onChange={handleChange} required />
               </div>
@@ -193,7 +209,15 @@ const AddEvent = () => {
                 <input type="time" name="time" value={eventData.time} onChange={handleChange} required />
               </div>
 
-              
+              <div className="form-group">
+                <label>* Venue:</label>
+                <input type="text" name="venue" value={eventData.venue} onChange={handleChange} />
+              </div>
+
+              <div className="form-group">
+                <label>* Registration Fee:</label>
+                <input type="text" name="regFee" value={eventData.regFee} onChange={handleChange} />
+              </div>
 
               <div className="form-group">
                 <label>* Registration Link:</label>

@@ -1,0 +1,9 @@
+roll_number,name,department,total_points,institute_points,department_points,username,email,password,phone_number,program,semester,gender,batch
+B220125CS,Arjun Menon,Computer Science,20,10,10,arjun,arjun.menon@iitm.ac.in,cs@123,9876553210,B.Tech,4,Male,CS01
+B220432CS,Diya Nair,Computer Science,15,5,10,diya,diya.nair@iitm.ac.in,cs@456,9876643211,B.Tech,4,Female,CS01
+B220333CS,Ravi Krishna,Computer Science,30,20,10,ravi,ravi.krishna@iitm.ac.in,cs@789,9877543212,B.Tech,4,Male,CS01
+B221102CS,Sneha Ramesh,Computer Science,40,15,25,sneha,sneha.ramesh@iitm.ac.in,cs@321,9886543213,B.Tech,4,Female,CS01
+B221138CS,Rachel Paul,Computer Science,25,10,15,rachel,rachel@nitc.ac.in,123,5467129901,B.Tech,4,Female,CS01
+B220503CS,Rushda P P,Computer Science,20,15,5,rushda,rushda@nitc.ac.in,123,8967103456,B.Tech,4,Female,CS01
+
+

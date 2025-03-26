@@ -1,0 +1,7 @@
+roll_number,name,department,total_points,institute_points,department_points,username,email,password,phone_number,program,semester,gender,batch
+B230545CS,Sreedevi K,Computer Science,12,6,6,sreedevi,sreedevi@nitc.ac.in,123,9876123456,B.Tech,2,Male,CS02
+B230278CS,Meghana Nair,Computer Science,18,10,8,meghana,meghana@nitc.ac.in,123,9876234567,B.Tech,2,Female,CS02
+B230389CS,Rohan Varma,Computer Science,25,12,13,rohan,rohan@nitc.ac.in,123,9876345678,B.Tech,2,Male,CS02
+B230532CS,Advaith S,Computer Science,14,7,7,advaith,advaith@nitc.ac.in,123,9876567890,B.Tech,2,Male,CS02
+B230649CS,Suzzane Sadique,Computer Science,20,9,11,suz,suz@nitc.ac.in,123,9876678901,B.Tech,2,Female,CS02
+B230812CS,Nandana K,Computer Science,27,14,13,nandana,nandana@nitc.ac.in,123,9876890123,B.Tech,2,Female,CS02
