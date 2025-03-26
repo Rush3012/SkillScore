@@ -152,7 +152,6 @@ public ResponseEntity<String> uploadFaculty(@RequestParam("file") MultipartFile 
          CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT.withFirstRecordAsHeader())) {
 
         for (CSVRecord record : csvParser) {
-            String facultyId = record.get("faculty_id");
             String name = record.get("name");
             String department = record.get("department");
             String username = record.get("username");
@@ -176,22 +175,14 @@ public ResponseEntity<String> uploadFaculty(@RequestParam("file") MultipartFile 
                 user = userRepository.save(user);
             }
 
+          
+                Faculty faculty = new Faculty(); 
+                faculty.setName(name);
+                faculty.setDepartment(department);
+                faculty.setUser(user);
+                facultyRepository.save(faculty);
+
             
-            Optional<Faculty> existingFaculty = facultyRepository.findById(Long.parseLong(facultyId));
-
-Faculty faculty;
-if (existingFaculty.isPresent()) {
-    faculty = existingFaculty.get();
-} else {
-    faculty = new Faculty(); 
-}
-
-faculty.setFacultyId(Long.parseLong(facultyId)); 
-faculty.setName(name);
-faculty.setDepartment(department);
-faculty.setUser(user);
-
-facultyRepository.save(faculty);
 
         }
         return ResponseEntity.ok("CSV uploaded and processed successfully.");

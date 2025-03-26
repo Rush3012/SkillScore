@@ -34,7 +34,7 @@ public class Document {
     @Column(nullable = false)
     private LocalDateTime uploadedAt;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "request_id", nullable = false)
     private Request request;  
 
