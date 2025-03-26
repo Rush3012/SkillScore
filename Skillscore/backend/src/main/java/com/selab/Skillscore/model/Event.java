@@ -38,7 +38,7 @@ public class Event {
     @Column(length = 2000)
     private String registrationLink;
     
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "faculty_id", referencedColumnName = "facultyId", nullable = false)
     private Faculty faculty;
 

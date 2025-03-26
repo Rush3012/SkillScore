@@ -18,6 +18,7 @@ const AddEvent = () => {
     endDate: "",
     time: "",
     facultyId: "",
+    registrationLink: "",
     poster: null,
   });
 
@@ -104,7 +105,8 @@ const AddEvent = () => {
         startDate: eventData.startDate,
         endDate: eventData.endDate,
         time: eventData.time,
-        faculty: { facultyId: Number(fac.facultyId) } 
+        faculty: { facultyId: Number(fac.facultyId) }, 
+        registrationLink: eventData.registrationLink
     };
     
     formData.append("eventData", JSON.stringify(formattedData)); 
@@ -134,6 +136,7 @@ const AddEvent = () => {
           endDate: "",
           time: "",
           facultyId: "",
+          registrationLink: "",
           poster: null,
         });
       } else {
@@ -190,10 +193,12 @@ const AddEvent = () => {
                 <input type="time" name="time" value={eventData.time} onChange={handleChange} required />
               </div>
 
-              {/* <div className="form-group">
-                <label>* Faculty ID:</label>
-                <input type="text" name="facultyId" value={eventData.facultyId} onChange={handleChange} required />
-              </div> */}
+              
+
+              <div className="form-group">
+                <label>* Registration Link:</label>
+                <input type="text" name="registrationLink" value={eventData.registrationLink} onChange={handleChange} />
+              </div>
 
               <div className="form-group">
                 <label>Upload Poster:</label>

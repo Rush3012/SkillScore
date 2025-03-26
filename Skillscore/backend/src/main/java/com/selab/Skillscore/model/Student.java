@@ -2,6 +2,7 @@ package com.selab.Skillscore.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -19,13 +20,15 @@ public class Student {
     private int totalPoints;
     private int institutePoints = 0;
     private int departmentPoints = 0;
+    // private String program;
+    // private String semester;
     
     @ManyToOne
     @JoinColumn(name = "faculty_id", referencedColumnName = "facultyId")
     @JsonIgnore  
     private Faculty faculty;
     
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
@@ -59,5 +62,6 @@ public class Student {
         this.departmentPoints = departmentPoints;
     }
 
-
+    // public String getProgram() {return program;}
+    // public String getSem() {return semester;} 
 }

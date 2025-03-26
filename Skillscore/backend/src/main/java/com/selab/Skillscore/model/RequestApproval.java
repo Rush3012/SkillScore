@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import org.hibernate.annotations.UpdateTimestamp;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -20,12 +21,12 @@ public class RequestApproval {
     @EmbeddedId
     private RequestApprovalId id;  // Composite key (requestId, facultyId)
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @MapsId("requestId")
     @JoinColumn(name = "request_id", referencedColumnName = "id", nullable = false)
     private Request request;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @MapsId("facultyId")
     @JoinColumn(name = "faculty_id", referencedColumnName = "facultyId", nullable = false)
     private Faculty faculty;

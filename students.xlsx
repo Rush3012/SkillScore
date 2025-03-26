@@ -1,0 +1,9 @@
+faculty_id,name,department,username,email,password,phone_number
+3,Dr. Anjali,EEE,anjali,anjali@nitc.ac.in,anjali123,9876543222
+4,Dr. Ramesh,ME,ramesh,ramesh@nitc.ac.in,ramesh123,9876543233
+5,Dr. Priya,CIVIL,priya,priya@nitc.ac.in,priya123,9876543244
+6,Dr. Suresh,CSE,suresh,suresh@nitc.ac.in,suresh123,9876543255
+7,Dr. Neha,ECE,neha,neha@nitc.ac.in,neha123,9876543266
+2,Dr. Arjun,EEE,arjun,arjun@nitc.ac.in,arjun123,9876543277
+9,Dr. Kavya,ME,kavya,kavya@nitc.ac.in,kavya123,9876543288
+10,Dr. Vikram,CIVIL,vikram,vikram@nitc.ac.in,vikram123,9876543299
