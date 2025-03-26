@@ -6,11 +6,13 @@ import logo from "../assets/skillscore_logo.png";
 const AdminDashboard = () => {
     const navigate = useNavigate();
     const [selectedFile, setSelectedFile] = useState(null);
+    const [uploading, setUploading] = useState(false);
+    
 
     // Logout function
     const handleLogout = () => {
         localStorage.removeItem("adminToken");
-        navigate("/AdminLogin");
+        navigate("/admin-login");
     };
 
     // File upload handler
@@ -26,7 +28,7 @@ const AdminDashboard = () => {
 
         const formData = new FormData();
         formData.append("file", selectedFile);
-
+        setUploading(true);
         try {
             const response = await fetch("http://localhost:8080/api/files/csv/faculty/upload", {
                 method: "POST",
@@ -38,9 +40,13 @@ const AdminDashboard = () => {
             } else {
                 alert("Error uploading faculty data.");
             }
+            window.location.reload(); // Refresh page to update student list
+
         } catch (error) {
             console.error("Upload failed:", error);
             alert("Upload failed.");
+        }finally {
+            setUploading(false);
         }
     };
 
@@ -72,8 +78,9 @@ const AdminDashboard = () => {
                 <div className="upload-container">
                     <h2>Upload Faculty List</h2>
                     <input type="file" accept=".xlsx, .xls" onChange={handleFileChange} />
-                    <button onClick={handleUpload}>Upload</button>
-
+                    <button onClick={handleUpload} disabled={uploading}>
+                    {uploading ? "Uploading..." : "Upload Excel"}
+                    </button>
                 </div>
             </div>
         </div>

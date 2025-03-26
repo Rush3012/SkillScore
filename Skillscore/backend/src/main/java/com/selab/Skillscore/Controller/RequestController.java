@@ -137,7 +137,7 @@ public class RequestController {
     public ResponseEntity<Request> updateRequest(@PathVariable Long requestId,
                                                 @RequestParam String description,
                                                 @RequestParam(required = false) String activityType,
-                                                @RequestParam(required = false) int points,
+                                                @RequestParam(required = false) Integer points,
                                                 @RequestParam(required = false) String coordinatorId) {
         Request updatedRequest = requestService.updateRequest(requestId, description, activityType, coordinatorId);
         return ResponseEntity.ok(updatedRequest);

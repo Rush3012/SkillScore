@@ -37,7 +37,7 @@ public class Request {
     private String activityName;
     private String activityType;
     private long coordinatorId;
-    private int points;
+    private Integer points;
     
 
     public Long getId() {
@@ -92,11 +92,11 @@ public class Request {
         return activityType;
     }
 
-    public void setPoints(int points){
+    public void setPoints(Integer points){
         this.points = points;
     }
 
-    public int getPoints() {
+    public Integer getPoints() {
         return points;
     }
 
