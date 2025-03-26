@@ -2,8 +2,11 @@ package com.selab.Skillscore.repository;
 
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -57,6 +60,14 @@ public interface RequestRepository extends JpaRepository<Request, Long> {
     List<Request> findRequestsByFacultyId(@Param("facultyId") Long facultyId, @Param("status") Status status);
 
     
+    List<Request> findByStudentRollNumber(String rollNumber);
+
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM Request r WHERE r.student.rollNumber = :rollNumber")
+    void deleteByStudentRollNumber(@Param("rollNumber") String rollNumber);
+
+
 
 }
 

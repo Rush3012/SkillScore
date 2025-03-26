@@ -14,6 +14,8 @@ const StudentReport = () => {
   const [student, setStudent] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [removing, setRemoving] = useState(false);
+
 
   useEffect(() => {
     const fetchStudentData = async () => {
@@ -57,6 +59,30 @@ const StudentReport = () => {
 
     fetchStudentData();
   }, [rollNumber]);
+
+  const handleRemoveStudent = async () => {
+    if (!window.confirm(`Are you sure you want to remove ${student.name}? This action cannot be undone.`)) return;
+
+    setRemoving(true);
+    try {
+      const response = await fetch(`http://localhost:8080/api/students/${rollNumber}`, {
+        method: "DELETE",
+        credentials: "include",
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to remove student. Please try again.");
+      }
+
+      alert("Student removed successfully!");
+      navigate("/faculty/students"); // Redirect to the faculty's student list
+    } catch (error) {
+      alert(error.message);
+    } finally {
+      setRemoving(false);
+    }
+  };
+
 
   if (loading) return <p>Loading student data...</p>;
   if (error) return <p className="error-message">{error}</p>;
@@ -142,6 +168,16 @@ const StudentReport = () => {
           ) : (
             <p className="no-requests">No pending requests</p>
           )}
+        </div>
+        {/* Remove Student Button */}
+        <div className="remove-student-section">
+          <button 
+            className="remove-student-button"
+            onClick={handleRemoveStudent}
+            disabled={removing}
+          >
+            {removing ? "Removing..." : "Remove Student"}
+          </button>
         </div>
       </div>
     </div>

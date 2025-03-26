@@ -3,6 +3,8 @@ package com.selab.Skillscore.model;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 
+import jakarta.persistence.CascadeType;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -32,7 +34,7 @@ public class Document {
     @Column(nullable = false)
     private LocalDateTime uploadedAt;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "request_id", nullable = false)
     private Request request;  
 

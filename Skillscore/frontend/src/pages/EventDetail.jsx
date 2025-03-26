@@ -68,7 +68,7 @@ const EventDetails = () => {
             <h3>About the Event</h3>
             <p>{event.description || "No description available."}</p>
           </div>
-
+          
           {event.registrationLink && (
             <p className="mt-2">
               <a

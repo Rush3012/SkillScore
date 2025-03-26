@@ -162,17 +162,17 @@ const FacultyRequestDetails = () => {
   if (!request) return <p>No request found.</p>;
 
   return (
-    <div className="faculty-page">
+    <div className="faculty-details-page">
       <StuSidebar />
-      <div className="content">
+      <div className="details-content">
         <StuHeader title="Requests" />
 
-        <div className="request-container">
-          <h2 className="page-title">Request Details</h2>
+        <div className="request-box">
+          <h2 className="details-title">Request Details</h2>
 
           <div className="request-card">
             <div className="request-info">
-              <div className="left">
+              <div className="details-left">
                 <p><strong>Event Name</strong> <br /> {request.activityName}</p>
                 <p><strong>Student</strong> <br /> {request.student.name}</p>
                 <p><strong>Activity Coordinator</strong> <br /> {request.faculty.name}</p>
@@ -180,7 +180,7 @@ const FacultyRequestDetails = () => {
                 
               </div>
 
-              <div className="right">
+              <div className="details-right">
                 <p><strong>Activity Points</strong> <br /> {request.points}</p>
                 <p><strong>Date of Event</strong> <br /> {request.eventDate}</p>
                 <p><strong>Description</strong> <br /> {request.description}</p>
@@ -215,14 +215,19 @@ const FacultyRequestDetails = () => {
           </div>
 
             {(isFA && isApproved) || (!isFA) ? (
+              <div>
+                {(!isFA) ? (
+              <p>This activity has been approved by the respective Activity Coordinator</p>):(
+                <p>This request is from one of your activities.</p>
+              )}
                 <div className="action-buttons">
-                    <button className="accept-btn" onClick={handleAccept}>✔ ACCEPT</button>
-                    <button className="reject-btn" onClick={() => setShowRejectPopup(true)}>❌ REJECT</button>
+                    <button className="approve-btn" onClick={handleAccept}>✔ ACCEPT</button>
+                    <button className="decline-btn" onClick={() => setShowRejectPopup(true)}>❌ REJECT</button>
                 </div>
+              </div>
             ) : (
                 <p>The request is not approved by the respective Activity Coordinator. Kindly wait for it to happen.</p>
             )}
-            {isApproved ? ( <p>the request is approved by activity coordinator</p>) : (<p> not APPROVED</p>)}
 
             {showRejectPopup && (
             <div className="popup-overlay">
