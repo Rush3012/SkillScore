@@ -20,8 +20,10 @@ public class Student {
     private int totalPoints;
     private int institutePoints = 0;
     private int departmentPoints = 0;
-    // private String program;
-    // private String semester;
+    private String program;
+    private String semester;
+    private String gender;
+    private String batch;
     
     @ManyToOne
     @JoinColumn(name = "faculty_id", referencedColumnName = "facultyId")
@@ -62,6 +64,15 @@ public class Student {
         this.departmentPoints = departmentPoints;
     }
 
-    // public String getProgram() {return program;}
-    // public String getSem() {return semester;} 
+    public String getProgram() {return program;}
+    public String getSem() {return semester;} 
+    public String getBatch() {return batch;}
+    public String getGender() {return gender;}
+
+    public void setProgram(String program) {this.program = program;}
+    public void setSem(String sem) {this.semester = sem;}
+    public void setBatch(String batch) {this.batch = batch;}
+    public void setGender(String gender) {this.gender = gender;}
+
+
 }

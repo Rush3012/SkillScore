@@ -103,52 +103,41 @@ const FacultyDashboard = () => {
     <div className="dashboard-container">
       {/* Faculty Sidebar */}
       <FacultySidebar />
-
+      
       {/* Main Content */}
       <div className="main-content">
         {/* Faculty Header */}
         <FacultyHeader />
 
-        {/* Dashboard Cards */}
-        <div className="dashboard-cards">
-          <div className="card">
-            <h3>Total Students</h3>
-            <p className="count">{faculty.studentCount}</p>
+        {/* Top Section (Split into Two Columns) */}
+        <div className="top-section">
+          {/* Left Side: Faculty Details */}
+          <div className="left-section">
+            <h2>Faculty Information</h2>
+            <div className="faculty-card">
+              <p><strong>Name:</strong> {faculty.name}</p>
+              <p><strong>Department:</strong> {faculty.department}</p>
+              <p><strong>Designation:</strong> {faculty.designation || "N/A"}</p>
+              <p><strong>Advisor:</strong> {faculty.isAdvisor ? "Yes" : "No"}</p>
+            </div>
           </div>
-          <div className="card highlight">
-            <h3>Students Below Credit</h3>
-            <p className="count red">60%</p>
-            <span>24 Students</span>
-          </div>
-          <div className="card">
-            <h3>Requests</h3>
-            <p className="count">{count}</p>
-            <span>to be approved</span>
+
+          {/* Right Side: Two Stacked Cards */}
+          <div className="right-section">
+            <div className="card">
+              <h3>Total Students</h3>
+              <p className="count">{faculty.studentCount}</p>
+            </div>
+            <div className="card">
+              <h3>Requests</h3>
+              <p className="count">{count}</p>
+              <span>to be approved</span>
+            </div>
           </div>
         </div>
 
-        {/* Tasks Section */}
-        {/* <div className="dashboard-section">
-          <h2>Tasks</h2>
-          <div className="events">
-            {requests.length > 0 ? (
-              requests.map((req) => (
-                <div
-                  key={req.id}
-                  className="event"
-                  onClick={() => window.location.href = `/faculty/${facultyId}/${requestId}`}
-                >
-                <p className="event-title">{req.activityName}</p>
-                </div>
-              ))
-            ): (
-              <p>No requests</p>
-            )}
-          </div>
-        </div> */}
-
-        {/* Upcoming Events */}
-        <div className="dashboard-section">
+        {/* Bottom Section: Events */}
+        <div className="bottom-section">
           <h2>My Events</h2>
           <div className="events">
             {events.length > 0 ? (
@@ -166,7 +155,6 @@ const FacultyDashboard = () => {
               <p>No events available</p>
             )}
           </div>
-
         </div>
       </div>
     </div>
@@ -174,4 +162,3 @@ const FacultyDashboard = () => {
 };
 
 export default FacultyDashboard;
-

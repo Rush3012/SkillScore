@@ -1,0 +1,11 @@
+roll_number,name,department,total_points,institute_points,department_points,username,email,password,phone_number,program,semester,gender,batch
+B220154CV,Arjun R, Civil Engineering,20,10,10,arjun,arjun@nitc.ac.in,123,9876123456,B.Tech,4,Male,CV02
+B220265CV,Meera S, Civil Engineering,18,8,10,meera,meera@nitc.ac.in,123,9876234567,B.Tech,4,Female,CV02
+B220312CV,Rahul Menon, Civil Engineering,25,12,13,rahul,rahul@nitc.ac.in,123,9876345678,B.Tech,4,Male,CV02
+B220459CV,Divya Raj, Civil Engineering,22,11,11,divya,divya@nitc.ac.in,123,9876456789,B.Tech,4,Female,CV02
+B220534CV,Anoop M, Civil Engineering,15,7,8,anoop,anoop@nitc.ac.in,123,9876567890,B.Tech,4,Male,CV02
+B220601CV,Soumya Nair, Civil Engineering,19,9,10,soumya,soumya@nitc.ac.in,123,9876678901,B.Tech,4,Female,CV02
+B220723CV,Vikram S, Civil Engineering,21,10,11,vikram,vikram@nitc.ac.in,123,9876789012,B.Tech,4,Male,CV02
+B220805CV,Sreeja K, Civil Engineering,24,11,13,sreeja,sreeja@nitc.ac.in,123,9876890123,B.Tech,4,Female,CV02
+B220912CV,Hari Prasad, Civil Engineering,27,13,14,hari,hari@nitc.ac.in,123,9876901234,B.Tech,4,Male,CV02
+B220978CV,Neha Pillai, Civil Engineering,30,15,15,neha,neha@nitc.ac.in,123,9877012345,B.Tech,4,Female,CV02

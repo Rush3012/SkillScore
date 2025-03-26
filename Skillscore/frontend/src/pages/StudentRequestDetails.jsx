@@ -83,6 +83,7 @@ const StudentRequestDetails = () => {
               <div className="left">
                 <p><strong>Event Name</strong> <br /> {request.activityName}</p>
                 <p><strong>Student</strong> <br /> {request.student.name}</p>
+                <p><strong>Activity Coordinator</strong> <br /> {request.faculty.name}</p>
               </div>
               <div className="right">
                 <p><strong>Activity Points</strong> <br /> {request.points}</p>

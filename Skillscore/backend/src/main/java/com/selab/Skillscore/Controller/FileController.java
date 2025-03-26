@@ -103,6 +103,12 @@ public class FileController {
                 String email = record.get("email");
                 String password = record.get("password");
                 String phoneNumber = record.get("phone_number");
+                int institutePoints = Integer.parseInt(record.get("institute_points"));
+                int departmentPoints = Integer.parseInt(record.get("department_points"));
+                String sem = record.get("semester");
+                String batch = record.get("batch");
+                String gender = record.get("gender");
+
 
                 // Check if user already exists
                 Optional<User> existingUser = userRepository.findByUsername(username);
@@ -131,6 +137,11 @@ public class FileController {
                     student.setTotalPoints(totalPoints);
                     student.setFaculty(facultyService.getFacultyById(facultyId));
                     student.setUser(user); 
+                    student.setBatch(batch);
+                    student.setSem(sem);
+                    student.setGender(gender);
+                    student.setDepartmentPoints(departmentPoints);
+                    student.setInstitutePoints(institutePoints);
                     studentRepository.save(student);
                 }
             }
@@ -158,6 +169,8 @@ public ResponseEntity<String> uploadFaculty(@RequestParam("file") MultipartFile 
             String email = record.get("email");
             String password = record.get("password");
             String phoneNumber = record.get("phone_number");
+            String designation = record.get("designation");
+            
 
             // Check if user already exists
             Optional<User> existingUser = userRepository.findByUsername(username);
@@ -180,7 +193,9 @@ public ResponseEntity<String> uploadFaculty(@RequestParam("file") MultipartFile 
                 faculty.setName(name);
                 faculty.setDepartment(department);
                 faculty.setUser(user);
+                faculty.setDesignation(designation);
                 facultyRepository.save(faculty);
+
 
             
 

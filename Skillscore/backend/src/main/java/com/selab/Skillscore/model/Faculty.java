@@ -20,17 +20,18 @@ public class Faculty {
     private String name;
     private String department;
     private boolean isAdvisor;
-    
+    private String designation;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
     public Faculty() {}
-    public Faculty(String name, String department, boolean isAdvisor, User user) {
+    public Faculty(String name, String department, boolean isAdvisor, String designation, User user) {
         this.name = name;
         this.department = department;
         this.isAdvisor = isAdvisor;
         this.user = user;
+        this.designation = designation;
     }
 
     public Long getId() { return facultyId; }
@@ -43,6 +44,10 @@ public class Faculty {
     public void setIsAdvisor(boolean isAdvisor) { this.isAdvisor = isAdvisor; }
     public User getUser() { return user; }
     public void setUser(User user) { this.user = user; }
+
+    public String getDesignation() {return designation;}
+    public void setDesignation(String designation) {this.designation = designation;}
+    
     
     // @OneToMany(mappedBy = "faculty")
     // @JsonManagedReference  

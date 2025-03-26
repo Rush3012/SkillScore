@@ -40,7 +40,8 @@ public class FacultyController {
         response.put("isAdvisor", faculty.getIsAdvisor());
         response.put("user", faculty.getUser());
         response.put("studentCount", studentCount);
-
+        response.put("designation", faculty.getDesignation());
+        response.put("isAdvisor", faculty.getIsAdvisor());
         return ResponseEntity.ok(response);
 
     }

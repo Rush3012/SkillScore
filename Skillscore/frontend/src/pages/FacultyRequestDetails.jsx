@@ -216,7 +216,7 @@ const FacultyRequestDetails = () => {
 
             {(isFA && isApproved) || (!isFA) ? (
               <div>
-                {(!isFA) ? (
+                {(isFA) ? (
               <p>This activity has been approved by the respective Activity Coordinator</p>):(
                 <p>This request is from one of your activities.</p>
               )}

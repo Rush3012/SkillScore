@@ -65,13 +65,14 @@ public class RequestService {
                     .orElseThrow(() -> new RuntimeException("Event not found"));
             request.setEvent(event);
             request.setActivityName(event.getName());
+            request.setActivityType(event.getActivityType());
             request.setPoints(event.getPoints());
             request.setCoordinatorId(event.getFaculty().getFacultyId());
+            request.setPoints(event.getPoints());
         }
 
         requestRepository.save(request);  // Save request
 
-        // Create faculty approval entries
         List<RequestApproval> approvals = new ArrayList<>();
 
         if (student.getFaculty() != null) {
@@ -171,10 +172,14 @@ public class RequestService {
                     student.setTotalPoints(student.getTotalPoints() + request.getPoints()); // Update student points
             
                     if ("Institute Level".equals(request.getActivityType())) {
+                        System.out.println("insti");
                         student.setInstitutePoints(student.getInstitutePoints() + request.getPoints());
                     } else if ("Department Level".equals(request.getActivityType())) {
+                        System.out.println("dept");
                         student.setDepartmentPoints(student.getDepartmentPoints() + request.getPoints());
                     }
+
+                    System.out.println("type: " + request.getActivityType());
             
                     studentRepository.save(student);
                 } else {
