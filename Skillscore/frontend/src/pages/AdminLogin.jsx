@@ -44,7 +44,12 @@ const AdminLogin = () => {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
-                    <button onClick={handleLogin}>Login</button>
+                    <button onClick={handleLogin} className="login-btn">Login</button>
+                    
+                    {/* Back to Home Button */}
+                    <button onClick={() => navigate("/")} className="home-btn">
+                        Back to Home
+                    </button>
                 </div>
             </div>
         </div>

@@ -1,0 +1,127 @@
+/* Admin Dashboard Layout */
+.admin-dashboard {
+    display: flex;
+    height: 100vh;
+    background: #f8f9fa;
+    width: 100vw;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 250px;
+    background: #1d4e2a;
+    color: white;
+    padding: 20px;
+    height: 100vh;
+    position: fixed;
+}
+
+.sidebar h2 {
+    font-size: 22px;
+    margin-bottom: 20px;
+    margin-left: 30px;
+    color: #ddd;
+}
+/* Sidebar Logo */
+.logo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+}
+
+.sidebar-logo {
+    width: 60px; /* Adjust as needed */
+    margin-bottom: 10px;
+    margin-left: 50px;
+}
+
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    padding: 15px;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.sidebar ul li:hover, .sidebar ul .logout:hover {
+    background: #154321;
+}
+
+.logout {
+    margin-top: 50px;
+    color: #e95e5e;
+    font-weight: bold;
+}
+
+/* Main Content */
+.main-content {
+    margin-left: 250px;
+    width: calc(100% - 250px);
+    padding: 20px;
+}
+
+/* Header */
+.header {
+    background: #f8f9fa;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #ddd;
+}
+
+.admin-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logout-btn {
+    background: #ff4444;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.logout-btn:hover {
+    background: #cc0000;
+}
+
+/* Upload Faculty Section */
+.upload-container {
+    margin-top: 30px;
+    background: white;
+    padding: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    border-radius: 10px;
+}
+
+.upload-container h2 {
+    margin-bottom: 20px;
+}
+
+.upload-container input {
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.upload-container button {
+    padding: 10px 20px;
+    background: #1d4e2a;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.upload-container button:hover {
+    background: #154321;
+}
