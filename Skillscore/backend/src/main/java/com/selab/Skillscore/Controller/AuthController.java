@@ -2,6 +2,7 @@
 package com.selab.Skillscore.Controller;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
 
@@ -17,8 +18,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
+import com.selab.Skillscore.dto.PasswordChangeRequest;
 import com.selab.Skillscore.model.User;
+import com.selab.Skillscore.repository.UserRepository;
 import com.selab.Skillscore.service.UserService;
 
 @RestController
@@ -27,6 +31,9 @@ public class AuthController {
     
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest, HttpSession session) {
@@ -78,6 +85,24 @@ public class AuthController {
         response.setStatus(HttpServletResponse.SC_OK);
     }
     
+    @PostMapping("/change-password")
+    public ResponseEntity<?> changePassword(@RequestBody PasswordChangeRequest request) {
+        User user = userRepository.findById(request.getUserId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+
+        // Direct string comparison for plain-text password
+        if (!request.getCurrentPassword().equals(user.getPassword())) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Collections.singletonMap("message", "Incorrect current password!"));
+        }
+
+        // Directly setting new password in plain text
+        user.setPassword(request.getNewPassword());
+        userRepository.save(user);
+
+        return ResponseEntity.ok(Collections.singletonMap("message", "Password changed successfully!"));
+    }
+
 
     public static class LoginRequest {
         private String username;

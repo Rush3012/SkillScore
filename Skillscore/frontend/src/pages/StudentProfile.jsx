@@ -8,6 +8,14 @@ const StudentProfile = () => {
   const [student, setStudent] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showPasswordModal, setShowPasswordModal] = useState(false);
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordError, setPasswordError] = useState(null);
+  const [passwordSuccess, setPasswordSuccess] = useState(null);
+  const [userId, setUserId] = useState(null);
+
 
   useEffect(() => {
     const fetchStudentData = async () => {
@@ -20,6 +28,7 @@ const StudentProfile = () => {
         }
         const userData = await userResponse.json();
         const userId = userData.userId;
+        setUserId(userId);
 
         const studentResponse = await fetch(`http://localhost:8080/api/students/by-user/${userId}`, {
             credentials: "include",
@@ -42,6 +51,39 @@ const StudentProfile = () => {
     fetchStudentData();
   }, []);
 
+  const handleChangePassword = async () => {
+    if (newPassword !== confirmPassword) {
+      setPasswordError("New passwords do not match!");
+      return;
+    }
+    console.log("userid:", userId);
+    try {
+      const response = await fetch("http://localhost:8080/api/auth/change-password", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          userId: userId, 
+          currentPassword,
+          newPassword,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Password change failed!");
+      }
+
+      setPasswordSuccess("Password changed successfully!");
+      alert("Password changed successfully");
+      setShowPasswordModal(false);
+      setCurrentPassword("");
+      setNewPassword("");
+      setConfirmPassword("");
+    } catch (error) {
+      setPasswordError(error.message);
+    }
+  };
   if (loading) {
     return <p>Loading...</p>;
   }
@@ -101,8 +143,24 @@ const StudentProfile = () => {
               </div>
             </div>
           </div>
+          <button onClick={() => setShowPasswordModal(true)} className="change-password-btn">Change Password</button>
+
         </div>
       </div>
+      {showPasswordModal && (
+        <div className="password-modal">
+          <div className="password-modal-content">
+            <h3>Change Password</h3>
+            {passwordError && <p className="error">{passwordError}</p>}
+            {passwordSuccess && <p className="success">{passwordSuccess}</p>}
+            <input type="password" placeholder="Current Password" value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} />
+            <input type="password" placeholder="New Password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
+            <input type="password" placeholder="Confirm New Password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
+            <button onClick={handleChangePassword}>Submit</button>
+            <button onClick={() => setShowPasswordModal(false)}>Cancel</button>
+            </div>
+        </div>
+      )}
     </div>
   );
 };
