@@ -5,8 +5,9 @@ import org.springframework.stereotype.Service;
 
 import com.selab.Skillscore.model.Faculty;
 import com.selab.Skillscore.repository.FacultyRepository;
-import com.selab.Skillscore.dto.FacultyDashboardDTO;
-import java.util.Optional;
+import com.selab.Skillscore.repository.StudentRepository;
+
+import java.util.List;
 
 
 @Service
@@ -36,5 +37,16 @@ public class FacultyService {
     public Faculty getFacultyById(Long facultyId) {
         return facultyRepository.findById(facultyId)
                 .orElseThrow(() -> new RuntimeException("Faculty not found with ID: " + facultyId));
+    }
+
+    @Autowired
+    private StudentRepository studentRepository;
+
+    public int getStudentCountByFacultyId(Long facultyId) {
+        return studentRepository.countStudentsByFacultyId(facultyId);
+    }
+
+    public List<Faculty> getAllFaculty() {
+        return facultyRepository.findAll();
     }
 }

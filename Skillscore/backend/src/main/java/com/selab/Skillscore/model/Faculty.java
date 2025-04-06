@@ -1,16 +1,12 @@
 package com.selab.Skillscore.model;
 
-import java.util.ArrayList;
-import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import lombok.Data;
 
@@ -20,20 +16,22 @@ public class Faculty {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long facultyId;
+    
     private String name;
     private String department;
     private boolean isAdvisor;
-    
-    @OneToOne
+    private String designation;
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
     public Faculty() {}
-    public Faculty(String name, String department, boolean isAdvisor, User user) {
+    public Faculty(String name, String department, boolean isAdvisor, String designation, User user) {
         this.name = name;
         this.department = department;
         this.isAdvisor = isAdvisor;
         this.user = user;
+        this.designation = designation;
     }
 
     public Long getId() { return facultyId; }
@@ -46,6 +44,10 @@ public class Faculty {
     public void setIsAdvisor(boolean isAdvisor) { this.isAdvisor = isAdvisor; }
     public User getUser() { return user; }
     public void setUser(User user) { this.user = user; }
+
+    public String getDesignation() {return designation;}
+    public void setDesignation(String designation) {this.designation = designation;}
+    
     
     // @OneToMany(mappedBy = "faculty")
     // @JsonManagedReference  

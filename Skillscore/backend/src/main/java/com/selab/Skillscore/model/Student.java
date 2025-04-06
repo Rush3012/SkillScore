@@ -1,8 +1,8 @@
 package com.selab.Skillscore.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -18,13 +18,19 @@ public class Student {
     private String name;
     private String department;
     private int totalPoints;
+    private int institutePoints = 0;
+    private int departmentPoints = 0;
+    private String program;
+    private String semester;
+    private String gender;
+    private String batch;
     
     @ManyToOne
     @JoinColumn(name = "faculty_id", referencedColumnName = "facultyId")
     @JsonIgnore  
     private Faculty faculty;
     
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
@@ -47,5 +53,26 @@ public class Student {
     public String getFacultyName() {
         return faculty != null ? faculty.getName() : null;
     }
+
+    public int getInstitutePoints(){return institutePoints;}
+    public int getDepartmentPonts() {return departmentPoints;}
+
+    public void setInstituePoints(int institutePoints){
+        this.institutePoints = institutePoints;
+    }
+    public void setDepartmentPoints(int departmentPoints){
+        this.departmentPoints = departmentPoints;
+    }
+
+    public String getProgram() {return program;}
+    public String getSem() {return semester;} 
+    public String getBatch() {return batch;}
+    public String getGender() {return gender;}
+
+    public void setProgram(String program) {this.program = program;}
+    public void setSem(String sem) {this.semester = sem;}
+    public void setBatch(String batch) {this.batch = batch;}
+    public void setGender(String gender) {this.gender = gender;}
+
 
 }

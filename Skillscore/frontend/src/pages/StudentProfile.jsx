@@ -87,19 +87,17 @@ const StudentProfile = () => {
 
           {/* Personal Information Section */}
           <div className="profile-info">
-            <h3>Personal</h3>
             <div className="profile-details">
               <div>
                 <p><strong>Name:</strong> {student.name}</p>
                 <p><strong>Semester:</strong> {student.semester}</p>
-                <p><strong>Mentor:</strong> {student.facultyName}</p>
+                <p><strong>Faculty Advisor:</strong> {student.facultyName}</p>
               </div>
               <div>
                 <p><strong>Program:</strong> {"Bachelor of Technology"}</p>
                 <p><strong>Department:</strong> {student.department}</p>
                 <p><strong>Batch:</strong> {student.batch}</p>
                 <p><strong>Gender:</strong> {student.gender}</p>
-                <p><strong>Email:</strong> {student.email}</p>
               </div>
             </div>
           </div>

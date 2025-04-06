@@ -1,15 +1,17 @@
 package com.selab.Skillscore.Controller;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.selab.Skillscore.service.StudentService;
-import com.selab.Skillscore.dto.StudentDashboardDTO;
 import com.selab.Skillscore.model.Student;
 
 
@@ -21,19 +23,27 @@ public class StudentController {
     @Autowired
     private StudentService studentService;
 
-    // @GetMapping("/dashboard/{userId}")
-    // public ResponseEntity<StudentDashboardDTO> getStudentDashboard(@PathVariable Long userId) {
-    //     StudentDashboardDTO dashboard = studentService.getStudentDashboard(userId);
-    //     if (dashboard != null) {
-    //         return ResponseEntity.ok(dashboard);
-    //     } else {
-    //         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-    //     }
-    // }
+    
     @GetMapping("/by-user/{userId}")
     public Student getStudentByUserId(@PathVariable Long userId) {
         return studentService.getStudentByUserId(userId);
     }
 
-}
+    @GetMapping("/faculty/{facultyId}")
+    public List<Student> getStudentsByFaculty(@PathVariable Long facultyId) {
+        return studentService.getStudentsByFacultyId(facultyId);
+    }
 
+    @GetMapping("/{rollNumber}")
+    public Optional<Student> getStudentsByStudent(@PathVariable String rollNumber){
+        return studentService.getStudentsByStudentRollNumber(rollNumber);
+    }
+
+
+    @DeleteMapping("/{rollNumber}")
+    public ResponseEntity<?> deleteStudent(@PathVariable String rollNumber) {
+        studentService.deleteStudent(rollNumber);
+        return ResponseEntity.ok().build();
+    }
+
+}

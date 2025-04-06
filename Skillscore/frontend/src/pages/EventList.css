@@ -2,13 +2,15 @@
   display: flex;
   background-color: #f8f9fa;
   height: 100vh;
-  width:1550px;
+  width: 100vw;
 }
 
 .events-content {
   flex-grow: 1;
   padding: 20px;
   overflow-y: auto;
+  margin-left: 250px; /* Ensures it starts after the sidebar */
+  width: calc(100% - 250px);
 }
 
 .events-section {
@@ -26,9 +28,11 @@
   color: #1d3c34;
 }
 
-.events-date {
-  color: #888;
-  font-size: 14px;
+.faculty-search-bar {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 250px;
 }
 
 .events-grid {
@@ -44,6 +48,12 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.event-card:hover {
+  transform: scale(1.05);
 }
 
 .event-image {
@@ -67,8 +77,20 @@
   color: #555;
 }
 
+.no-events {
+  text-align: center;
+  color: #888;
+  font-size: 16px;
+  padding: 20px;
+}
+
 @media (max-width: 768px) {
   .events-grid {
     grid-template-columns: 1fr;
+  }
+
+  .events-content {
+    margin-left: 0;
+    width: 100%;
   }
 }

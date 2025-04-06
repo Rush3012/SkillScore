@@ -1,0 +1,55 @@
+.faculty-details-page {
+  display: flex;
+  width:100%;
+  height: auto;
+}
+
+.details-content {
+  flex-grow: 1;
+  padding: 20px;
+  height: 100vh;
+  width: 87vw;
+  margin-left: 250px;
+}
+
+.request-box {
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  max-width: 800px;
+  margin:auto;
+}
+
+.details-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.details-grid {
+  display: flex;
+  justify-content: space-between;
+}
+
+.details-left, .details-right {
+  width: 48%;
+  justify-content: space-evenly;
+}
+
+.decision-buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.approve-btn {
+  background: green;
+  color: white;
+}
+
+.decline-btn {
+  background: red;
+  color: white;
+}

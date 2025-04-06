@@ -1,10 +1,7 @@
 package com.selab.Skillscore.dto;
 
 import java.util.List;
-import java.util.Optional;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.selab.Skillscore.model.Faculty;
 import com.selab.Skillscore.model.Student;
 
 public class FacultyDashboardDTO {

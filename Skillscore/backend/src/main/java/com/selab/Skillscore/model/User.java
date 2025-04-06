@@ -14,7 +14,13 @@ public class User {
     private String username;
 
     @Column(nullable = false)
-    private String password; // Stored as plaintext (not recommended for security reasons)
+    private String password; 
+
+    @Column(unique = true, nullable = false)
+    private String email;
+
+    @Column(unique = true)
+    private String phoneNumber;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -35,5 +41,15 @@ public class User {
     public void setPassword(String password) { this.password = password; }
 
     public Role getRole() { return role; }
-    public void setRole(Role role) { this.role = role; }
+    public void setRole(Role student) { this.role = student; }
+
+    public String getEmail() {return email;}
+    public String getPhoneNumber() {return phoneNumber;}
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 }
+    

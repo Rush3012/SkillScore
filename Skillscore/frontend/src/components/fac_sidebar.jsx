@@ -22,7 +22,7 @@ const FacultySidebar = () => {
             sessionStorage.clear();
             localStorage.removeItem("authToken"); 
     
-            navigate("/");
+            navigate("/login");
         } catch (error) {
             console.error("Error during logout:", error);
         }
@@ -38,13 +38,13 @@ const FacultySidebar = () => {
           <Link to="/FacultyDashboard"> Dashboard</Link>
         </li>
         <li>
-          <Link to="/faculty-students"> Students</Link> {/* Faculty managing students */}
+          <Link to="/faculty/students"> Students</Link> {/* Faculty managing students */}
         </li>
         <li>
           <Link to="/FacultyEvents"> Events</Link>
         </li>
         <li>
-          <Link to="/faculty-requests"> Requests</Link>
+          <Link to="/faculty/requests"> Requests</Link>
         </li>
       </ul>
       <button className="logout-btn" onClick={handleLogout}> Logout</button>

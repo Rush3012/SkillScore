@@ -1,13 +1,15 @@
 
 .profile-container {
     display: flex;
-    width:1550px;
+    width : 100vw;
+    height: 100vh;
   }
   
   .profile-content {
     flex-grow: 1;
     padding: 20px;
     background-color: #f8f8f8;
+    margin-left: 250px;
   }
   
   .profile-title {
@@ -17,6 +19,7 @@
   }
   
   .profile-card {
+    /* height: 100vh; */
     background: white;
     border-radius: 10px;
     padding: 20px;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { FaSignOutAlt } from "react-icons/fa";
 import logo from "../assets/skillscore_logo.png";
@@ -7,6 +7,32 @@ import "./stu_sidebar.css"; // Sidebar styles
 const Sidebar = ({ role }) => {
   const navigate = useNavigate();
   const location = useLocation(); 
+  const [rollNumber, setRollNumber] = useState(null);
+
+  console.log("Location:", rollNumber);
+
+  useEffect(() => {
+    fetch("http://localhost:8080/api/auth/profile", { credentials: "include" })
+    .then((response) => response.json())
+    .then((data) => {
+      if (!data?.userId) {
+        throw new Error("Invalid user data received");
+      }
+      const userId = data.userId;
+
+      return fetch(`http://localhost:8080/api/students/by-user/${userId}`, { credentials: "include" });
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      if (!data?.rollNumber) {
+        throw new Error("Roll number not found");
+      }
+      setRollNumber(data.rollNumber);
+    })
+    .catch((error) => console.error("Error fetching student data:", error));
+}, []); // Empty dependency array to run only on mount
+
+console.log("Location:", rollNumber);
 
   const handleLogout = async () => {
     try {
@@ -22,7 +48,7 @@ const Sidebar = ({ role }) => {
         sessionStorage.clear();
         localStorage.removeItem("authToken"); 
 
-        navigate("/");
+        navigate("/login");
     } catch (error) {
         console.error("Error during logout:", error);
     }
@@ -54,30 +80,18 @@ const Sidebar = ({ role }) => {
           >
             Events
           </li>
-          {role === "STUDENT" ? (
+          
             <li 
-              className={location.pathname === "/Requests" ? "dashboard-active" : ""}
-              onClick={() => navigate("/Requests")}
-            >
+              className={location.pathname === `/student/request/PENDING/${rollNumber}` ? "dashboard-active" : ""}
+
+              onClick={() => navigate(`/student/request/PENDING/${rollNumber}`)}
+              >
               Requests
             </li>
-          ) : role === "FACULTY" ? (
-            <>
-              <li 
-                className={location.pathname === "/ManageStudents" ? "dashboard-active" : ""}
-                onClick={() => navigate("/ManageStudents")}
-              >
-                Manage Students
-              </li>
-              <li 
-                className={location.pathname === "/Reports" ? "dashboard-active" : ""}
-                onClick={() => navigate("/Reports")}
-              >
-                Reports
-              </li>
-            </>
-          ) : null}
-        </ul>
+         
+          </ul>
+             
+              
       </nav>
       <button className="dashboard-logout-btn" onClick={handleLogout}>
         <FaSignOutAlt /> Logout

@@ -5,6 +5,8 @@ body {
   margin: 0;
   padding: 0;
   background-color: #f5f6fa;
+  width : 100vw;
+
 }
 
 /* Main Dashboard Container */
@@ -200,4 +202,73 @@ body {
     flex-direction: column;
     align-items: center;
   }
+}
+
+.dashboard-container {
+  display: flex;
+}
+
+.main-content {
+  flex-grow: 1;
+  padding: 20px;
+}
+
+/* Top Section: Faculty Info + Cards */
+.top-section {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+/* Left Side: Faculty Info */
+.left-section {
+  flex: 1;
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Right Side: Two Stacked Cards */
+.right-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+/* Bottom Section: Events */
+.bottom-section {
+  margin-top: 30px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+}
+
+.events {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+}
+
+.event {
+  background: #e3f2fd;
+  padding: 10px;
+  border-radius: 5px;
+  min-width: 200px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.event:hover {
+  background: #bbdefb;
 }
