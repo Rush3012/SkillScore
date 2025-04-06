@@ -3,6 +3,7 @@ package com.selab.Skillscore.Controller;
 
 import java.io.IOException;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -13,6 +14,11 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,16 +42,29 @@ public class AuthController {
     private UserRepository userRepository;
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest, HttpSession session) {
+    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest, HttpServletRequest request) {
         Optional<User> userOptional = userService.findByUsername(loginRequest.getUsername());
 
         if (userOptional.isPresent() && userOptional.get().getPassword().equals(loginRequest.getPassword())) { 
             User user = userOptional.get();
-            session.setAttribute("loggedInUser", user);  
+
+            UsernamePasswordAuthenticationToken authenticationToken =
+                new UsernamePasswordAuthenticationToken(
+                        user.getUsername(), // principal
+                        null,               // no credentials needed now
+                        List.of(new SimpleGrantedAuthority("ROLE_" + user.getRole().name()))
+                );
+
+            SecurityContext context = SecurityContextHolder.createEmptyContext();
+        context.setAuthentication(authenticationToken);
+        request.getSession().setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, context);
+
+        // Step 3: Also set your own session attribute (if you still want it)
+        request.getSession().setAttribute("loggedInUser", user);
             
-            System.out.println("User logged in: " + user.getUsername());
-        System.out.println("Session Created! Session ID: " + session.getId());
-        System.out.println("Session Attribute Set: " + session.getAttribute("loggedInUser"));
+        // System.out.println("User logged in: " + user.getUsername());
+        // System.out.println("Session Created! Session ID: " + session.getId());
+        // System.out.println("Session Attribute Set: " + session.getAttribute("loggedInUser"));
  
 
             return ResponseEntity.ok(Map.of(
@@ -81,7 +100,7 @@ public class AuthController {
 
     @GetMapping("/user")
     public ResponseEntity<?> getUserFromSession(HttpSession session) {
-        Object userObj = session.getAttribute("user");
+        Object userObj = session.getAttribute("loggedInUser");
 
         if (userObj instanceof User user) {
             return ResponseEntity.ok(Map.of(

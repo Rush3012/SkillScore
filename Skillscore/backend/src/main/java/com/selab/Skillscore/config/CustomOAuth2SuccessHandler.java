@@ -34,11 +34,13 @@ public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler 
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
 
-            // ✅ Store user in session
             HttpSession session = request.getSession();
-            session.setAttribute("user", user);
+            session.setAttribute("user", user); // this is optional
+            session.setAttribute("loggedInUser", user); // ✅ This is required for /user
 
-            // ✅ Redirect to frontend
+            // Debug log
+            System.out.println("OAuth Success: Stored user in session: " + user.getUsername());
+
             response.sendRedirect("http://localhost:5173/oauth-success");
 
         } else {

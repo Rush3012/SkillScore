@@ -30,7 +30,7 @@ const AddEvent = () => {
   useEffect(() => {
           const fetchFacultyData = async () => {
               try {
-                  const userResponse = await fetch("/api/auth/user", { credentials: "include" });
+                  const userResponse = await fetch("https://localhost:8080/api/auth/user", { credentials: "include" });
                   if (!userResponse.ok) throw new Error("Failed to fetch user profile");
   
                   const userData = await userResponse.json();

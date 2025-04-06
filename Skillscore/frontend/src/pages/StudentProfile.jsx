@@ -20,7 +20,7 @@ const StudentProfile = () => {
   useEffect(() => {
     const fetchStudentData = async () => {
       try {
-        const userResponse = await fetch("/api/auth/user", {
+        const userResponse = await fetch("http://localhost:8080/api/auth/user", {
             credentials: "include"
         }); 
         if (!userResponse.ok) {
