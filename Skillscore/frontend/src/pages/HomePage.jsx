@@ -71,6 +71,10 @@ const HomePage = () => {
           <button className="login-btn" onClick={handleLogin}>
             Login
           </button>
+          <a href="http://localhost:8080/oauth2/authorization/google">
+  <button>Login with Google</button>
+</a>
+
         </div>
       </div>
     </div>

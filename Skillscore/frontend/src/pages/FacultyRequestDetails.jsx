@@ -23,7 +23,7 @@ const FacultyRequestDetails = () => {
     const fetchRequestDetails = async () => {
         
       try {
-        const userResponse = await fetch("/api/auth/profile", { credentials: "include" });
+        const userResponse = await fetch("/api/auth/user", { credentials: "include" });
         if (!userResponse.ok) throw new Error("Failed to fetch user profile");
 
         const userData = await userResponse.json();

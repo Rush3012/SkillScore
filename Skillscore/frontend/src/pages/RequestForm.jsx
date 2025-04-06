@@ -44,7 +44,7 @@ const RequestForm = () => {
   useEffect(() => {
     const fetchStudentData = async () => {
       try {
-        const userResponse = await fetch("/api/auth/profile", { credentials: "include" });
+        const userResponse = await fetch("/api/auth/user", { credentials: "include" });
         if (!userResponse.ok) throw new Error("Failed to fetch student data");
 
         const userData = await userResponse.json();

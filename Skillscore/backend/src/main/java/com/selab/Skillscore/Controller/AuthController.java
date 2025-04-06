@@ -79,6 +79,21 @@ public class AuthController {
         ));
     }
 
+    @GetMapping("/user")
+    public ResponseEntity<?> getUserFromSession(HttpSession session) {
+        Object userObj = session.getAttribute("user");
+
+        if (userObj instanceof User user) {
+            return ResponseEntity.ok(Map.of(
+                "userId", user.getId(),
+                "role", user.getRole().name().toLowerCase()
+            ));
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("error", "User not logged in"));
+        }
+    }
+
     @PostMapping("/logout")
     public void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.getSession().invalidate(); // Invalidate session

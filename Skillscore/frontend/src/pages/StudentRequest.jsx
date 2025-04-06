@@ -138,7 +138,7 @@ const StudentRequests = () => {
   useEffect(() => {
     const fetchStudentData = async () => {
       try {
-        const userResponse = await fetch("http://localhost:8080/api/auth/profile", { credentials: "include" });
+        const userResponse = await fetch("http://localhost:8080/api/auth/user", { credentials: "include" });
         if (!userResponse.ok) throw new Error("Failed to fetch user data");
         const userData = await userResponse.json();
 

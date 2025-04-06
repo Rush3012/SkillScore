@@ -20,7 +20,7 @@ export default function StudentDashboard() {
   useEffect(() => {
     const fetchStudentData = async () => {
       try {
-        const userResponse = await fetch("/api/auth/profile", {
+        const userResponse = await fetch("/api/auth/user", {
             credentials: "include"
         }); 
         if (!userResponse.ok) {

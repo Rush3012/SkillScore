@@ -44,7 +44,7 @@ public class CorsConfig {
     @Bean
     public CorsFilter corsFilter() {
         CorsConfiguration config = new CorsConfiguration();
-        config.addAllowedOriginPattern("*"); // ✅ More flexible CORS policy
+        config.setAllowedOrigins(List.of("http://localhost:5173")); // instead of pattern "*"
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("Content-Type", "Authorization"));
         config.setExposedHeaders(List.of("Authorization"));

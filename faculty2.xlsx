@@ -1,10 +1,3 @@
-name,department,username,email,password,phone_number,isAdvisor,designation 
-Dr. Emily,ECE,emily,emily@nitc.ac.in,emily123,9876543400,false,Lecturer  
-Dr. Michael,ME,michael,michael@nitc.ac.in,michael123,9876543411,true,Assistant Professor  
-Dr. Sophia,CIVIL,sophia,sophia@nitc.ac.in,sophia123,9876543422,false,Senior Lecturer  
-Dr. Daniel,EEE,daniel,daniel@nitc.ac.in,daniel123,9876543433,true,HOD  
-Dr. Olivia,CSE,olivia,olivia@nitc.ac.in,olivia123,9876543444,false,Professor  
-Dr. William,ECE,william,william@nitc.ac.in,william123,9876543455,true,Associate Professor  
-Dr. Charlotte,ME,charlotte,charlotte@nitc.ac.in,charlotte123,9876543466,false,Senior Lecturer  
-Dr. James,CIVIL,james,james@nitc.ac.in,james123,9876543477,true,Lecturer  
-Dr. Ava,EEE,ava,ava@nitc.ac.in,ava123,9876543488,false,Assistant Professor
+name,department,username,email,password,phone_number,isAdvisor,designation
+Dr. Benjamin,CSE,benjamin,benjamin@nitc.ac.in,benjamin123,9876543499,true,Senior Professor
+Dr. Lucas,ECE,lucas,lucas@nitc.ac.in,lucas123,9876543500,false,Assistant Lecturer

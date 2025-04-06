@@ -13,7 +13,7 @@ const HomePage = () => {
 
         <div className="logo-section bounce">
           {/* <img src={logo} alt="SkillScore Logo" className="logo" /> */}
-          <h1 className="website-name slide-in">SkillScore</h1>
+          <h1 className="website-name slide-in">Welcome to SkillScore</h1>
           <p className="tagline slide-in">Empowering students by tracking their achievements.</p>
         </div>
 

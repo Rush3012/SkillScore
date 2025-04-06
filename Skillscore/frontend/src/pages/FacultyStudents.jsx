@@ -148,7 +148,7 @@ const FacultyStudents = () => {
     useEffect(() => {
         const fetchFaculty = async () => {
             try {
-                const response = await fetch("/api/auth/profile", { credentials: "include" });
+                const response = await fetch("/api/auth/user", { credentials: "include" });
                 if (!response.ok) throw new Error("Failed to fetch faculty profile");
 
                 const data = await response.json();

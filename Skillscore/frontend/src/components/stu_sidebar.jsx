@@ -12,7 +12,7 @@ const Sidebar = ({ role }) => {
   console.log("Location:", rollNumber);
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/auth/profile", { credentials: "include" })
+    fetch("http://localhost:8080/api/auth/user", { credentials: "include" })
     .then((response) => response.json())
     .then((data) => {
       if (!data?.userId) {
