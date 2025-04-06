@@ -1,0 +1,67 @@
+.dashboard-container {
+    display: flex;
+    height: 100vh;
+    width : 100vw;
+  }
+  
+  .dashboard-main-content {
+    flex-grow: 1;
+    padding: 20px;
+    background-color: #f8f8f8;
+  }
+  
+  .requests-container {
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  h2 {
+    color: #2b2b2b;
+  }
+  
+  .tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+  
+  .tabs button {
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    background: #e0e0e0;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+  
+  .tabs .active {
+    background: #006400;
+    color: white;
+  }
+  
+  .request-list {
+    margin-top: 10px;
+  }
+  
+  .request-card {
+    background: #ffffff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .edit-button {
+    background: #b22222;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  

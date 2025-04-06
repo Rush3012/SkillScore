@@ -1,0 +1,205 @@
+
+/* Faculty Dashboard Styles */
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f5f6fa;
+  width : 100vw;
+
+}
+
+/* Main Dashboard Container */
+.dashboard-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Main Content */
+.main-content {
+  flex-grow: 1;
+  padding: 20px;
+  margin-left: 250px; /* To prevent content from overlapping sidebar */
+}
+
+/* Sidebar */
+.sidebar {
+  width: 250px;
+  height: 100vh;
+  background: #164B31;
+  color: white;
+  position: fixed;
+  left: 0;
+  top: 0;
+  padding-top: 20px;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  padding: 15px;
+}
+
+.sidebar ul li a {
+  color: white;
+  text-decoration: none;
+  display: block;
+}
+
+.sidebar ul li a:hover {
+  background: #2ECC71;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+/* Faculty Header */
+.faculty-header {
+  display: flex;
+  justify-content: space-between;
+  background: #F5F5F5;
+  padding: 15px 20px;
+  border-bottom: 2px solid #164B31;
+}
+
+.header-content h1 {
+  font-size: 22px;
+  color: #333;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+}
+
+.profile span {
+  font-size: 14px;
+  color: gray;
+  margin-right: 20px;
+}
+
+.profile-info {
+  display: flex;
+  align-items: center;
+}
+
+.profile-info img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.faculty-details h4 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.faculty-details p {
+  margin: 0;
+  font-size: 14px;
+  color: #555;
+}
+
+/* Dashboard Cards */
+.dashboard-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: space-evenly;
+  margin-top: 20px;
+}
+
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 220px;
+  text-align: center;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.highlight {
+  background: #fef6f6;
+}
+
+.card .count {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.card .count.red {
+  color: red;
+}
+
+/* Tasks */
+.task-list {
+  margin-top: 10px;
+}
+
+.task-item {
+  display: flex;
+  background: #e9f5e9;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 8px;
+  align-items: center;
+}
+
+.task-item.warning {
+  background: #fff3cd;
+}
+
+/* Events */
+.events {
+  display: flex;
+  flex-direction: column;
+}
+
+.event {
+  background: white;
+  padding: 12px;
+  border-radius: 8px;
+  margin: 5px 0;
+  transition: transform 0.3s ease-in-out;
+}
+
+.event:hover {
+  transform: translateY(-3px);
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.event-title {
+  font-weight: bold;
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 768px) {
+  .dashboard-container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+
+  .main-content {
+    margin-left: 0;
+    padding: 15px;
+  }
+
+  .dashboard-cards {
+    flex-direction: column;
+    align-items: center;
+  }
+}
