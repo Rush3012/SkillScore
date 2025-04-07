@@ -34,4 +34,6 @@ build/
 
 
 src/main/resources/application-secrets.properties
+Skillscore/backend/src/main/resources/application-secret.properties
+
 
