@@ -30,8 +30,13 @@ public class FacultyService {
     //     faculty.getStudents());
     // }
 
+    // public Faculty getFacultyByUserId(Long userId) {
+    //     return facultyRepository.findByUserId(userId).orElse(null);
+    // }
+
     public Faculty getFacultyByUserId(Long userId) {
-        return facultyRepository.findByUserId(userId).orElse(null);
+        return facultyRepository.findByUserId(userId)
+                .orElseThrow(() -> new RuntimeException("Faculty not found for user ID: " + userId));
     }
 
     public Faculty getFacultyById(Long facultyId) {

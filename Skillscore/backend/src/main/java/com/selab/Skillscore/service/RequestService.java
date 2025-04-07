@@ -69,9 +69,9 @@ public class RequestService {
             request.setCoordinatorId(event.getFaculty().getFacultyId());
         }
 
-        requestRepository.save(request);  // Save request
+        requestRepository.save(request);  
 
-        // Create faculty approval entries
+        
         List<RequestApproval> approvals = new ArrayList<>();
 
         if (student.getFaculty() != null) {
@@ -194,11 +194,11 @@ public class RequestService {
         Request request = requestRepository.findById(id).orElseThrow(() -> new RuntimeException("Request not found"));
         System.out.println("get event details: " + request.getEvent());
         if (request.getEvent() != null) {
-            // Case 1: Existing event (Allow only description & file update)
+           
             request.setDescription(description);
         } 
         else {
-            // Case 2: "Other Event" (Allow everything except title)
+            
             request.setDescription(description);
             request.setActivityType(activityType);
             request.setCoordinatorId(Long.parseLong(coordinatorId));
