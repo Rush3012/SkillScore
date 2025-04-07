@@ -123,7 +123,7 @@ const StudentRequests = () => {
   const fetchRequests = async (status, rollNumber) => {
     setLoading(true);
     try {
-      const response = await fetch(`http://localhost:8080/api/requests/${status}/${rollNumber}`);
+      const response = await fetch(`http://localhost:8080/api/requests/${status}/${rollNumber}`, {credentials: "include"});
       if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
       const data = await response.json();
       setRequests(data);
@@ -138,7 +138,7 @@ const StudentRequests = () => {
   useEffect(() => {
     const fetchStudentData = async () => {
       try {
-        const userResponse = await fetch("http://localhost:8080/api/auth/profile", { credentials: "include" });
+        const userResponse = await fetch("http://localhost:8080/api/auth/user", { credentials: "include" });
         if (!userResponse.ok) throw new Error("Failed to fetch user data");
         const userData = await userResponse.json();
 

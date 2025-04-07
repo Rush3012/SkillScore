@@ -19,6 +19,7 @@ import StudentRequestDetails from "./pages/StudentRequestDetails";
 import Home from "./pages/Home";
 import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
+import OAuthHandler from "./pages/OAuthHandler";
 
 const AppRoutes = () => (
   <Router>
@@ -27,6 +28,7 @@ const AppRoutes = () => (
       <Route path="/admin-login" element={<AdminLogin/>}/>
       <Route path="/admin/dashboard" element={<AdminDashboard/>}/>
       <Route path="/login" element={<HomePage />} />
+      <Route path="/oauth-success" element={<OAuthHandler />} />
       <Route path="/StudentDashboard" element={<StudentDashboard />} />
       <Route path="/FacultyDashboard" element={<FacultyDashboard />} />
       <Route path="/student/request/add" element={<RequestForm />} />

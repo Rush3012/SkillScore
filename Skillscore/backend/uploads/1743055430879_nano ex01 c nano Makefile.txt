@@ -1,0 +1,7 @@
+nano ex01.c
+nano Makefile 
+	obj-m := ex01.o
+make -C /lib/modules/$(uname -r)/build M=$PWD modules
+ls -l
+sudo insmod ./ex01.ko
+lsmod

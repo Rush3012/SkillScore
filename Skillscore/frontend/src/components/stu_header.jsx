@@ -37,7 +37,7 @@ const StudentHeader = ({ title }) => {
   useEffect(() => {
     const fetchStudentData = async () => {
       try {
-        const userResponse = await fetch("http://localhost:8080/api/auth/profile", {
+        const userResponse = await fetch("http://localhost:8080/api/auth/user", {
           credentials: "include", // Ensure cookies/session are sent
         });
 

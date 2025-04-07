@@ -23,7 +23,7 @@ const FacultyRequestDetails = () => {
     const fetchRequestDetails = async () => {
         
       try {
-        const userResponse = await fetch("/api/auth/profile", { credentials: "include" });
+        const userResponse = await fetch("http://localhost:8080/api/auth/user", { credentials: "include" });
         if (!userResponse.ok) throw new Error("Failed to fetch user profile");
 
         const userData = await userResponse.json();
@@ -101,7 +101,7 @@ const FacultyRequestDetails = () => {
   useEffect(() => {
     const fetchDocuments = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/api/documents/files/${id}`);
+        const response = await fetch(`http://localhost:8080/api/documents/files/${id}`, {credentials: "include"});
         if (!response.ok) throw new Error("Failed to fetch documents");
 
         const data = await response.json();
@@ -119,6 +119,7 @@ const FacultyRequestDetails = () => {
     try {
       const response = await fetch(`http://localhost:8080/api/requests/faculty/${faculty.facultyId}/${id}/update-status?status=APPROVED`, {
         method: "PUT",
+        credentials: "include"
       });
   
       if (!response.ok) throw new Error("Failed to accept request");
@@ -142,6 +143,7 @@ const FacultyRequestDetails = () => {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ reason: rejectReason }),
+        credentials: "include"
       });
   
       if (!response.ok) throw new Error("Failed to reject request");
