@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -87,12 +88,12 @@ class StudentControllerTest {
     @Test
     void getStudentsByStudent_WhenStudentExists_ReturnsStudent() {
         String rollNumber = "CS2023001";
-        when(studentService.getStudentsByStudentRollNumber(rollNumber)).thenReturn(student);
+        when(studentService.getStudentsByStudentRollNumber(rollNumber)).thenReturn(Optional.of(student));
         
-        Student result = studentController.getStudentsByStudent(rollNumber);
+        Optional<Student> result = studentController.getStudentsByStudent(rollNumber);
         
-        assertNotNull(result);
-        assertEquals(rollNumber, result.getRollNumber());
+        assertNotNull(result.isPresent());
+        assertEquals(rollNumber, result.get().getRollNumber());
         verify(studentService, times(1)).getStudentsByStudentRollNumber(rollNumber);
     }
 
@@ -101,9 +102,9 @@ class StudentControllerTest {
         String rollNumber = "INVALID123";
         when(studentService.getStudentsByStudentRollNumber(rollNumber)).thenReturn(null);
         
-        Student result = studentController.getStudentsByStudent(rollNumber);
+        Optional<Student> result = studentController.getStudentsByStudent(rollNumber);
         
-        assertNull(result);
+        assertNull(result.isPresent());
         verify(studentService, times(1)).getStudentsByStudentRollNumber(rollNumber);
     }
 }

@@ -38,8 +38,8 @@ class FacultyServiceTest {
     @Test
     void getAllFaculty_ReturnsAllFaculties() {
         
-        Faculty faculty1 = new Faculty("John Doe", "Computer Science", true, new User());
-        Faculty faculty2 = new Faculty("Jane Smith", "Mathematics", false, new User());
+        Faculty faculty1 = new Faculty("John Doe", "Computer Science", true, "Professor",new User());
+        Faculty faculty2 = new Faculty("Jane Smith", "Mathematics", false, "Assistant Professor",new User());
         List<Faculty> expectedFaculties = Arrays.asList(faculty1, faculty2);
         
         when(facultyRepository.findAll()).thenReturn(expectedFaculties);
@@ -58,7 +58,7 @@ class FacultyServiceTest {
         User user = new User();
         user.setId(userId);
         
-        Faculty expectedFaculty = new Faculty("John Doe", "Computer Science", true, user);
+        Faculty expectedFaculty = new Faculty("John Doe", "Computer Science", true, "Professor",user);
         
         when(facultyRepository.findByUserId(userId)).thenReturn(Optional.of(expectedFaculty));
 

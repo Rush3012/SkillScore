@@ -108,12 +108,12 @@ class StudentServiceTest {
     @Test
     void getStudentsByStudentRollNumber_WhenStudentExists_ReturnsStudent() {
         String rollNumber = "CS2023001";
-        when(studentRepository.findByRollNumber(rollNumber)).thenReturn(student);
+        when(studentRepository.findByRollNumber(rollNumber)).thenReturn(Optional.of(student));
+
+        Optional<Student> result = studentService.getStudentsByStudentRollNumber(rollNumber);
         
-        Student result = studentService.getStudentsByStudentRollNumber(rollNumber);
-        
-        assertNotNull(result);
-        assertEquals(rollNumber, result.getRollNumber());
+        assertNotNull(result.isPresent());
+        assertEquals(rollNumber, result.get().getRollNumber());
         verify(studentRepository, times(1)).findByRollNumber(rollNumber);
     }
 
@@ -122,9 +122,9 @@ class StudentServiceTest {
         String rollNumber = "INVALID123";
         when(studentRepository.findByRollNumber(rollNumber)).thenReturn(null);
         
-        Student result = studentService.getStudentsByStudentRollNumber(rollNumber);
+        Optional<Student> result = studentService.getStudentsByStudentRollNumber(rollNumber);
         
-        assertNull(result);
+        assertNull(result.isPresent());
         verify(studentRepository, times(1)).findByRollNumber(rollNumber);
     }
 

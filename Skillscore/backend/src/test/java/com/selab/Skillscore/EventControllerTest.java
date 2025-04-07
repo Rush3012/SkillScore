@@ -59,20 +59,32 @@ class EventControllerTest {
         testFaculty.setName("Dr. Smith");
         testFaculty.setDepartment("CSE");
 
-        testEvent = new Event(
-            "Tech Fest",
-            "Annual technical festival",
-            50,
-            LocalDate.now(),
-            LocalDate.now().plusDays(3),
-            LocalTime.of(10, 0),
-            "poster.jpg",
-            "https://register.com",
-            testFaculty
-        );
-        testEvent.setId(1L);
-    }
+    //     testEvent = new Event(
+    //         "Tech Fest",
+    //         "Annual technical festival",
+    //         50,
+    //         LocalDate.now(),
+    //         LocalDate.now().plusDays(3),
+    //         LocalTime.of(10, 0),
+    //         "poster.jpg",
+    //         "https://register.com",
+    //         testFaculty
+    //     );
+    //     testEvent.setId(1L);
+    // }
 
+    testEvent = new Event();
+testEvent.setId(1L);
+testEvent.setName("Tech Fest");
+testEvent.setDescription("Annual technical festival");
+testEvent.setPoints(50);
+testEvent.setStartDate(LocalDate.now());
+testEvent.setEndDate(LocalDate.now().plusDays(3));
+testEvent.setTime(LocalTime.of(10, 0));
+testEvent.setImage("poster.jpg");
+testEvent.setRegistrationLink("https://register.com");
+testEvent.setFaculty(testFaculty);
+    }
     @Test
     void addEvent_WithValidData_ReturnsCreatedEvent() throws Exception {
         when(facultyService.getFacultyById(1L)).thenReturn(testFaculty);

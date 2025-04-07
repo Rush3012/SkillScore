@@ -36,8 +36,8 @@ class FacultyControllerTest {
     @Test
     void getAllFaculty_ReturnsListOfFaculties() {
        
-        Faculty faculty1 = new Faculty("John Doe", "Computer Science", true, new User());
-        Faculty faculty2 = new Faculty("Jane Smith", "Mathematics", false, new User());
+        Faculty faculty1 = new Faculty("John Doe", "Computer Science", true, "Professor",new User());
+        Faculty faculty2 = new Faculty("Jane Smith", "Mathematics", false, "Assistant Professor",new User());
         List<Faculty> expectedFaculties = Arrays.asList(faculty1, faculty2);
         
         when(facultyService.getAllFaculty()).thenReturn(expectedFaculties);
@@ -57,7 +57,7 @@ class FacultyControllerTest {
         User user = new User();
         user.setId(userId);
         
-        Faculty faculty = new Faculty("John Doe", "Computer Science", true, user);
+        Faculty faculty = new Faculty("John Doe", "Computer Science", true, "Professor",user);
         faculty.setFacultyId(101L);
         
         when(facultyService.getFacultyByUserId(userId)).thenReturn(faculty);
