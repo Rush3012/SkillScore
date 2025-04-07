@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Sidebar from "../components/stu_sidebar";
 import Header from "../components/stu_header";
 import "./StudentProfile.css"; // Ensure you have the CSS file for styling
@@ -15,6 +16,8 @@ const StudentProfile = () => {
   const [passwordError, setPasswordError] = useState(null);
   const [passwordSuccess, setPasswordSuccess] = useState(null);
   const [userId, setUserId] = useState(null);
+  const navigate = useNavigate();
+  
 
 
   useEffect(() => {
@@ -76,6 +79,7 @@ const StudentProfile = () => {
 
       setPasswordSuccess("Password changed successfully!");
       alert("Password changed successfully");
+      navigate("/login");
       setShowPasswordModal(false);
       setCurrentPassword("");
       setNewPassword("");

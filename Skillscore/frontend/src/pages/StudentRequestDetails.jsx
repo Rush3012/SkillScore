@@ -35,7 +35,7 @@ const StudentRequestDetails = () => {
   useEffect(() => {
     const fetchDocuments = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/api/documents/files/${id}`);
+        const response = await fetch(`http://localhost:8080/api/documents/files/${id}`, {credentials: "include"});
         if (!response.ok) throw new Error("Failed to fetch documents");
         const data = await response.json();
         setDocument(data);
@@ -49,7 +49,7 @@ const StudentRequestDetails = () => {
   useEffect(() => {
     const fetchApprovals = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/api/requests/all/${id}`);
+        const response = await fetch(`http://localhost:8080/api/requests/all/${id}`, {credentials: "include"});
         if (!response.ok) throw new Error("Failed to fetch approvals");
         const data = await response.json();
         setApprovals(data);

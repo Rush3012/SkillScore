@@ -72,7 +72,7 @@ const RequestForm = () => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await fetch("http://localhost:8080/api/events");
+        const response = await fetch("http://localhost:8080/api/events", { credentials: "include" });
         if (!response.ok) throw new Error("Failed to fetch events");
         const data = await response.json();
         const today = new Date();
@@ -92,7 +92,7 @@ const RequestForm = () => {
 
     const fetchFaculty = async () => {
       try {
-        const response = await fetch("http://localhost:8080/api/faculty");
+        const response = await fetch("http://localhost:8080/api/faculty", { credentials: "include" });
         if (!response.ok) throw new Error("Failed to fetch faculty list");
         const data = await response.json();
         setFacultyList(data);
@@ -107,7 +107,7 @@ const RequestForm = () => {
  useEffect(() => {
     const fetchDocuments = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/api/documents/files/${requestId}`);
+        const response = await fetch(`http://localhost:8080/api/documents/files/${requestId}`, {credentials: "include"});
         if (!response.ok) throw new Error("Failed to fetch documents");
         const docus = await response.json();
         setUploadedFiles(docus);
@@ -125,7 +125,7 @@ const RequestForm = () => {
     if (isEditing) {
       const fetchRequestDetails = async () => {
         try {
-          const response = await fetch(`http://localhost:8080/api/requests/${requestId}`);
+          const response = await fetch(`http://localhost:8080/api/requests/${requestId}`, { credentials: "include" });
           if (!response.ok) throw new Error("Failed to fetch request details");
           const requestData = await response.json();
   
@@ -215,6 +215,7 @@ const RequestForm = () => {
       const uploadResponse = await fetch("http://localhost:8080/api/documents/upload", {
         method: "POST",
         body: fileData,
+        credentials: "include"
       });
   
       if (!uploadResponse.ok) {
@@ -261,6 +262,7 @@ const RequestForm = () => {
       try {
         const response = await fetch(`http://localhost:8080/api/documents/delete/${file.id}`, {
           method: "DELETE",
+          credentials: "include"
         });
   
         if (!response.ok) {
@@ -308,7 +310,7 @@ const RequestForm = () => {
       
       const method = isEditing ? "PUT" : "POST";
   
-      const requestResponse = await fetch(url, { method, body: requestData });
+      const requestResponse = await fetch(url, { method, body: requestData , credentials: "include" });
   
       if (!requestResponse.ok) {
         const errorText = await requestResponse.text();
@@ -330,6 +332,7 @@ const RequestForm = () => {
             const uploadResponse = await fetch("http://localhost:8080/api/documents/upload", {
               method: "POST",
               body: fileData,
+              credentials: "include"
             });
   
             if (!uploadResponse.ok) {

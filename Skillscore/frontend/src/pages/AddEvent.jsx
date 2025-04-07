@@ -9,6 +9,7 @@ import "./AddEvent.css";
 const AddEvent = () => {
   const [fac, setFac] = useState(null);
   const [preview, setPreview] = useState(null);
+  const [error, setError] = useState();
   
 
   const [eventData, setEventData] = useState({
@@ -30,7 +31,7 @@ const AddEvent = () => {
   useEffect(() => {
           const fetchFacultyData = async () => {
               try {
-                  const userResponse = await fetch("https://localhost:8080/api/auth/user", { credentials: "include" });
+                  const userResponse = await fetch("http://localhost:8080/api/auth/user", { credentials: "include" });
                   if (!userResponse.ok) throw new Error("Failed to fetch user profile");
   
                   const userData = await userResponse.json();
