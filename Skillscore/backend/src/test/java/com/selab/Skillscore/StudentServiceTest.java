@@ -120,11 +120,11 @@ class StudentServiceTest {
     @Test
     void getStudentsByStudentRollNumber_WhenStudentNotExists_ReturnsNull() {
         String rollNumber = "INVALID123";
-        when(studentRepository.findByRollNumber(rollNumber)).thenReturn(null);
+        when(studentRepository.findByRollNumber(rollNumber)).thenReturn(Optional.empty());
         
         Optional<Student> result = studentService.getStudentsByStudentRollNumber(rollNumber);
         
-        assertNull(result.isPresent());
+        assertFalse(result.isPresent());
         verify(studentRepository, times(1)).findByRollNumber(rollNumber);
     }
 

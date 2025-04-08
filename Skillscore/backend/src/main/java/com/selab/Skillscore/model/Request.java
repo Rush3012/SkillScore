@@ -37,7 +37,7 @@ public class Request {
     private String activityName;
     private String activityType;
     private long coordinatorId;
-    private Integer points;
+    private Integer points = 0;
     
 
     public Long getId() {

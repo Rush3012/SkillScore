@@ -100,11 +100,11 @@ class StudentControllerTest {
     @Test
     void getStudentsByStudent_WhenStudentNotExists_ReturnsNull() {
         String rollNumber = "INVALID123";
-        when(studentService.getStudentsByStudentRollNumber(rollNumber)).thenReturn(null);
+        when(studentService.getStudentsByStudentRollNumber(rollNumber)).thenReturn(Optional.empty());
         
         Optional<Student> result = studentController.getStudentsByStudent(rollNumber);
         
-        assertNull(result.isPresent());
+        assertFalse(result.isPresent());
         verify(studentService, times(1)).getStudentsByStudentRollNumber(rollNumber);
     }
 }
